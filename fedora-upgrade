@@ -1,0 +1,61 @@
+#!/bin/sh
+set -e
+
+FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
+
+echo "Going to upgrade your Fedora to version 18."
+echo "You may want to read Release Notes:"
+echo "  http://docs.fedoraproject.org/release-notes/"
+echo "Hit Enter to continue or Ctrl + C to cancel."
+read
+
+if [ 0$FEDORA_VERSION -eq 17 ]; then
+  # TODO add -q to all yum and create some kind of progress metter
+  # but now be verbose
+  rpm -q rpmconf >/dev/null || yum install -y rpmconf
+  rpm -q yum-utils >/dev/null || yum install -y yum-utils
+  rpmconf -a
+  if [ -f /etc/sysconfig/desktop ]; then
+    . /etc/sysconfig/desktop
+    if [ "$DISPLAYMANAGER" = GNOME ]; then
+      preferred=gdm
+    elif [ "$DISPLAYMANAGER" = KDE ]; then
+      preferred=kdm
+    elif [ "$DISPLAYMANAGER" = WDM ]; then
+      preferred=wdm
+    elif [ "$DISPLAYMANAGER" = XDM ]; then
+      preferred=xdm
+    elif [ -n "$DISPLAYMANAGER" ]; then
+      # TODO - some heuristics?
+      true
+    fi
+  fi
+  rpm --import https://fedoraproject.org/static/DE7F38BD.txt
+  yum update -q yum
+  yum clean -q all
+  yum --releasever=18 --disableplugin=presto distro-sync
+  rpm --rebuilddb
+  if [ -n "$preferred" ]; then
+    systemctl enable --force ${preferred}.service
+  else
+    echo Could not determine your display manager
+    echo If you are using display manager, you have to run manualy:
+    echo systemctl enable --force your-display-manager.service
+    echo
+  fi
+  yum groupupdate Base
+  # TODO call package-cleanup --orphans or yum list extras and ask to remove it
+  # but the list has a lot of false negatives
+  rpmconf -a
+  rpmconf --clean
+  ( cd /etc/rc.d/init.d; 
+    for f in *; do
+      [ -x $f ] && /sbin/chkconfig $f resetpriorities
+    done # TODO - the same for systemd unit files
+  )
+  echo You sucessfullly upgraded to Fedora 18.
+  echo Reboot is strongly suggested.
+else
+  echo Upgrading from version $FEDORA_VERSION is not supported.
+  exit 1
+fi
