@@ -21,8 +21,6 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
       preferred=gdm
     elif [ "$DISPLAYMANAGER" = KDE ]; then
       preferred=kdm
-    elif [ "$DISPLAYMANAGER" = WDM ]; then
-      preferred=wdm
     elif [ "$DISPLAYMANAGER" = XDM ]; then
       preferred=xdm
     elif [ -n "$DISPLAYMANAGER" ]; then
