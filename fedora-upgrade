@@ -33,14 +33,6 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   yum clean -q all
   yum --releasever=18 --disableplugin=presto distro-sync
   rpm --rebuilddb
-  if [ -n "$preferred" ]; then
-    systemctl enable --force ${preferred}.service
-  else
-    echo Could not determine your display manager
-    echo If you are using display manager, you have to run manualy:
-    echo systemctl enable --force your-display-manager.service
-    echo
-  fi
   yum groupupdate Base
   # TODO call package-cleanup --orphans or yum list extras and ask to remove it
   # but the list has a lot of false negatives
@@ -51,6 +43,14 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
       [ -x $f ] && /sbin/chkconfig $f resetpriorities
     done # TODO - the same for systemd unit files
   )
+  if [ -n "$preferred" ]; then
+    systemctl enable --force ${preferred}.service
+  else
+    echo Could not determine your display manager
+    echo If you are using display manager, you have to run manualy:
+    echo systemctl enable --force your-display-manager.service
+    echo
+  fi
   echo You sucessfullly upgraded to Fedora 18.
   echo Reboot is strongly suggested.
 else
