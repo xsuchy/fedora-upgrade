@@ -40,7 +40,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   rpmconf --clean
   ( cd /etc/rc.d/init.d; 
     for f in *; do
-      [ -x $f ] && /sbin/chkconfig $f resetpriorities
+      [ -x $f ] && /sbin/chkconfig $f resetpriorities || :
     done # TODO - the same for systemd unit files
   )
   if [ -n "$preferred" ]; then
