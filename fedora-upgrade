@@ -43,6 +43,8 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
       [ -x $f ] && /sbin/chkconfig $f resetpriorities || :
     done # TODO - the same for systemd unit files
   )
+
+  # https://fedoraproject.org/wiki/Features/DisplayManagerRework
   if [ -n "$preferred" ]; then
     systemctl enable --force ${preferred}.service
   else
@@ -51,6 +53,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
     echo systemctl enable --force your-display-manager.service
     echo
   fi
+
   echo You sucessfullly upgraded to Fedora 18.
   echo Reboot is strongly suggested.
 else
