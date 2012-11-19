@@ -31,7 +31,15 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   rpm --import https://fedoraproject.org/static/DE7F38BD.txt
   yum update -q yum
   yum clean -q all
+  # https://bugzilla.redhat.com/show_bug.cgi?id=844167
+  SE_STATE=$(/usr/sbin/getenforce)
+  if [ "$SE_STATE" = "Enforcing" ]; then
+    /usr/sbin/setenforce 0
+  fi
   yum --releasever=18 --disableplugin=presto distro-sync
+  if [ "$SE_STATE" = "Enforcing" ]; then
+    /usr/sbin/setenforce 1
+  fi 
   rpm --rebuilddb
   yum groupupdate Base
   # TODO call package-cleanup --orphans or yum list extras and ask to remove it
