@@ -3,17 +3,23 @@ set -e
 
 FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
 
+function pause() {
+   read -p "Hit Enter to continue or Ctrl + C to cancel."
+}
+
 echo "Going to upgrade your Fedora to version 18."
 echo "You may want to read Release Notes:"
 echo "  http://docs.fedoraproject.org/release-notes/"
-echo "Hit Enter to continue or Ctrl + C to cancel."
-read
+pause
 
 if [ 0$FEDORA_VERSION -eq 17 ]; then
   # TODO add -q to all yum and create some kind of progress metter
   # but now be verbose
   rpm -q rpmconf >/dev/null || yum install -y rpmconf
   rpm -q yum-utils >/dev/null || yum install -y yum-utils
+
+  echo "Going to resolve old .rpmsave and .rpmnew files before upgrading."
+  pause 
   rpmconf -a
   if [ -f /etc/sysconfig/desktop ]; then
     . /etc/sysconfig/desktop
@@ -34,18 +40,29 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   # https://bugzilla.redhat.com/show_bug.cgi?id=844167
   SE_STATE=$(/usr/sbin/getenforce)
   if [ "$SE_STATE" = "Enforcing" ]; then
+    echo "Going to temporary disable SELinux due bug 844167"
+    pause
     /usr/sbin/setenforce 0
   fi
   yum --releasever=18 --disableplugin=presto distro-sync
   if [ "$SE_STATE" = "Enforcing" ]; then
     /usr/sbin/setenforce 1
-  fi 
+  fi
   rpm --rebuilddb
+
+  echo "Going to install missing packages from group Base"
+  pause
   yum groupupdate Base
   # TODO call package-cleanup --orphans or yum list extras and ask to remove it
   # but the list has a lot of false negatives
+
+  echo "Going to resolve .rpmsave and .rpmnew files after upgrade."
+  pause
   rpmconf -a
   rpmconf --clean
+
+  echo "Going to reset priorities of services."
+  pause
   ( cd /etc/rc.d/init.d; 
     for f in *; do
       [ -x $f ] && /sbin/chkconfig $f resetpriorities || :
