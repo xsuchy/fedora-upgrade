@@ -35,6 +35,10 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
     fi
   fi
   rpm --import https://fedoraproject.org/static/DE7F38BD.txt
+  if [ -f /etc/yum.repos.d/rpmfusion-free.repo ]; then
+    rpm --import 'http://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-18'
+    rpm --import 'http://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-18'  
+  fi
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
   # https://bugzilla.redhat.com/show_bug.cgi?id=844167
