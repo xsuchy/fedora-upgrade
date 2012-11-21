@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	18.1
+Version:	18.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade
 
@@ -38,3 +38,6 @@ install -m755 fedora-upgrade %{buildroot}%{_sbindir}
 
 
 %changelog
+* Wed Nov 21 2012 Miroslav Suchý 18.2-1
+- initial release
+
