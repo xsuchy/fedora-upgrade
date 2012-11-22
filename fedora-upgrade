@@ -54,7 +54,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   fi
   rpm --rebuilddb
 
-  echo "Going to install missing packages from group Base"
+  echo "Going to install missing packages from group 'Minimal Install'"
   pause
   yum groupupdate 'Minimal Install'
   # TODO call package-cleanup --orphans or yum list extras and ask to remove it
