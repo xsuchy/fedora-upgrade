@@ -1,5 +1,7 @@
 fedora-upgrade(8)
 =================
+:man source:  fedora-upgrade
+:man manual:  Fedora Upgrade
 
 NAME
 ----
@@ -8,17 +10,18 @@ fedora-upgrade - tool to guide you with upgrade of Fedora to next major version 
 
 SYNOPSIS
 --------
-fedora-upgrade
+*fedora-upgrade*
 
 
 DESCRIPTION
 -----------
 
-Script fedora-upgrade tries to automate steps needed for yum-upgrade from one major version to next one.
+Script *fedora-upgrade* tries to automate steps needed for yum-upgrade from one major version to next one.
 
 Currently only upgrade from Fedora 17 to Fedora 18 is available.
 
 Steps which fedora-upgrade does:
+
 * Display usual warnings.
 * Check dependencies.
 * Resolve old .rpmsave and .rpmnew files before upgrading (if there are some).
@@ -31,8 +34,14 @@ Steps which fedora-upgrade does:
 
 SEE ALSO
 --------
-yum(8), rpmconf(8)
+yum(8), rpmconf(8),
 https://fedoraproject.org/wiki/Upgrading_Fedora_using_yum
+
+
+BUGS
+----
+If you experience some problem, please report it at: https://github.com/xsuchy/fedora-upgrade/issues
+
 
 AUTHOR
 ------
