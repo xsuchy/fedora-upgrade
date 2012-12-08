@@ -17,6 +17,8 @@ Requires:	yum
 Requires:	yum-utils
 Requires:	rpmconf
 Requires:	libselinux-utils
+BuildRequires: asciidoc
+BuildRequires: libxslt
 
 %description
 Upgrade Fedora to next version using yum upgrade.
@@ -27,10 +29,13 @@ https://fedoraproject.org/wiki/Upgrading_Fedora_using_yum
 %setup -q
 
 %build
+a2x -d manpage -f manpage fedora-upgrade.8.asciidoc
 
 %install
 mkdir -p %{buildroot}%{_sbindir}
+mkdir -p %{buildroot}%{_mandir}/man8
 install -m755 fedora-upgrade %{buildroot}%{_sbindir}
+install fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 
 %files
 %doc LICENSE README.md
