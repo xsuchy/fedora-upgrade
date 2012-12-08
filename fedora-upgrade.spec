@@ -35,7 +35,7 @@ a2x -d manpage -f manpage fedora-upgrade.8.asciidoc
 mkdir -p %{buildroot}%{_sbindir}
 mkdir -p %{buildroot}%{_mandir}/man8
 install -m755 fedora-upgrade %{buildroot}%{_sbindir}
-install fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
+install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 
 %files
 %doc LICENSE README.md
