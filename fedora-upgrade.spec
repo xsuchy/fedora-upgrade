@@ -40,7 +40,7 @@ install fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %files
 %doc LICENSE README.md
 %{_sbindir}/fedora-upgrade
-
+%doc %{_mandir}/man8/fedora-upgrade.8*
 
 %changelog
 * Wed Nov 21 2012 Miroslav Suchý 18.2-1
