@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	18.2
+Version:	18.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade
 
@@ -43,6 +43,10 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %doc %{_mandir}/man8/fedora-upgrade.8*
 
 %changelog
+* Tue Dec 11 2012 Miroslav Suchý <msuchy@redhat.com> 18.3-1
+- do not set executable flag on man page
+- add man page
+
 * Wed Nov 21 2012 Miroslav Suchý 18.2-1
 - initial release
 
