@@ -73,16 +73,16 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
   # https://bugzilla.redhat.com/show_bug.cgi?id=844167
-  SE_STATE=$(/usr/sbin/getenforce)
-  if [ "$SE_STATE" = "Enforcing" ]; then
-    echo "Going to temporary disable SELinux due bug 844167"
-    pause
-    /usr/sbin/setenforce 0
-  fi
+#  SE_STATE=$(/usr/sbin/getenforce)
+#  if [ "$SE_STATE" = "Enforcing" ]; then
+#    echo "Going to temporary disable SELinux due bug 844167"
+#    pause
+#    /usr/sbin/setenforce 0
+#  fi
   yum --releasever=18 --disableplugin=presto distro-sync
-  if [ "$SE_STATE" = "Enforcing" ]; then
-    /usr/sbin/setenforce 1
-  fi
+#  if [ "$SE_STATE" = "Enforcing" ]; then
+#    /usr/sbin/setenforce 1
+#  fi
   rpm --rebuilddb
 
   install_base
