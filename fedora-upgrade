@@ -7,14 +7,13 @@ function pause() {
    read -p "Hit Enter to continue or Ctrl + C to cancel."
 }
 
-function contintue_or_skip() {
+function continue_or_skip() {
    echo "This step is highly recomended, but can be safely skipped."
-   local ANSWER='XXX'
+   ANSWER='XXX'
    while [ "$ANSWER" != "" -a "$ANSWER" != "S" ] ; do
      read -p "Hit Enter to continue, Ctrl + C to cancel or S + Enter to skip. " ANSWER
      ANSWER=$(echo $ANSWER | tr "[:lower:]" "[:upper:]")
    done
-   echo $ANSWER
 }
 
 function install_deps() {
@@ -26,7 +25,7 @@ function install_deps() {
 
 function rpmconf_before_upgrade() {
   echo "Going to resolve old .rpmsave and .rpmnew files before upgrading."
-  local ANSWER=$(contintue_or_skip)
+  continue_or_skip
   if [ "$ANSWER" != "S" ] ; then
     rpmconf -a
   fi
@@ -34,7 +33,7 @@ function rpmconf_before_upgrade() {
 
 function install_base() {
   echo "Going to install missing packages from group 'Minimal Install'"
-  local ANSWER=$(contintue_or_skip)
+  continue_or_skip
   if [ "$ANSWER" != "S" ] ; then
     yum groupupdate 'Minimal Install'
   fi
@@ -42,7 +41,7 @@ function install_base() {
 
 function rpmconf_after_upgrade() {
   echo "Going to resolve .rpmsave and .rpmnew files after upgrade."
-  local ANSWER=$(contintue_or_skip)
+  continue_or_skip
   if [ "$ANSWER" != "S" ] ; then
     rpmconf -a
     rpmconf --clean
@@ -51,7 +50,7 @@ function rpmconf_after_upgrade() {
 
 function reset_service_priorities() {
   echo "Going to reset priorities of services."
-  local ANSWER=$(contintue_or_skip)
+  continue_or_skip
   if [ "$ANSWER" != "S" ] ; then
     ( cd /etc/rc.d/init.d;
       for f in *; do
