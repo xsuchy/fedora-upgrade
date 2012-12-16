@@ -24,7 +24,7 @@ function install_deps() {
 }
 
 function rpmconf_before_upgrade() {
-  echo "Going to resolve old .rpmsave and .rpmnew files before upgrading."
+  echo -e "\nGoing to resolve old .rpmsave and .rpmnew files before upgrading."
   continue_or_skip
   if [ "$ANSWER" != "S" ] ; then
     rpmconf -a
@@ -32,7 +32,7 @@ function rpmconf_before_upgrade() {
 }
 
 function install_base() {
-  echo "Going to install missing packages from group 'Minimal Install'"
+  echo -e "\nGoing to install missing packages from group 'Minimal Install'"
   continue_or_skip
   if [ "$ANSWER" != "S" ] ; then
     yum groupupdate 'Minimal Install'
@@ -40,7 +40,7 @@ function install_base() {
 }
 
 function rpmconf_after_upgrade() {
-  echo "Going to resolve .rpmsave and .rpmnew files after upgrade."
+  echo -e "\nGoing to resolve .rpmsave and .rpmnew files after upgrade."
   continue_or_skip
   if [ "$ANSWER" != "S" ] ; then
     rpmconf -a
@@ -49,7 +49,7 @@ function rpmconf_after_upgrade() {
 }
 
 function reset_service_priorities() {
-  echo "Going to reset priorities of services."
+  echo -e "\nGoing to reset priorities of services."
   continue_or_skip
   if [ "$ANSWER" != "S" ] ; then
     ( cd /etc/rc.d/init.d;
@@ -109,6 +109,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
     echo
   fi
 
+  echo
   echo You sucessfullly upgraded to Fedora 18.
   echo Reboot is strongly suggested.
 elif [ 0$FEDORA_VERSION -eq 18 ]; then
@@ -129,6 +130,7 @@ elif [ 0$FEDORA_VERSION -eq 18 ]; then
   rpmconf_after_upgrade
   reset_service_priorities
 
+  echo
   echo You sucessfullly upgraded to Fedora 19.
   echo Reboot is strongly suggested.
 else
