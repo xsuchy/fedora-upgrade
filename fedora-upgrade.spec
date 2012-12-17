@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	18.4
+Version:	18.5
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade
 
@@ -43,6 +43,9 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %doc %{_mandir}/man8/fedora-upgrade.8*
 
 %changelog
+* Mon Dec 17 2012 Miroslav Suchý <msuchy@redhat.com> 18.5-1
+- add fedora-git releaser
+
 * Mon Dec 17 2012 Miroslav Suchý <msuchy@redhat.com> 18.4-1
 - make output more friendly by adding more space
 - enhance README.md - what works and how it works
