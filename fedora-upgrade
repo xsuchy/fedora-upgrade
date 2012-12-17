@@ -103,6 +103,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   if [ -n "$preferred" ]; then
     systemctl enable --force ${preferred}.service
   else
+    echo
     echo Could not determine your display manager
     echo If you are using display manager, you have to run manualy:
     echo systemctl enable --force your-display-manager.service
