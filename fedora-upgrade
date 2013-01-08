@@ -60,6 +60,14 @@ function reset_service_priorities() {
   fi
 }
 
+function clear_rpm_db() {
+  echo -e "\nGoing to clear rpm db files."
+  continue_or_skip
+  if [ "$ANSWER" != "S" ] ; then
+    rm -rf /var/lib/rpm/__db.00*
+  fi
+}
+
 function reinstall_polkit() {
   echo -e "\nGoing to reinstall polkit & systemd."
   continue_or_skip
@@ -106,6 +114,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
 
   rpmconf_after_upgrade
   reset_service_priorities
+  clear_rpm_db
   reinstall_polkit
 
   # https://fedoraproject.org/wiki/Features/DisplayManagerRework
