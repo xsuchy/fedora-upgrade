@@ -66,6 +66,9 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   echo "  http://docs.fedoraproject.org/release-notes/"
   pause
 
+  # upgrade to latest due BZ 844167
+  yum upgrade selinux-policy -y >/dev/null
+
   install_deps
   rpmconf_before_upgrade
 
