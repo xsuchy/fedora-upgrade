@@ -8,6 +8,7 @@ function pause() {
 }
 
 function continue_or_skip() {
+   echo -e $1
    echo "This step is highly recomended, but can be safely skipped."
    ANSWER='XXX'
    while [ "$ANSWER" != "" -a "$ANSWER" != "S" ] ; do
@@ -24,24 +25,21 @@ function install_deps() {
 }
 
 function rpmconf_before_upgrade() {
-  echo -e "\nGoing to resolve old .rpmsave and .rpmnew files before upgrading."
-  continue_or_skip
+  continue_or_skip "\nGoing to resolve old .rpmsave and .rpmnew files before upgrading."
   if [ "$ANSWER" != "S" ] ; then
     rpmconf -a
   fi
 }
 
 function install_base() {
-  echo -e "\nGoing to install missing packages from group 'Minimal Install'"
-  continue_or_skip
+  continue_or_skip "\nGoing to install missing packages from group 'Minimal Install'"
   if [ "$ANSWER" != "S" ] ; then
     yum groupupdate 'Minimal Install'
   fi
 }
 
 function rpmconf_after_upgrade() {
-  echo -e "\nGoing to resolve .rpmsave and .rpmnew files after upgrade."
-  continue_or_skip
+  continue_or_skip "\nGoing to resolve .rpmsave and .rpmnew files after upgrade."
   if [ "$ANSWER" != "S" ] ; then
     rpmconf -a
     rpmconf --clean
@@ -49,8 +47,7 @@ function rpmconf_after_upgrade() {
 }
 
 function reset_service_priorities() {
-  echo -e "\nGoing to reset priorities of services."
-  continue_or_skip
+  continue_or_skip "\nGoing to reset priorities of services."
   if [ "$ANSWER" != "S" ] ; then
     ( cd /etc/rc.d/init.d;
       for f in *; do
