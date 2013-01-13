@@ -24,6 +24,13 @@ function install_deps() {
   rpm -q yum-utils >/dev/null || yum install -y yum-utils
 }
 
+function upgrade_before_upgrade() {
+  continue_or_skip "\nGoing to run 'yum upgrade' before upgrading."
+  if [ "$ANSWER" != "S" ] ; then
+    yum upgrade
+  fi
+}
+
 function rpmconf_before_upgrade() {
   continue_or_skip "\nGoing to resolve old .rpmsave and .rpmnew files before upgrading."
   if [ "$ANSWER" != "S" ] ; then
@@ -67,6 +74,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   yum upgrade selinux-policy -y >/dev/null
 
   install_deps
+  upgrade_before_upgrade
   rpmconf_before_upgrade
 
   if [ -f /etc/sysconfig/desktop ]; then
