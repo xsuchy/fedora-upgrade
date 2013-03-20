@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	18.5
+Version:	19.0
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade
 
