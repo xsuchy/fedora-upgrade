@@ -34,13 +34,16 @@ a2x -d manpage -f manpage fedora-upgrade.8.asciidoc
 %install
 mkdir -p %{buildroot}%{_sbindir}
 mkdir -p %{buildroot}%{_mandir}/man8
+mkdir -p %{buildroot}%{_datadir}/%{name}/keys
 install -m755 fedora-upgrade %{buildroot}%{_sbindir}
 install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
+cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 
 %files
 %doc LICENSE README.md
 %{_sbindir}/fedora-upgrade
 %doc %{_mandir}/man8/fedora-upgrade.8*
+%{_datadir}/%{name}
 
 %changelog
 * Mon Dec 17 2012 Miroslav Suchý <msuchy@redhat.com> 18.5-1
