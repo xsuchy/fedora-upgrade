@@ -64,6 +64,18 @@ function reset_service_priorities() {
   fi
 }
 
+function unwanted_packages() {
+  LAST=$1
+  continue_or_skip "\nThere can be some packages which are now orphan, do you want to see them?"
+  RESULT=0
+  for i in $(seq 10 $LAST); do
+    rpm -qa | grep fc$i && RESULT=1
+  done
+  if [ 0$RESULT -eq 1 ]; then
+    echo "These packages are very probably orphan. You may want to remove them."
+  fi
+}
+
 if [ 0$FEDORA_VERSION -eq 17 ]; then
   echo "Going to upgrade your Fedora to version 18."
   echo "You may want to read Release Notes:"
@@ -118,6 +130,8 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
     echo
   fi
 
+  unwanted_packages 17
+
   echo
   echo You sucessfullly upgraded to Fedora 18.
   echo Reboot is strongly suggested.
@@ -145,6 +159,7 @@ elif [ 0$FEDORA_VERSION -eq 18 ]; then
 
   rpmconf_after_upgrade
   reset_service_priorities
+  unwanted_packages 18
 
   echo
   echo You sucessfullly upgraded to Fedora 19.
