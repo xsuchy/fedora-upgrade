@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	19.0
+Version:	19.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade
 
@@ -46,6 +46,16 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Wed Mar 20 2013 Miroslav Suchý <msuchy@redhat.com> 19.1-1
+- bump up version
+- suggest unwanted packages
+- add upgrade to Fedora 19
+- use gpg keys shipped with fedora-upgrade
+- distribute gpg keys with rpm
+- add GPG keys
+- call "yum upgrade" before upgrade
+- fixes #3 - upgrade to latest selinux before upgrading
+
 * Mon Dec 17 2012 Miroslav Suchý <msuchy@redhat.com> 18.5-1
 - add fedora-git releaser
 
