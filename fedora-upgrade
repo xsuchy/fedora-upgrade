@@ -76,6 +76,16 @@ function unwanted_packages() {
   fi
 }
 
+function is_prerelease() {
+  # will print string "--enablerepo=updates-testing" if this is prerelease, "" otherwise
+  local RELEASE=$1
+  if yumdownloader --disablerepo=* --enablerepo=fedora --releasever=19 fedora-release --urls | tail -n 1 | wget -q -i - -O - | rpm2cpio | cpio -i --quiet --to-stdout - ./etc/yum.repos.d/fedora-updates-testing.repo | grep 'enabled=1' >/dev/null; then
+    echo "--enablerepo=updates-testing"
+  else
+    echo ""
+  fi
+}
+
 if [ 0$FEDORA_VERSION -eq 17 ]; then
   echo "Going to upgrade your Fedora to version 18."
   echo "You may want to read Release Notes:"
@@ -153,7 +163,8 @@ elif [ 0$FEDORA_VERSION -eq 18 ]; then
 
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
-  yum --releasever=19 --disableplugin=presto distro-sync
+  enable_updates=$(is_prerelease 19)
+  yum --releasever=19 --disableplugin=presto $enable_updates distro-sync
 
   install_base
 
