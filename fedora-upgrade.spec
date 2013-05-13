@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	19.1
+Version:	19.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade
 
@@ -46,6 +46,9 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Mon May 13 2013 Miroslav Suchý <msuchy@redhat.com> 19.2-1
+- #4 - Enable updates-testing on branched development release
+
 * Wed Mar 20 2013 Miroslav Suchý <msuchy@redhat.com> 19.1-1
 - bump up version
 - suggest unwanted packages
