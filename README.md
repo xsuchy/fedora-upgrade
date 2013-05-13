@@ -18,7 +18,8 @@ However I am aiming for official support - see https://fedoraproject.org/wiki/Fe
 
 Currently you can upgrade only to next version. You can upgrade from
 * Fedora 17 -> Fedora 18
-* Fedora 18 -> rawhide
+* Fedora 18 -> Fedora 19
+* Fedora 19 -> rawhide
 
 You can *not* upgrade from older releases.
 You can *not* skip release - e.g. upgrade from Fedora 16 to Fedora 18.
@@ -36,12 +37,17 @@ How it works
 7. Install packages from group 'Minimal Install'. It may happen that some new essential packages have been introduced to Fedora. This step will install them. You may however skip this step if you want to.
 8. Resolve old .rpmsave and .rpmnew files using [rpmconf](https://github.com/xsuchy/rpmconf/). This step is optional and can be skipped. But it is better to finish upgrade with clean state.
 9. Reset service priorities - the order of init scripts could have changed from the previous version. This steps is optional and can be skipped. And this does not affect services already migrated to systemD units.
-10. Report success and suggest you reboot.
+11. Optionally report dead packages (packages that are no present in Fedora any more) and you have them installed from previous version.
+12. Report success and suggest you reboot.
 
 If there will be a problem during upgrade, this script will immediately stop and will not continue.
 If you hit problem before step 6, you can run fedora-upgrade again after you resolve the problem.
 If you hit problem in later stage, you can resolve the issue manually and open fedora-upgrade as it is just bash script. And try to finish manually. But most steps after step 6 are optional, so it should not affect stability of your system.
 
+Note
+====
+
+If you are upgrading to branched development version then updates-testing is automatically enabled.
 
 BUGS
 ====
