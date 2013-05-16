@@ -151,6 +151,16 @@ elif [ 0$FEDORA_VERSION -eq 18 ]; then
   echo "  http://docs.fedoraproject.org/release-notes/"
   pause
 
+  if [ "$DISPLAY" != "" ]; then
+    cat << WARNING
+It seems you are running upgrade from XWindows. You should switch to VT,
+because session information will be lost during upgrade and it may lead
+to unpredictable things.
+See https://bugzilla.redhat.com/show_bug.cgi?id=962983
+WARNING
+    pause
+  fi
+
   install_deps
   upgrade_before_upgrade
   rpmconf_before_upgrade
