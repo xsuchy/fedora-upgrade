@@ -34,7 +34,7 @@ function upgrade_before_upgrade() {
 function rpmconf_before_upgrade() {
   continue_or_skip "\nGoing to resolve old .rpmsave and .rpmnew files before upgrading."
   if [ "$ANSWER" != "S" ] ; then
-    rpmconf -a
+    rpmconf -fvimdiff -a
   fi
 }
 
@@ -48,7 +48,7 @@ function install_base() {
 function rpmconf_after_upgrade() {
   continue_or_skip "\nGoing to resolve .rpmsave and .rpmnew files after upgrade."
   if [ "$ANSWER" != "S" ] ; then
-    rpmconf -a
+    rpmconf -fvimdiff -a
     rpmconf --clean
   fi
 }
