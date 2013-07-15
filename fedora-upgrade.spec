@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	19.2
+Version:	19.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -50,6 +50,12 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jul 15 2013 Miroslav Suchý <msuchy@redhat.com> 19.3-1
+- 983082 - clarify that fedora-upgrade is not an official upgrade tool
+- set up differ for rpmconf
+- warn about loosing session (bug 962983)
+- update README
+
 * Mon May 13 2013 Miroslav Suchý <msuchy@redhat.com> 19.2-1
 - #4 - Enable updates-testing on branched development release
 
