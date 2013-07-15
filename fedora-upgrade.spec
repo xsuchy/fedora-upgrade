@@ -1,7 +1,7 @@
 Name:		fedora-upgrade
 Version:	19.2
 Release:	1%{?dist}
-Summary:	Upgrade Fedora to next version using yum upgrade
+Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
 Group:		Applications/System
 License:	GPLv2
@@ -25,6 +25,9 @@ BuildRequires: libxslt
 Upgrade Fedora to next version using yum upgrade.
 This is attempt to automatize steps as listed here:
 https://fedoraproject.org/wiki/Upgrading_Fedora_using_yum
+
+This is an unofficial tool, for official Fedora-supported
+upgrades please see the 'fedup' tool.
 
 %prep
 %setup -q

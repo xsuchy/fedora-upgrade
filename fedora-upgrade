@@ -90,6 +90,9 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   echo "Going to upgrade your Fedora to version 18."
   echo "You may want to read Release Notes:"
   echo "  http://docs.fedoraproject.org/release-notes/"
+  echo "Warning: This is unofficial upgrade tool. Official tool is 'fedup'."
+  echo "         While author of fedora-upgrade thinks fedora-upgrade is better, it is"
+  echo "         not officially tested by FedoraQA."
   pause
 
   # upgrade to latest due BZ 844167
