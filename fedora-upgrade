@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
+TARGET_VERSION=$((FEDORA_VERSION + 1))
 
 function pause() {
    read -p "Hit Enter to continue or Ctrl + C to cancel."
@@ -35,6 +36,16 @@ function rpmconf_before_upgrade() {
   continue_or_skip "\nGoing to resolve old .rpmsave and .rpmnew files before upgrading."
   if [ "$ANSWER" != "S" ] ; then
     rpmconf -fvimdiff -a
+  fi
+}
+
+function import_keys() {
+  rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-fedora-$TARGET_VERSION-primary
+  if [ -f /etc/yum.repos.d/rpmfusion-free.repo ]; then
+    rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION
+  fi
+  if [ -f /etc/yum.repos.d/rpmfusion-nonfree.repo ]; then
+    rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$TARGET_VERSION
   fi
 }
 
@@ -115,11 +126,9 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
       true
     fi
   fi
-  rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-fedora-18-primary
-  if [ -f /etc/yum.repos.d/rpmfusion-free.repo ]; then
-    rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-18
-    rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-18
-  fi
+
+  import_keys
+
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
   yum --releasever=18 --disableplugin=presto distro-sync
@@ -167,12 +176,7 @@ WARNING
   install_deps
   upgrade_before_upgrade
   rpmconf_before_upgrade
-
-  rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-fedora-19-primary
-  if [ -f /etc/yum.repos.d/rpmfusion-free.repo ]; then
-    rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-19
-    rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-19
-  fi
+  import_keys
 
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
