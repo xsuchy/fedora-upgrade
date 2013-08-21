@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	20.0
+Version:	20.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -50,6 +50,13 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 21 2013 Miroslav Suchý <miroslav@suchy.cz> 20.1-1
+- bump up version to 20
+- add upgrade to Fedora 20
+- add rpmfusion 20 gpg keys
+- add fedora-20-primary gpg key
+- Import rpmfusion-nonfree key if it is potentially required.  Refactor.
+
 * Mon Jul 15 2013 Miroslav Suchý <msuchy@redhat.com> 19.3-1
 - 983082 - clarify that fedora-upgrade is not an official upgrade tool
 - set up differ for rpmconf
