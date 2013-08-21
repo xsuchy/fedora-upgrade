@@ -193,6 +193,31 @@ WARNING
   echo You sucessfullly upgraded to Fedora 19.
   echo Reboot is strongly suggested.
 elif [ 0$FEDORA_VERSION -eq 19 ]; then
+  echo "Going to upgrade your Fedora to version 20."
+  echo "You may want to read Release Notes:"
+  echo "  http://docs.fedoraproject.org/release-notes/"
+  pause
+
+  install_deps
+  upgrade_before_upgrade
+  rpmconf_before_upgrade
+  import_keys
+
+  yum update -q yum
+  yum clean -q dbcache rpmdb plugins metadata
+  enable_updates=$(is_prerelease 20)
+  yum --releasever=20 --disableplugin=presto $enable_updates distro-sync
+
+  install_base
+
+  rpmconf_after_upgrade
+  reset_service_priorities
+  unwanted_packages 19
+
+  echo
+  echo You sucessfullly upgraded to Fedora 20.
+  echo Reboot is strongly suggested.
+elif [ 0$FEDORA_VERSION -eq 20 ]; then
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora 20 is currently under development."
   echo "Are you sure?"
