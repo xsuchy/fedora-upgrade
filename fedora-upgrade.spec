@@ -1,6 +1,6 @@
 Name:		fedora-upgrade
 Version:	20.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
 Group:		Applications/System
@@ -18,6 +18,7 @@ Requires:	yum-utils
 Requires:	rpmconf
 Requires:	libselinux-utils
 Requires:	vim-enhanced
+Requires:	wget
 BuildRequires: asciidoc
 BuildRequires: libxslt
 
@@ -50,6 +51,10 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Thu Sep 19 2013 Leonardo Rodrigues de Mello <l@lmello.eu.org> 20.1-2
+- add missing dependency on wget.
+- We depend on wget and it isn't installed by default on fedora.
+
 * Wed Aug 21 2013 Miroslav Suchý <miroslav@suchy.cz> 20.1-1
 - bump up version to 20
 - add upgrade to Fedora 20
