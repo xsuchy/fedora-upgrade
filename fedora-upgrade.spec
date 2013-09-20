@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	20.1
+Version:	20.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -51,6 +51,9 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Fri Sep 20 2013 Miroslav Suchý <miroslav@suchy.cz> 20.2-1
+- add wget require explicit dependency
+
 * Wed Aug 21 2013 Miroslav Suchý <miroslav@suchy.cz> 20.1-1
 - bump up version to 20
 - add upgrade to Fedora 20
