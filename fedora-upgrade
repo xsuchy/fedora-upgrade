@@ -4,6 +4,10 @@ set -e
 FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
 TARGET_VERSION=$((FEDORA_VERSION + 1))
 
+function check_intallation() {
+  [[ -e /usr/sbin/fedora-upgrade ]]
+}
+
 function pause() {
    read -p "Hit Enter to continue or Ctrl + C to cancel."
 }
@@ -96,6 +100,11 @@ function is_prerelease() {
     echo ""
   fi
 }
+
+if ! check_intallation; then
+  echo "Please install fedora-upgrade package using yum first"
+  exit 2
+fi
 
 if [ 0$FEDORA_VERSION -eq 17 ]; then
   echo "Going to upgrade your Fedora to version 18."
