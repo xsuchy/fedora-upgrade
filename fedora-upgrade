@@ -271,3 +271,4 @@ else
   echo Upgrading from version $FEDORA_VERSION is not supported.
   exit 1
 fi
+print_exit_banner
