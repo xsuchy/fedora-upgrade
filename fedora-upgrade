@@ -112,12 +112,17 @@ function print_exit_banner() {
     echo You sucessfullly upgraded to Fedora $TARGET_VERSION
     echo Reboot is strongly suggested.
     exit 0
+  elif [ $UPGRADE_FINISHED -eq 0 ];
+    echo
+    echo Upgrade to Fedora $TARGET_VERSION was not finished!
+    echo You can safely re-run fedora-upgrade again to start over.
+    exit 1
   else
     echo
     echo Upgrade to Fedora $TARGET_VERSION was not finished!
-    echo Finish steps manually according to documentation on the wiki,
-    echo or re-run fedora-upgrade to start over.
-    exit 1
+    echo Finish steps manually according to documentation on the wiki:
+    echo 'http://fedoraproject.org/wiki/Upgrading_Fedora_using_yum#5._Make_sure_Fedora_is_upgraded'
+    exit 2
   fi
 }
 
@@ -164,6 +169,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
   yum --releasever=18 --disableplugin=presto distro-sync
+  UPGRADE_FINISHED=2
   rpm --rebuilddb
 
   install_base
@@ -211,6 +217,7 @@ WARNING
   yum clean -q dbcache rpmdb plugins metadata
   enable_updates=$(is_prerelease 19)
   yum --releasever=19 --disableplugin=presto $enable_updates distro-sync
+  UPGRADE_FINISHED=2
 
   install_base
 
@@ -233,6 +240,7 @@ elif [ 0$FEDORA_VERSION -eq 19 ]; then
   yum clean -q dbcache rpmdb plugins metadata
   enable_updates=$(is_prerelease 20)
   yum --releasever=20 --disableplugin=presto $enable_updates distro-sync
+  UPGRADE_FINISHED=2
 
   install_base
 
@@ -252,6 +260,7 @@ elif [ 0$FEDORA_VERSION -eq 20 ]; then
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
   yum --releasever=rawhide --disableplugin=presto distro-sync --nogpgcheck
+  UPGRADE_FINISHED=2
 
   install_base
 
