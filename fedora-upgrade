@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: sw=3:ts=3:et
 set -e
 
 FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
@@ -9,10 +10,13 @@ function check_intallation() {
 }
 
 function pause() {
+   # clear the stdin buffer and pause with question
+   read -t 1 -n 10000 discard
    read -p "Hit Enter to continue or Ctrl + C to cancel."
 }
 
 function continue_or_skip() {
+   read -t 1 -n 10000 discard
    echo -e $1
    echo "This step is highly recomended, but can be safely skipped."
    ANSWER='XXX'
