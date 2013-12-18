@@ -4,6 +4,7 @@ set -e
 
 FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
 TARGET_VERSION=$((FEDORA_VERSION + 1))
+UPGRADE_FINISHED=0
 
 function check_intallation() {
   [[ -e /usr/sbin/fedora-upgrade ]]
@@ -105,10 +106,28 @@ function is_prerelease() {
   fi
 }
 
+function print_exit_banner() {
+  if [ $UPGRADE_FINISHED -eq 1 ]; then
+    echo
+    echo You sucessfullly upgraded to Fedora $TARGET_VERSION
+    echo Reboot is strongly suggested.
+    exit 0
+  else
+    echo
+    echo Upgrade to Fedora $TARGET_VERSION was not finished!
+    echo Finish steps manually according to documentation on the wiki,
+    echo or re-run fedora-upgrade to start over.
+    exit 1
+  fi
+}
+
 if ! check_intallation; then
   echo "Please install fedora-upgrade package using yum first"
   exit 2
 fi
+
+# make obvious ending for unexperienced users
+trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
 if [ 0$FEDORA_VERSION -eq 17 ]; then
   echo "Going to upgrade your Fedora to version 18."
@@ -166,10 +185,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   fi
 
   unwanted_packages 17
-
-  echo
-  echo You sucessfullly upgraded to Fedora 18.
-  echo Reboot is strongly suggested.
+  UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 18 ]; then
   echo "Going to upgrade your Fedora to version 19."
   echo "You may want to read Release Notes:"
@@ -201,10 +217,7 @@ WARNING
   rpmconf_after_upgrade
   reset_service_priorities
   unwanted_packages 18
-
-  echo
-  echo You sucessfullly upgraded to Fedora 19.
-  echo Reboot is strongly suggested.
+  UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 19 ]; then
   echo "Going to upgrade your Fedora to version 20."
   echo "You may want to read Release Notes:"
@@ -226,13 +239,10 @@ elif [ 0$FEDORA_VERSION -eq 19 ]; then
   rpmconf_after_upgrade
   reset_service_priorities
   unwanted_packages 19
-
-  echo
-  echo You sucessfullly upgraded to Fedora 20.
-  echo Reboot is strongly suggested.
+  UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 20 ]; then
   echo "Going to upgrade your Fedora to rawhide."
-  echo "Fedora 20 is currently under development."
+  echo "Fedora 21 is currently under development."
   echo "Are you sure?"
   pause
 
@@ -247,10 +257,7 @@ elif [ 0$FEDORA_VERSION -eq 20 ]; then
 
   rpmconf_after_upgrade
   reset_service_priorities
-
-  echo
-  echo You sucessfullly upgraded to Fedora 20.
-  echo Reboot is strongly suggested.
+  UPGRADE_FINISHED=1
 else
   echo Upgrading from version $FEDORA_VERSION is not supported.
   exit 1
