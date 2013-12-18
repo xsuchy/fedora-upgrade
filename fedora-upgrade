@@ -126,6 +126,16 @@ function print_exit_banner() {
   fi
 }
 
+function welcome_banner() {
+  echo "Going to upgrade your Fedora to version $1."
+  echo "You may want to read Release Notes:"
+  echo "  http://docs.fedoraproject.org/release-notes/"
+  echo "Warning: This is unofficial upgrade tool. Official tool is 'fedup'."
+  echo "         While author of fedora-upgrade thinks fedora-upgrade is better, it is"
+  echo "         not officially tested by FedoraQA."
+  pause
+}
+
 if ! check_intallation; then
   echo "Please install fedora-upgrade package using yum first"
   exit 2
@@ -135,13 +145,7 @@ fi
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
 if [ 0$FEDORA_VERSION -eq 17 ]; then
-  echo "Going to upgrade your Fedora to version 18."
-  echo "You may want to read Release Notes:"
-  echo "  http://docs.fedoraproject.org/release-notes/"
-  echo "Warning: This is unofficial upgrade tool. Official tool is 'fedup'."
-  echo "         While author of fedora-upgrade thinks fedora-upgrade is better, it is"
-  echo "         not officially tested by FedoraQA."
-  pause
+  welcome_banner 18
 
   # upgrade to latest due BZ 844167
   yum upgrade selinux-policy -y >/dev/null
@@ -193,10 +197,7 @@ if [ 0$FEDORA_VERSION -eq 17 ]; then
   unwanted_packages 17
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 18 ]; then
-  echo "Going to upgrade your Fedora to version 19."
-  echo "You may want to read Release Notes:"
-  echo "  http://docs.fedoraproject.org/release-notes/"
-  pause
+  welcome_banner 19
 
   if [ "$DISPLAY" != "" ]; then
     cat << WARNING
@@ -226,10 +227,7 @@ WARNING
   unwanted_packages 18
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 19 ]; then
-  echo "Going to upgrade your Fedora to version 20."
-  echo "You may want to read Release Notes:"
-  echo "  http://docs.fedoraproject.org/release-notes/"
-  pause
+  welcome_banner 20
 
   install_deps
   upgrade_before_upgrade
@@ -250,7 +248,7 @@ elif [ 0$FEDORA_VERSION -eq 19 ]; then
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 20 ]; then
   echo "Going to upgrade your Fedora to rawhide."
-  echo "Fedora 21 is currently under development."
+  echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"
   pause
 
