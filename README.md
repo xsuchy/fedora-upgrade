@@ -19,7 +19,8 @@ However I am aiming for official support - see https://fedoraproject.org/wiki/Fe
 Currently you can upgrade only to next version. You can upgrade from
 * Fedora 17 -> Fedora 18
 * Fedora 18 -> Fedora 19
-* Fedora 19 -> rawhide
+* Fedora 19 -> Fedora 20
+* Fedora 20 -> rawhide
 
 You can *not* upgrade from older releases.
 You can *not* skip release - e.g. upgrade from Fedora 16 to Fedora 18.
