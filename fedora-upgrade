@@ -112,7 +112,7 @@ function print_exit_banner() {
     echo You sucessfullly upgraded to Fedora $TARGET_VERSION
     echo Reboot is strongly suggested.
     exit 0
-  elif [ $UPGRADE_FINISHED -eq 0 ];
+  elif [ $UPGRADE_FINISHED -eq 0 ]; then
     echo
     echo Upgrade to Fedora $TARGET_VERSION was not finished!
     echo You can safely re-run fedora-upgrade again to start over.
