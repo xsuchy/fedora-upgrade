@@ -12,12 +12,12 @@ function check_intallation() {
 
 function pause() {
    # clear the stdin buffer and pause with question
-   read -t 1 -n 10000 discard
+   read -t 1 -n 10000 discard || [ $? -gt 128 ]
    read -p "Hit Enter to continue or Ctrl + C to cancel."
 }
 
 function continue_or_skip() {
-   read -t 1 -n 10000 discard
+   read -t 1 -n 10000 discard || [ $? -gt 128 ]
    echo -e $1
    echo "This step is highly recomended, but can be safely skipped."
    ANSWER='XXX'
@@ -112,7 +112,7 @@ function print_exit_banner() {
     echo You sucessfullly upgraded to Fedora $TARGET_VERSION
     echo Reboot is strongly suggested.
     exit 0
-  elif [ $UPGRADE_FINISHED -eq 0 ];
+  elif [ $UPGRADE_FINISHED -eq 0 ]; then
     echo
     echo Upgrade to Fedora $TARGET_VERSION was not finished!
     echo You can safely re-run fedora-upgrade again to start over.
