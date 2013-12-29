@@ -18,8 +18,6 @@ DESCRIPTION
 
 Script *fedora-upgrade* tries to automate steps needed for yum-upgrade from one major version to next one.
 
-Currently only upgrade from Fedora 17 to Fedora 18 is available.
-
 Steps which fedora-upgrade does:
 
 * Display usual warnings.
