@@ -84,6 +84,10 @@ function reset_service_priorities() {
   fi
 }
 
+function cleanup_cache() {
+  rm -rf /var/cache/yum/*
+}
+
 function unwanted_packages() {
   LAST=$1
   continue_or_skip "\nThere can be some packages which are now orphan, do you want to see them?"
@@ -224,6 +228,7 @@ WARNING
 
   rpmconf_after_upgrade
   reset_service_priorities
+  cleanup_cache
   unwanted_packages 18
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 19 ]; then
@@ -244,6 +249,7 @@ elif [ 0$FEDORA_VERSION -eq 19 ]; then
 
   rpmconf_after_upgrade
   reset_service_priorities
+  cleanup_cache
   unwanted_packages 19
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 20 ]; then
@@ -264,6 +270,7 @@ elif [ 0$FEDORA_VERSION -eq 20 ]; then
 
   rpmconf_after_upgrade
   reset_service_priorities
+  cleanup_cache
   UPGRADE_FINISHED=1
 else
   echo Upgrading from version $FEDORA_VERSION is not supported.
