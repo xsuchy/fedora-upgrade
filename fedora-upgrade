@@ -103,7 +103,7 @@ function unwanted_packages() {
 function is_prerelease() {
   # will print string "--enablerepo=updates-testing" if this is prerelease, "" otherwise
   local RELEASE=$1
-  if yumdownloader --disablerepo=* --enablerepo=fedora --releasever=19 fedora-release --urls | tail -n 1 | wget -q -i - -O - | rpm2cpio | cpio -i --quiet --to-stdout - ./etc/yum.repos.d/fedora-updates-testing.repo | grep 'enabled=1' >/dev/null; then
+  if yumdownloader --disablerepo=* --enablerepo=fedora --releasever=$RELEASE fedora-release --urls | tail -n 1 | wget -q -i - -O - | rpm2cpio | cpio -i --quiet --to-stdout - ./etc/yum.repos.d/fedora-updates-testing.repo | grep 'enabled=1' >/dev/null; then
     echo "--enablerepo=updates-testing"
   else
     echo ""
