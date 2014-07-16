@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	21.0
+Version:	21.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -51,6 +51,22 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Wed Jul 16 2014 Miroslav Suchý <miroslav@suchy.cz> 21.1-1
+- bump up major version to 21
+- remove upgrades from F17,F18 and add upgrade to F21
+- delete F18 gpg keys and add F21 gpg keys
+- use correct version
+- clean up yum cache after upgrade
+- "read -t 1" exits greater than 128, which trips over "set -e".
+- Upgrade of 19->20 now available.
+- Remove out-of-date note saying that only 17->18 is supported.
+- put repeated code of welcome banner to separate function
+- print exit banner even if there is no problem
+- make trap message little precise
+- Adding trap for nice exit message
+- Clear the stdin buffer before question
+- Added installation check as a first step
+
 * Fri Sep 20 2013 Miroslav Suchý <miroslav@suchy.cz> 20.2-1
 - add wget require explicit dependency
 
