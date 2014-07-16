@@ -148,90 +148,7 @@ fi
 # make obvious ending for unexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
-if [ 0$FEDORA_VERSION -eq 17 ]; then
-  welcome_banner 18
-
-  # upgrade to latest due BZ 844167
-  yum upgrade selinux-policy -y >/dev/null
-
-  install_deps
-  upgrade_before_upgrade
-  rpmconf_before_upgrade
-
-  if [ -f /etc/sysconfig/desktop ]; then
-    . /etc/sysconfig/desktop
-    if [ "$DISPLAYMANAGER" = GNOME ]; then
-      preferred=gdm
-    elif [ "$DISPLAYMANAGER" = KDE ]; then
-      preferred=kdm
-    elif [ "$DISPLAYMANAGER" = XDM ]; then
-      preferred=xdm
-    elif [ -n "$DISPLAYMANAGER" ]; then
-      # TODO - some heuristics?
-      true
-    fi
-  fi
-
-  import_keys
-
-  yum update -q yum
-  yum clean -q dbcache rpmdb plugins metadata
-  yum --releasever=18 --disableplugin=presto distro-sync
-  UPGRADE_FINISHED=2
-  rpm --rebuilddb
-
-  install_base
-  # TODO call package-cleanup --orphans or yum list extras and ask to remove it
-  # but the list has a lot of false negatives
-
-  rpmconf_after_upgrade
-  reset_service_priorities
-
-  # https://fedoraproject.org/wiki/Features/DisplayManagerRework
-  if [ -n "$preferred" ]; then
-    systemctl enable --force ${preferred}.service
-  else
-    echo
-    echo Could not determine your display manager
-    echo If you are using display manager, you have to run manualy:
-    echo systemctl enable --force your-display-manager.service
-    echo
-  fi
-
-  unwanted_packages 17
-  UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 18 ]; then
-  welcome_banner 19
-
-  if [ "$DISPLAY" != "" ]; then
-    cat << WARNING
-It seems you are running upgrade from XWindows. You should switch to VT,
-because session information will be lost during upgrade and it may lead
-to unpredictable things.
-See https://bugzilla.redhat.com/show_bug.cgi?id=962983
-WARNING
-    pause
-  fi
-
-  install_deps
-  upgrade_before_upgrade
-  rpmconf_before_upgrade
-  import_keys
-
-  yum update -q yum
-  yum clean -q dbcache rpmdb plugins metadata
-  enable_updates=$(is_prerelease 19)
-  yum --releasever=19 --disableplugin=presto $enable_updates distro-sync
-  UPGRADE_FINISHED=2
-
-  install_base
-
-  rpmconf_after_upgrade
-  reset_service_priorities
-  cleanup_cache
-  unwanted_packages 18
-  UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 19 ]; then
+if [ 0$FEDORA_VERSION -eq 19 ]; then
   welcome_banner 20
 
   install_deps
@@ -253,6 +170,27 @@ elif [ 0$FEDORA_VERSION -eq 19 ]; then
   unwanted_packages 19
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 20 ]; then
+  welcome_banner 21
+
+  install_deps
+  upgrade_before_upgrade
+  rpmconf_before_upgrade
+  import_keys
+
+  yum update -q yum
+  yum clean -q dbcache rpmdb plugins metadata
+  enable_updates=$(is_prerelease 21)
+  yum --releasever=21 --disableplugin=presto $enable_updates distro-sync
+  UPGRADE_FINISHED=2
+
+  install_base
+
+  rpmconf_after_upgrade
+  reset_service_priorities
+  cleanup_cache
+  unwanted_packages 20
+  UPGRADE_FINISHED=1
+elif [ 0$FEDORA_VERSION -eq 21 ]; then
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"
