@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	21.1
+Version:	21.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -51,6 +51,9 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Thu Oct 02 2014 Miroslav Suchý 21.2-1
+- productize Fedora after upgrade
+
 * Wed Jul 16 2014 Miroslav Suchý <miroslav@suchy.cz> 21.1-1
 - bump up major version to 21
 - remove upgrades from F17,F18 and add upgrade to F21
