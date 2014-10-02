@@ -140,6 +140,33 @@ function welcome_banner() {
   pause
 }
 
+function choose_fedora_next() {
+  echo "Fedora now split into several products:"
+  echo "  * Cloud"
+  echo "  * Server"
+  echo "  * Workstation"
+  echo "And there is choice to stay non-productized:"
+  echo "  * Standard"
+
+  read -t 1 -n 10000 discard || [ $? -gt 128 ]
+  echo -e $1
+  ANSWER='XXX'
+  while [ "$ANSWER" != "cloud" -a "$ANSWER" != "server" -a "$ANSWER" != "workstation" -a "$ANSWER" != "standard" ] ; do
+    read -p "What is your option? (cloud/server/workstation/standard)  " ANSWER
+    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
+  done
+  if [ "$ANSWER" != "standard" ] ; then
+    if [ "$ANSWER" != "cloud" ] ; then
+      rpm -e --nodeps firewalld-config-standard >/dev/null || :
+    fi
+    rpm -q fedora-release-standard >/dev/null && rpm -e fedora-release-standard
+    if [ "$ANSWER" != "cloud" ] ; then
+      yum install -y firewalld-config-$ANSWER firewalld-config-$ANSWER
+    fi
+  fi
+  yum install -y fedora-release-$ANSWER
+}
+
 if ! check_intallation; then
   echo "Please install fedora-upgrade package using yum first"
   exit 2
@@ -183,10 +210,11 @@ elif [ 0$FEDORA_VERSION -eq 20 ]; then
   yum --releasever=21 --disableplugin=presto $enable_updates distro-sync
   UPGRADE_FINISHED=2
 
-  install_base
+  choose_fedora_next
+  #install_base
 
   rpmconf_after_upgrade
-  reset_service_priorities
+  #reset_service_priorities
   cleanup_cache
   unwanted_packages 20
   UPGRADE_FINISHED=1
