@@ -227,6 +227,9 @@ elif [ 0$FEDORA_VERSION -eq 21 ]; then
   install_deps
   rpmconf_before_upgrade
 
+  yum install fedora-release-rawhide yum-utils
+  yum-config-manager --disable fedora updates updates-testing
+  yum-config-manager --enable rawhide
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
   yum --releasever=rawhide --disableplugin=presto distro-sync --nogpgcheck
