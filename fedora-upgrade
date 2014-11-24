@@ -146,20 +146,23 @@ function choose_fedora_next() {
   echo "  * Server"
   echo "  * Workstation"
   echo "And there is choice to stay non-productized:"
-  echo "  * Standard"
+  echo "  * Nonproduct"
 
   read -t 1 -n 10000 discard || [ $? -gt 128 ]
   echo -e $1
   ANSWER='XXX'
-  while [ "$ANSWER" != "cloud" -a "$ANSWER" != "server" -a "$ANSWER" != "workstation" -a "$ANSWER" != "standard" ] ; do
-    read -p "What is your option? (cloud/server/workstation/standard)  " ANSWER
+  while [ "$ANSWER" != "cloud" -a "$ANSWER" != "server" -a "$ANSWER" != "workstation" -a "$ANSWER" != "nonproduct" ] ; do
+    read -p "What is your option? (cloud/server/workstation/nonproduct)  " ANSWER
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
-  if [ "$ANSWER" != "standard" ] ; then
+  if [ "$ANSWER" != "nonproduct" ] ; then
+    # would be nice to use:
+    # yum swap -- remove fedora-release-workstation -- install fedora-release-server
+    # but it does not work BZ 1167194
     if [ "$ANSWER" != "cloud" ] ; then
       rpm -e --nodeps firewalld-config-standard >/dev/null || :
     fi
-    rpm -q fedora-release-standard >/dev/null && rpm -e fedora-release-standard
+    rpm -q fedora-release-nonproduct >/dev/null && rpm -e fedora-release-nonproduct
     if [ "$ANSWER" != "cloud" ] ; then
       yum install -y firewalld-config-$ANSWER firewalld-config-$ANSWER
     fi
@@ -185,8 +188,7 @@ if [ 0$FEDORA_VERSION -eq 19 ]; then
 
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
-  enable_updates=$(is_prerelease 20)
-  yum --releasever=20 --disableplugin=presto $enable_updates distro-sync
+  yum --releasever=20 --disableplugin=presto distro-sync
   UPGRADE_FINISHED=2
 
   install_base
