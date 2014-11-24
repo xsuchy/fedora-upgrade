@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	21.2
+Version:	21.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -51,6 +51,10 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Mon Nov 24 2014 Miroslav Suchý <miroslav@suchy.cz> 21.3-1
+- 1167079 - fedora-release-standard was renamed to fedora-release-nonproduct
+- sync upgrade to rawhide with wiki page
+
 * Thu Oct 02 2014 Miroslav Suchý 21.2-1
 - productize Fedora after upgrade
 
