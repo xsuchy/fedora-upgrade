@@ -221,6 +221,28 @@ elif [ 0$FEDORA_VERSION -eq 20 ]; then
   unwanted_packages 20
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 21 ]; then
+  welcome_banner 22
+
+  install_deps
+  upgrade_before_upgrade
+  rpmconf_before_upgrade
+  import_keys
+
+  yum update -q yum
+  yum clean -q dbcache rpmdb plugins metadata
+  enable_updates=$(is_prerelease 22)
+  yum --releasever=21 --disableplugin=presto $enable_updates distro-sync
+  UPGRADE_FINISHED=2
+
+  choose_fedora_next
+  #install_base
+
+  rpmconf_after_upgrade
+  #reset_service_priorities
+  cleanup_cache
+  unwanted_packages 21
+  UPGRADE_FINISHED=1
+elif [ 0$FEDORA_VERSION -eq 22 ]; then
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"
