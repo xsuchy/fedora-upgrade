@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	22.0
+Version:	22.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -51,6 +51,12 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Fri Feb 20 2015 Miroslav Suchý <msuchy@redhat.com> 22.1-1
+- bump up version
+- import rpmfusion keys only if it exists
+- add F22 GPG keys
+- add Fedora 22
+
 * Mon Nov 24 2014 Miroslav Suchý <miroslav@suchy.cz> 21.3-1
 - 1167079 - fedora-release-standard was renamed to fedora-release-nonproduct
 - sync upgrade to rawhide with wiki page
