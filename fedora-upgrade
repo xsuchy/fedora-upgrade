@@ -50,10 +50,10 @@ function rpmconf_before_upgrade() {
 
 function import_keys() {
   rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-fedora-$TARGET_VERSION-primary
-  if [ -f /etc/yum.repos.d/rpmfusion-free.repo ]; then
+  if [ -f /etc/yum.repos.d/rpmfusion-free.repo -a -e /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION ]; then
     rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION
   fi
-  if [ -f /etc/yum.repos.d/rpmfusion-nonfree.repo ]; then
+  if [ -f /etc/yum.repos.d/rpmfusion-nonfree.repo -a -e /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$TARGET_VERSION ]; then
     rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$TARGET_VERSION
   fi
 }
