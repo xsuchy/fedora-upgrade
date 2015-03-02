@@ -254,7 +254,7 @@ elif [ 0$FEDORA_VERSION -eq 22 ]; then
   install_deps
   rpmconf_before_upgrade
 
-  yum install fedora-release-rawhide yum-utils
+  yum install fedora-repos-rawhide yum-utils
   yum-config-manager --disable fedora updates updates-testing
   yum-config-manager --enable rawhide
   yum update -q yum
