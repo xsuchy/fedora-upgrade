@@ -17,6 +17,7 @@ Requires:	yum
 Requires:	yum-utils
 Requires:	rpmconf
 Requires:	libselinux-utils
+Requires:   policycoreutils
 Requires:	vim-enhanced
 Requires:	wget
 BuildRequires: asciidoc

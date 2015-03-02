@@ -215,6 +215,9 @@ elif [ 0$FEDORA_VERSION -eq 20 ]; then
   choose_fedora_next
   #install_base
 
+  echo "Relabel system"
+  restorecon -Rpv / 
+
   rpmconf_after_upgrade
   #reset_service_priorities
   cleanup_cache
