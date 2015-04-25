@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	22.1
+Version:	22.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -52,6 +52,11 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Sat Apr 25 2015 Miroslav Suchý <miroslav@suchy.cz> 22.2-1
+- upgrade to F22 was in fact upgrade to F21
+- package with rawhide repos was renamed
+- restore selinux context after upgrade
+
 * Fri Feb 20 2015 Miroslav Suchý <msuchy@redhat.com> 22.1-1
 - bump up version
 - import rpmfusion keys only if it exists
