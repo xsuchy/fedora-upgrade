@@ -234,7 +234,7 @@ elif [ 0$FEDORA_VERSION -eq 21 ]; then
   yum update -q yum
   yum clean -q dbcache rpmdb plugins metadata
   enable_updates=$(is_prerelease 22)
-  yum --releasever=21 --disableplugin=presto $enable_updates distro-sync
+  yum --releasever=22 --disableplugin=presto $enable_updates distro-sync
   UPGRADE_FINISHED=2
 
   choose_fedora_next
