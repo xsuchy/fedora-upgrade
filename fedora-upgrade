@@ -65,6 +65,13 @@ function install_base() {
   fi
 }
 
+function dnf_install_base() {
+  continue_or_skip "\nGoing to install missing packages from group 'Minimal Install'"
+  if [ "$ANSWER" != "S" ] ; then
+    dnf groupupdate 'Minimal Install'
+  fi
+}
+
 function rpmconf_after_upgrade() {
   continue_or_skip "\nGoing to resolve .rpmsave and .rpmnew files after upgrade."
   if [ "$ANSWER" != "S" ] ; then
@@ -237,8 +244,7 @@ elif [ 0$FEDORA_VERSION -eq 21 ]; then
   yum --releasever=22 --disableplugin=presto $enable_updates distro-sync
   UPGRADE_FINISHED=2
 
-  choose_fedora_next
-  #install_base
+  dnf_install_base
 
   rpmconf_after_upgrade
   #reset_service_priorities
@@ -262,7 +268,7 @@ elif [ 0$FEDORA_VERSION -eq 22 ]; then
   yum --releasever=rawhide --disableplugin=presto distro-sync --nogpgcheck
   UPGRADE_FINISHED=2
 
-  install_base
+  dnf_install_base
 
   rpmconf_after_upgrade
   reset_service_priorities
