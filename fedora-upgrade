@@ -6,7 +6,7 @@ FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
 TARGET_VERSION=$((FEDORA_VERSION + 1))
 UPGRADE_FINISHED=0
 
-function check_intallation() {
+function check_installation() {
   [[ -e /usr/sbin/fedora-upgrade ]]
 }
 
@@ -19,7 +19,7 @@ function pause() {
 function continue_or_skip() {
    read -t 1 -n 10000 discard || [ $? -gt 128 ]
    echo -e $1
-   echo "This step is highly recomended, but can be safely skipped."
+   echo "This step is highly recommended, but can be safely skipped."
    ANSWER='XXX'
    while [ "$ANSWER" != "" -a "$ANSWER" != "S" ] ; do
      read -p "Hit Enter to continue, Ctrl + C to cancel or S + Enter to skip. " ANSWER
@@ -28,7 +28,7 @@ function continue_or_skip() {
 }
 
 function install_deps() {
-  # TODO add -q to all yum and create some kind of progress metter
+  # TODO add -q to all yum and create some kind of progress meter
   # but now be verbose
   rpm -q rpmconf >/dev/null || yum install -y rpmconf
   rpm -q yum-utils >/dev/null || yum install -y yum-utils
@@ -97,13 +97,13 @@ function cleanup_cache() {
 
 function unwanted_packages() {
   LAST=$1
-  continue_or_skip "\nThere can be some packages which are now orphan, do you want to see them?"
+  continue_or_skip "\nThere may be some packages which are now orphaned, do you want to see them?"
   RESULT=0
   for i in $(seq 10 $LAST); do
     rpm -qa | grep fc$i && RESULT=1
   done
   if [ 0$RESULT -eq 1 ]; then
-    echo "These packages are very probably orphan. You may want to remove them."
+    echo "These packages are very probably orphaned. You may want to remove them."
   fi
 }
 
@@ -120,7 +120,7 @@ function is_prerelease() {
 function print_exit_banner() {
   if [ $UPGRADE_FINISHED -eq 1 ]; then
     echo
-    echo You sucessfullly upgraded to Fedora $TARGET_VERSION
+    echo You successfully upgraded to Fedora $TARGET_VERSION
     echo Reboot is strongly suggested.
     exit 0
   elif [ $UPGRADE_FINISHED -eq 0 ]; then
@@ -177,12 +177,12 @@ function choose_fedora_next() {
   yum install -y fedora-release-$ANSWER
 }
 
-if ! check_intallation; then
+if ! check_installation; then
   echo "Please install fedora-upgrade package using yum first"
   exit 2
 fi
 
-# make obvious ending for unexperienced users
+# make obvious ending for inexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
 if [ 0$FEDORA_VERSION -eq 19 ]; then
