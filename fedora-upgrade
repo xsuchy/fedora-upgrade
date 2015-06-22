@@ -34,6 +34,13 @@ function install_deps() {
   rpm -q yum-utils >/dev/null || yum install -y yum-utils
 }
 
+function dnf_install_deps() {
+  # TODO add -q to all dnf and create some kind of progress meter
+  # but now be verbose
+  rpm -q rpmconf >/dev/null || dnf install -y rpmconf
+  rpm -q dnf-plugins-core >/dev/null || dnf install -y dnf-plugins-core
+}
+
 function upgrade_before_upgrade() {
   continue_or_skip "\nGoing to run 'yum upgrade' before upgrading."
   if [ "$ANSWER" != "S" ] ; then
@@ -92,7 +99,7 @@ function reset_service_priorities() {
 }
 
 function cleanup_cache() {
-  rm -rf /var/cache/yum/*
+  rm -rf /var/cache/yum/* /var/cache/dnf/*
 }
 
 function unwanted_packages() {
@@ -257,15 +264,15 @@ elif [ 0$FEDORA_VERSION -eq 22 ]; then
   echo "Are you sure?"
   pause
 
-  install_deps
+  dnf_install_deps
   rpmconf_before_upgrade
 
-  yum install fedora-repos-rawhide yum-utils
-  yum-config-manager --disable fedora updates updates-testing
-  yum-config-manager --enable rawhide
-  yum update -q yum
-  yum clean -q dbcache rpmdb plugins metadata
-  yum --releasever=rawhide --disableplugin=presto distro-sync --nogpgcheck
+  dnf install fedora-repos-rawhide dnf-plugins-core
+  dnf config-manager --set-disabled fedora updates updates-testing
+  dnf config-manager --set-enabled rawhide
+  dnf upgrade -q dnf
+  dnf clean -q dbcache plugins metadata
+  dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck
   UPGRADE_FINISHED=2
 
   dnf_install_base

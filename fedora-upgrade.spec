@@ -13,12 +13,17 @@ URL:		https://github.com/xsuchy/fedora-upgrade
 Source0:	%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
+%if 0%{?fedora} >= 22
+Requires:   dnf
+Requires:   dnf-plugins-core
+%else
 Requires:	yum
 Requires:	yum-utils
+%endif
 Requires:	rpmconf
 Requires:	libselinux-utils
 Requires:   policycoreutils
-Requires:	vim-enhanced
+Suggests:   vim-enhanced
 Requires:	wget
 BuildRequires: asciidoc
 BuildRequires: libxslt
