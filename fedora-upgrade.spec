@@ -51,7 +51,8 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 
 %files
-%doc LICENSE README.md
+%license LICENSE
+%doc README.md
 %{_sbindir}/fedora-upgrade
 %doc %{_mandir}/man8/fedora-upgrade.8*
 %{_datadir}/%{name}
