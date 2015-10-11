@@ -177,6 +177,7 @@ function going_to_reboot() {
   echo "successful transaction. You can remove cached packages by executing"
   echo "'dnf clean packages'."
   echo "In next step your computer will be REBOOTED and packages will be upgraded."
+  pause
 }
 
 function choose_upgrade_method() {
