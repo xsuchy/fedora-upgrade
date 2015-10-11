@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	23.0
+Version:	23.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
@@ -58,6 +58,15 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Sun Oct 11 2015 Miroslav Suchý <miroslav@suchy.cz> 23.1-1
+- add F23,24 keys
+- change note about official tool
+- upgrade to F23
+- use %%license for LICENSE
+- use dnf on F22
+- update README.md #15
+- do not ask about fedora next when upgrading to F22
+
 * Sat Apr 25 2015 Miroslav Suchý <miroslav@suchy.cz> 22.2-1
 - upgrade to F22 was in fact upgrade to F21
 - package with rawhide repos was renamed
