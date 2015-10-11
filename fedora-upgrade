@@ -217,7 +217,6 @@ function choose_fedora_next() {
 
 if ! check_installation; then
   echo "Please install fedora-upgrade package using dnf first"
->>>>>>>
   exit 2
 fi
 
