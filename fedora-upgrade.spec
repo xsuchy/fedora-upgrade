@@ -1,7 +1,7 @@
 Name:		fedora-upgrade
 Version:	23.1
 Release:	1%{?dist}
-Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
+Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
 Group:		Applications/System
 License:	GPLv2
@@ -29,7 +29,7 @@ BuildRequires: asciidoc
 BuildRequires: libxslt
 
 %description
-Upgrade Fedora to next version using yum upgrade.
+Upgrade Fedora to next version using dnf upgrade.
 This is attempt to automatize steps as listed here:
 https://fedoraproject.org/wiki/Upgrading_Fedora_using_yum
 

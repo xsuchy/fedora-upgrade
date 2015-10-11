@@ -1,7 +1,7 @@
 fedora-upgrade
 ==============
 
-Upgrade Fedora to next version using yum upgrade.
+Upgrade Fedora to next version using dnf upgrade.
 
 This is attempt to automatize steps as listed here:
 
@@ -33,8 +33,8 @@ How it works
 2. Check if dependencies are installed and install them. This step is needed only if you download script from GitHub. Dependencies are always present if you install fedora-upgrade as rpm package.
 3. Resolve old .rpmsave and .rpmnew files using [rpmconf](https://github.com/xsuchy/rpmconf/). This step is optional and can be skipped. But it is better to start upgrade with clean state.
 4. Download and install new GPG keys - including rpmfusion if you are using it.
-5. Update yum and clean all yum metadata. 
-6. Upgrade system using yum. In this or any previous step, you can hit Ctrl + C and interrupt upgrade and repeat it as many times you wish. After this step, you could not return (you can use back up, you created backup before upgrade, did you?).
+5. Update dnf and clean all dnf metadata.
+6. Upgrade system using dnf. In this or any previous step, you can hit Ctrl + C and interrupt upgrade and repeat it as many times you wish. After this step, you could not return (you can use back up, you created backup before upgrade, did you?).
 7. Install packages from group 'Minimal Install'. It may happen that some new essential packages have been introduced to Fedora. This step will install them. You may however skip this step if you want to.
 8. Resolve old .rpmsave and .rpmnew files using [rpmconf](https://github.com/xsuchy/rpmconf/). This step is optional and can be skipped. But it is better to finish upgrade with clean state.
 9. Reset service priorities - the order of init scripts could have changed from the previous version. This steps is optional and can be skipped. And this does not affect services already migrated to systemD units.

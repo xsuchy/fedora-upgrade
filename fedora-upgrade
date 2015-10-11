@@ -42,9 +42,9 @@ function dnf_install_deps() {
 }
 
 function upgrade_before_upgrade() {
-  continue_or_skip "\nGoing to run 'yum upgrade' before upgrading."
+  continue_or_skip "\nGoing to run 'dnf upgrade' before upgrading."
   if [ "$ANSWER" != "S" ] ; then
-    yum upgrade
+    dnf upgrade
   fi
 }
 
@@ -75,7 +75,7 @@ function import_keys() {
 function install_base() {
   continue_or_skip "\nGoing to install missing packages from group 'Minimal Install'"
   if [ "$ANSWER" != "S" ] ; then
-    yum groupupdate 'Minimal Install'
+    dnf group install 'Minimal Install'
   fi
 }
 
@@ -124,11 +124,14 @@ function unwanted_packages() {
 function is_prerelease() {
   # will print string "--enablerepo=updates-testing" if this is prerelease, "" otherwise
   local RELEASE=$1
-  if yumdownloader --disablerepo=* --enablerepo=fedora --releasever=$RELEASE fedora-release --urls | tail -n 1 | wget -q -i - -O - | rpm2cpio | cpio -i --quiet --to-stdout - ./etc/yum.repos.d/fedora-updates-testing.repo | grep 'enabled=1' >/dev/null; then
+  TEMP=$(mktemp -d)
+  dnf download --destdir "$TEMP" --disablerepo=* --enablerepo=fedora --releasever=$RELEASE fedora-repos
+  if rpm2cpio "$TEMP"/fedora-repos*.rpm | cpio -i --quiet --to-stdout - ./etc/yum.repos.d/fedora-updates-testing.repo | grep 'enabled=1' >/dev/null ; then
     echo "--enablerepo=updates-testing"
   else
     echo ""
   fi
+  rm -rf "$TEMP"
 }
 
 function print_exit_banner() {
@@ -186,14 +189,15 @@ function choose_fedora_next() {
     fi
     rpm -q fedora-release-nonproduct >/dev/null && rpm -e fedora-release-nonproduct
     if [ "$ANSWER" != "cloud" ] ; then
-      yum install -y firewalld-config-$ANSWER firewalld-config-$ANSWER
+      dnf install -y firewalld-config-$ANSWER firewalld-config-$ANSWER
     fi
   fi
-  yum install -y fedora-release-$ANSWER
+  dnf install -y fedora-release-$ANSWER
 }
 
 if ! check_installation; then
-  echo "Please install fedora-upgrade package using yum first"
+  echo "Please install fedora-upgrade package using dnf first"
+>>>>>>>
   exit 2
 fi
 

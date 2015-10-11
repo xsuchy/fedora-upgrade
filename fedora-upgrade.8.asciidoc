@@ -5,7 +5,7 @@ fedora-upgrade(8)
 
 NAME
 ----
-fedora-upgrade - tool to guide you with upgrade of Fedora to next major version using yum.
+fedora-upgrade - tool to guide you with upgrade of Fedora to next major version using dnf.
 
 
 SYNOPSIS
@@ -16,7 +16,7 @@ SYNOPSIS
 DESCRIPTION
 -----------
 
-Script *fedora-upgrade* tries to automate steps needed for yum-upgrade from one major version to next one.
+Script *fedora-upgrade* tries to automate steps needed for dnf-upgrade from one major version to next one.
 
 Steps which fedora-upgrade does:
 
@@ -24,7 +24,7 @@ Steps which fedora-upgrade does:
 * Check dependencies.
 * Resolve old .rpmsave and .rpmnew files before upgrading (if there are some).
 * Download and import RPM GPG keys.
-* Run "yum --releasever=$TOVER distro-sync".
+* Run "dnf --releasever=$TOVER distro-sync".
 * Install missing packages from group 'Minimal Install'.
 * Resolve old .rpmsave and .rpmnew files after upgrade.
 * Reset priorities of services.
@@ -32,7 +32,7 @@ Steps which fedora-upgrade does:
 
 SEE ALSO
 --------
-yum(8), rpmconf(8),
+dnf(8), rpmconf(8),
 https://fedoraproject.org/wiki/Upgrading_Fedora_using_yum
 
 
