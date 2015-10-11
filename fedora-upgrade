@@ -48,6 +48,13 @@ function upgrade_before_upgrade() {
   fi
 }
 
+function dnf_upgrade_before_upgrade() {
+  continue_or_skip "\nGoing to run 'dnf upgrade' before upgrading."
+  if [ "$ANSWER" != "S" ] ; then
+    dnf upgrade
+  fi
+}
+
 function rpmconf_before_upgrade() {
   continue_or_skip "\nGoing to resolve old .rpmsave and .rpmnew files before upgrading."
   if [ "$ANSWER" != "S" ] ; then
@@ -192,52 +199,7 @@ fi
 # make obvious ending for inexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
-if [ 0$FEDORA_VERSION -eq 19 ]; then
-  welcome_banner 20
-
-  install_deps
-  upgrade_before_upgrade
-  rpmconf_before_upgrade
-  import_keys
-
-  yum update -q yum
-  yum clean -q dbcache rpmdb plugins metadata
-  yum --releasever=20 --disableplugin=presto distro-sync
-  UPGRADE_FINISHED=2
-
-  install_base
-
-  rpmconf_after_upgrade
-  reset_service_priorities
-  cleanup_cache
-  unwanted_packages 19
-  UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 20 ]; then
-  welcome_banner 21
-
-  install_deps
-  upgrade_before_upgrade
-  rpmconf_before_upgrade
-  import_keys
-
-  yum update -q yum
-  yum clean -q dbcache rpmdb plugins metadata
-  enable_updates=$(is_prerelease 21)
-  yum --releasever=21 --disableplugin=presto $enable_updates distro-sync
-  UPGRADE_FINISHED=2
-
-  choose_fedora_next
-  #install_base
-
-  echo "Relabel system"
-  restorecon -Rpv / 
-
-  rpmconf_after_upgrade
-  #reset_service_priorities
-  cleanup_cache
-  unwanted_packages 20
-  UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 21 ]; then
+if [ 0$FEDORA_VERSION -eq 21 ]; then
   welcome_banner 22
 
   install_deps
@@ -259,6 +221,26 @@ elif [ 0$FEDORA_VERSION -eq 21 ]; then
   unwanted_packages 21
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 22 ]; then
+  welcome_banner 23
+
+  dnf_install_deps
+  dnf_upgrade_before_upgrade
+  rpmconf_before_upgrade
+  import_keys
+
+  dnf install -y -q dnf-plugins-core
+  dnf clean -q dbcache plugins metadata
+  enable_updates=$(is_prerelease 23)
+  dnf --releasever=23 --setopt=deltarpm=false $enable_updates distro-sync
+  UPGRADE_FINISHED=2
+
+  dnf_install_base
+
+  rpmconf_after_upgrade
+  reset_service_priorities
+  cleanup_cache
+  UPGRADE_FINISHED=1
+elif [ 0$FEDORA_VERSION -eq 23 ]; then
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"
