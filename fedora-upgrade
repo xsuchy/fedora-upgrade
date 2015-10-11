@@ -173,6 +173,9 @@ function warn_about_online() {
 }
 
 function going_to_reboot() {
+  echo ""
+  echo "********** End of DNF plugin output **********"
+  echo ""
   echo "Download complete! The downloaded packages were saved in cache till the next"
   echo "successful transaction. You can remove cached packages by executing"
   echo "'dnf clean packages'."
