@@ -160,7 +160,7 @@ function welcome_banner() {
   pause
 }
 
-function warn_about_online()
+function warn_about_online() {
   echo "Warning: This is unofficial upgrade path. For official tool see:"
   echo "         https://fedoraproject.org/wiki/Upgrading"
   echo "         While author of fedora-upgrade thinks online upgrade is better, it is"
