@@ -155,7 +155,8 @@ function welcome_banner() {
   echo "Going to upgrade your Fedora to version $1."
   echo "You may want to read Release Notes:"
   echo "  http://docs.fedoraproject.org/release-notes/"
-  echo "Warning: This is unofficial upgrade tool. Official tool is 'fedup'."
+  echo "Warning: This is unofficial upgrade tool. For official tool see:"
+  echo "         https://fedoraproject.org/wiki/Upgrading"
   echo "         While author of fedora-upgrade thinks fedora-upgrade is better, it is"
   echo "         not officially tested by FedoraQA."
   pause
