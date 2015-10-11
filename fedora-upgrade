@@ -36,8 +36,12 @@ function install_deps() {
 function dnf_install_deps() {
   # TODO add -q to all dnf and create some kind of progress meter
   # but now be verbose
-  rpm -q rpmconf >/dev/null || dnf install -y rpmconf
-  rpm -q dnf-plugins-core >/dev/null || dnf install -y dnf-plugins-core
+  install_if_missing rpmconf
+  install_if_missing dnf-plugins-core
+}
+
+function install_if_missing() {
+  rpm -q $1 >/dev/null || dnf install -y -q $1
 }
 
 function upgrade_before_upgrade() {
@@ -212,7 +216,7 @@ function choose_fedora_next() {
       dnf install -y firewalld-config-$ANSWER firewalld-config-$ANSWER
     fi
   fi
-  dnf install -y fedora-release-$ANSWER
+  install_if_missing fedora-release-$ANSWER
 }
 
 if ! check_installation; then
@@ -252,7 +256,7 @@ elif [ 0$FEDORA_VERSION -eq 22 ]; then
   rpmconf_before_upgrade
   import_keys
 
-  dnf install -y -q dnf-plugins-core
+  install_if_missing dnf-plugins-core
   dnf clean -q dbcache plugins metadata
   enable_updates=$(is_prerelease 23)
 
@@ -266,7 +270,7 @@ elif [ 0$FEDORA_VERSION -eq 22 ]; then
   if [ "$ANSWER" == "online" ] ; then
     dnf --releasever=23 --setopt=deltarpm=false $enable_updates distro-sync
   elif [ "$ANSWER" == "offline" ] ; then
-    dnf install -q -y dnf-plugin-system-upgrade
+    install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download --releasever=23 --distro-sync --best
     going_to_reboot
     dnf system-upgrade reboot
@@ -288,7 +292,8 @@ elif [ 0$FEDORA_VERSION -eq 23 ]; then
   dnf_install_deps
   rpmconf_before_upgrade
 
-  dnf install -y -q fedora-repos-rawhide dnf-plugins-core
+  install_if_missing fedora-repos-rawhide
+  install_if_missing dnf-plugins-core
   dnf config-manager --set-disabled fedora updates updates-testing
   dnf config-manager --set-enabled rawhide
   dnf upgrade -y dnf
@@ -303,7 +308,7 @@ elif [ 0$FEDORA_VERSION -eq 23 ]; then
   if [ "$ANSWER" == "online" ] ; then
     dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck
   elif [ "$ANSWER" == "offline" ] ; then
-    dnf install -q -y dnf-plugin-system-upgrade
+    install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download --releasever=23 --distro-sync --best --nogpgcheck
     going_to_reboot
     dnf system-upgrade reboot
