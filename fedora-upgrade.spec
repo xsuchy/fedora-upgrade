@@ -14,12 +14,14 @@ Source0:	%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
 %if 0%{?fedora} >= 22
-Requires:   dnf
-Requires:   dnf-plugins-core
+Requires:	dnf
+Requires:	dnf-plugins-core
+Suggests:	dnf-plugin-system-upgrade
 %else
 Requires:	yum
 Requires:	yum-utils
 %endif
+Requires:	cpio
 Requires:	rpmconf
 Requires:	libselinux-utils
 Requires:   policycoreutils

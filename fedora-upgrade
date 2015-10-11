@@ -31,7 +31,6 @@ function install_deps() {
   # TODO add -q to all yum and create some kind of progress meter
   # but now be verbose
   rpm -q rpmconf >/dev/null || yum install -y rpmconf
-  rpm -q yum-utils >/dev/null || yum install -y yum-utils
 }
 
 function dnf_install_deps() {
@@ -158,11 +157,32 @@ function welcome_banner() {
   echo "Going to upgrade your Fedora to version $1."
   echo "You may want to read Release Notes:"
   echo "  http://docs.fedoraproject.org/release-notes/"
-  echo "Warning: This is unofficial upgrade tool. For official tool see:"
+  pause
+}
+
+function warn_about_online()
+  echo "Warning: This is unofficial upgrade path. For official tool see:"
   echo "         https://fedoraproject.org/wiki/Upgrading"
-  echo "         While author of fedora-upgrade thinks fedora-upgrade is better, it is"
+  echo "         While author of fedora-upgrade thinks online upgrade is better, it is"
   echo "         not officially tested by FedoraQA."
   pause
+}
+
+function going_to_reboot() {
+  echo "Download complete! The downloaded packages were saved in cache till the next"
+  echo "successful transaction. You can remove cached packages by executing"
+  echo "'dnf clean packages'."
+  echo "In next step your computer will be REBOOTED and packages will be upgraded."
+}
+
+function choose_upgrade_method() {
+  echo "Choose upgrade method"
+  echo "  * offline - this use dnf-plugin-system-upgrade plugin and requires two reboots"
+  echo "            - this is official upgrade method"
+  echo "  * online  - this use distro-sync and require only one reboot"
+  echo "            - this is not offically tested by FedoraQA"
+  echo "For more information see https://fedoraproject.org/wiki/Upgrading"
+  read -t 1 -n 10000 discard || [ $? -gt 128 ]
 }
 
 function choose_fedora_next() {
@@ -212,7 +232,7 @@ if [ 0$FEDORA_VERSION -eq 21 ]; then
   rpmconf_before_upgrade
   import_keys
 
-  yum update -q yum
+  yum upgrade -q yum
   yum clean -q dbcache rpmdb plugins metadata
   enable_updates=$(is_prerelease 22)
   yum --releasever=22 --disableplugin=presto $enable_updates distro-sync
@@ -236,7 +256,21 @@ elif [ 0$FEDORA_VERSION -eq 22 ]; then
   dnf install -y -q dnf-plugins-core
   dnf clean -q dbcache plugins metadata
   enable_updates=$(is_prerelease 23)
-  dnf --releasever=23 --setopt=deltarpm=false $enable_updates distro-sync
+
+  choose_upgrade_method
+  echo -e $1
+  ANSWER='XXX'
+  while [ "$ANSWER" != "offline" -a "$ANSWER" != "online" ] ; do
+    read -p "What is your choice? (offline/online)  " ANSWER
+    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
+  done
+  if [ "$ANSWER" != "online" ] ; then
+    dnf --releasever=23 --setopt=deltarpm=false $enable_updates distro-sync
+  elif [ "$ANSWER" != "offline" ] ; then
+    dnf system-upgrade download --releasever=23 --distro-sync --best
+    going_to_reboot
+    dnf system-upgrade reboot
+  fi
   UPGRADE_FINISHED=2
 
   dnf_install_base
@@ -254,12 +288,26 @@ elif [ 0$FEDORA_VERSION -eq 23 ]; then
   dnf_install_deps
   rpmconf_before_upgrade
 
-  dnf install fedora-repos-rawhide dnf-plugins-core
+  dnf install -y -q fedora-repos-rawhide dnf-plugins-core
   dnf config-manager --set-disabled fedora updates updates-testing
   dnf config-manager --set-enabled rawhide
-  dnf upgrade -q dnf
+  dnf upgrade -y dnf
   dnf clean -q dbcache plugins metadata
-  dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck
+  choose_upgrade_method
+  echo -e $1
+  ANSWER='XXX'
+  while [ "$ANSWER" != "offline" -a "$ANSWER" != "online" ] ; do
+    read -p "What is your choice? (offline/online)  " ANSWER
+    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
+  done
+  if [ "$ANSWER" != "online" ] ; then
+    dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck
+  elif [ "$ANSWER" != "offline" ] ; then
+    dnf install -q dnf-plugin-system-upgrade
+    dnf system-upgrade download --releasever=23 --distro-sync --best --nogpgcheck
+    going_to_reboot
+    dnf system-upgrade reboot
+  fi
   UPGRADE_FINISHED=2
 
   dnf_install_base
