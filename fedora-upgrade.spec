@@ -16,7 +16,7 @@ BuildArch:	noarch
 %if 0%{?fedora} >= 22
 Requires:	dnf
 Requires:	dnf-plugins-core
-Suggests:	dnf-plugin-system-upgrade
+Recommends:	dnf-plugin-system-upgrade
 %else
 Requires:	yum
 Requires:	yum-utils
