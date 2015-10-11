@@ -266,6 +266,7 @@ elif [ 0$FEDORA_VERSION -eq 22 ]; then
   if [ "$ANSWER" == "online" ] ; then
     dnf --releasever=23 --setopt=deltarpm=false $enable_updates distro-sync
   elif [ "$ANSWER" == "offline" ] ; then
+    dnf install -q -y dnf-plugin-system-upgrade
     dnf system-upgrade download --releasever=23 --distro-sync --best
     going_to_reboot
     dnf system-upgrade reboot
@@ -302,7 +303,7 @@ elif [ 0$FEDORA_VERSION -eq 23 ]; then
   if [ "$ANSWER" == "online" ] ; then
     dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck
   elif [ "$ANSWER" == "offline" ] ; then
-    dnf install -q dnf-plugin-system-upgrade
+    dnf install -q -y dnf-plugin-system-upgrade
     dnf system-upgrade download --releasever=23 --distro-sync --best --nogpgcheck
     going_to_reboot
     dnf system-upgrade reboot
