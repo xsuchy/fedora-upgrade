@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	22.2
+Version:	23.0
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using yum upgrade (unofficial tool)
 
