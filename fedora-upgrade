@@ -272,7 +272,7 @@ elif [ 0$FEDORA_VERSION -eq 22 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-    dnf --releasever=23 --setopt=deltarpm=false $enable_updates distro-sync
+    dnf --releasever=23 --setopt=deltarpm=false $enable_updates distro-sync --best
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download --releasever=23 --distro-sync --best
@@ -310,7 +310,7 @@ elif [ 0$FEDORA_VERSION -eq 23 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-    dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck
+    dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck --best
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download --releasever=23 --distro-sync --best --nogpgcheck
