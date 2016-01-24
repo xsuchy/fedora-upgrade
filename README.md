@@ -17,10 +17,11 @@ are not blocker for release.
 However I am aiming for official support - see https://fedoraproject.org/wiki/Features/FedoraUpgrade
 
 Currently you can upgrade only to next version. You can upgrade from
-* Fedora 19 -> Fedora 20
-* Fedora 20 -> Fedora 21
+* Fedora 19 -> Fedora 20 (removed in master)
+* Fedora 20 -> Fedora 21 (removed in master)
 * Fedora 21 -> Fedora 22
-* Fedora 22 -> rawhide
+* Fedora 22 -> Fedora 23
+* Fedora 23 -> rawhide
 
 You can *not* upgrade from older releases.
 You can *not* skip release - e.g. upgrade from Fedora 16 to Fedora 18.
