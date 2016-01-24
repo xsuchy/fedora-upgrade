@@ -27,12 +27,6 @@ function continue_or_skip() {
    done
 }
 
-function install_deps() {
-  # TODO add -q to all yum and create some kind of progress meter
-  # but now be verbose
-  rpm -q rpmconf >/dev/null || yum install -y rpmconf
-}
-
 function dnf_install_deps() {
   # TODO add -q to all dnf and create some kind of progress meter
   # but now be verbose
@@ -152,7 +146,7 @@ function print_exit_banner() {
     echo
     echo Upgrade to Fedora $TARGET_VERSION was not finished!
     echo Finish steps manually according to documentation on the wiki:
-    echo 'http://fedoraproject.org/wiki/Upgrading_Fedora_using_yum#5._Make_sure_Fedora_is_upgraded'
+    echo 'https://fedoraproject.org/wiki/Upgrading_Fedora_using_package_manager?rd=Upgrading_Fedora_using_yum#5._Make_sure_Fedora_is_upgraded'
     exit 2
   fi
 }
@@ -193,36 +187,6 @@ function choose_upgrade_method() {
   read -t 1 -n 10000 discard || [ $? -gt 128 ]
 }
 
-function choose_fedora_next() {
-  echo "Fedora now split into several products:"
-  echo "  * Cloud"
-  echo "  * Server"
-  echo "  * Workstation"
-  echo "And there is choice to stay non-productized:"
-  echo "  * Nonproduct"
-
-  read -t 1 -n 10000 discard || [ $? -gt 128 ]
-  echo -e $1
-  ANSWER='XXX'
-  while [ "$ANSWER" != "cloud" -a "$ANSWER" != "server" -a "$ANSWER" != "workstation" -a "$ANSWER" != "nonproduct" ] ; do
-    read -p "What is your option? (cloud/server/workstation/nonproduct)  " ANSWER
-    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
-  done
-  if [ "$ANSWER" != "nonproduct" ] ; then
-    # would be nice to use:
-    # yum swap -- remove fedora-release-workstation -- install fedora-release-server
-    # but it does not work BZ 1167194
-    if [ "$ANSWER" != "cloud" ] ; then
-      rpm -e --nodeps firewalld-config-standard >/dev/null || :
-    fi
-    rpm -q fedora-release-nonproduct >/dev/null && rpm -e fedora-release-nonproduct
-    if [ "$ANSWER" != "cloud" ] ; then
-      dnf install -y firewalld-config-$ANSWER firewalld-config-$ANSWER
-    fi
-  fi
-  install_if_missing fedora-release-$ANSWER
-}
-
 if ! check_installation; then
   echo "Please install fedora-upgrade package using dnf first"
   exit 2
@@ -231,28 +195,7 @@ fi
 # make obvious ending for inexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
-if [ 0$FEDORA_VERSION -eq 21 ]; then
-  welcome_banner 22
-
-  install_deps
-  upgrade_before_upgrade
-  rpmconf_before_upgrade
-  import_keys
-
-  yum upgrade -q yum
-  yum clean -q dbcache rpmdb plugins metadata
-  enable_updates=$(is_prerelease 22)
-  yum --releasever=22 --disableplugin=presto $enable_updates distro-sync
-  UPGRADE_FINISHED=2
-
-  dnf_install_base
-
-  rpmconf_after_upgrade
-  #reset_service_priorities
-  cleanup_cache
-  unwanted_packages 21
-  UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 22 ]; then
+if [ 0$FEDORA_VERSION -eq 22 ]; then
   welcome_banner 23
 
   dnf_install_deps
