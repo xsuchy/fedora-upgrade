@@ -204,7 +204,7 @@ if [ 0$FEDORA_VERSION -eq 22 ]; then
   import_keys
 
   install_if_missing dnf-plugins-core
-  dnf clean -q dbcache plugins metadata
+  dnf clean -q dbcache metadata
   enable_updates=$(is_prerelease 23)
 
   choose_upgrade_method
@@ -239,7 +239,7 @@ elif [ 0$FEDORA_VERSION -eq 23 ]; then
   import_keys
 
   install_if_missing dnf-plugins-core
-  dnf clean -q dbcache plugins metadata
+  dnf clean -q dbcache metadata
   enable_updates=$(is_prerelease 24)
 
   choose_upgrade_method
@@ -279,7 +279,7 @@ elif [ 0$FEDORA_VERSION -eq 24 ]; then
   dnf config-manager --set-disabled fedora updates updates-testing
   dnf config-manager --set-enabled rawhide
   dnf upgrade -y dnf
-  dnf clean -q dbcache plugins metadata
+  dnf clean -q dbcache metadata
   choose_upgrade_method
   echo -e $1
   ANSWER='XXX'
