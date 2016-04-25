@@ -13,14 +13,9 @@ URL:		https://github.com/xsuchy/fedora-upgrade
 Source0:	%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
-%if 0%{?fedora} >= 22
 Requires:	dnf
 Requires:	dnf-plugins-core
 Recommends:	dnf-plugin-system-upgrade
-%else
-Requires:	yum
-Requires:	yum-utils
-%endif
 Requires:	cpio
 Requires:	rpmconf
 Requires:	libselinux-utils
