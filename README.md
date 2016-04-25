@@ -46,6 +46,42 @@ If there will be a problem during upgrade, this script will immediately stop and
 If you hit problem before step 6, you can run fedora-upgrade again after you resolve the problem.
 If you hit problem in later stage, you can resolve the issue manually and open fedora-upgrade as it is just bash script. And try to finish manually. But most steps after step 6 are optional, so it should not affect stability of your system.
 
+Example
+=======
+
+    # fedora-upgrade 
+    Going to upgrade your Fedora to version 24.
+    You may want to read Release Notes:
+      http://docs.fedoraproject.org/release-notes/
+    Hit Enter to continue or Ctrl + C to cancel.
+    
+    Going to run 'dnf upgrade' before upgrading.
+    This step is highly recommended, but can be safely skipped.
+    Hit Enter to continue, Ctrl + C to cancel or S + Enter to skip. 
+    Last metadata expiration check: 2:35:57 ago on Mon Apr 25 16:05:04 2016.
+    Závislosti vyřešeny.
+    Není co dělat
+    Hotovo!
+    
+    Going to resolve old .rpmsave and .rpmnew files before upgrading.
+    This step is highly recommended, but can be safely skipped.
+    Hit Enter to continue, Ctrl + C to cancel or S + Enter to skip. 
+    Configuration file '/etc/mime.types'
+    -rw-r--r--. 1 root root 57068 25. Sep  2015 /etc/mime.types.rpmnew
+    -rw-r--r--. 1 root root 57618  9. Nov 09.45 /etc/mime.types
+    
+     ==> Package distributor has shipped an updated version.
+       What would you like to do about it ?  Your options are:
+        Y or I  : install the package maintainer's version
+        N or O  : keep your currently-installed version
+          D     : show the differences between the versions
+          M     : merge configuration files
+          Z     : background this process to examine the situation
+          S     : skip this file
+     The default action is to keep your current version.
+    *** aliases (Y/I/N/O/D/M/Z/S) [default=N] ? 
+    Your choice: i
+
 Note
 ====
 
