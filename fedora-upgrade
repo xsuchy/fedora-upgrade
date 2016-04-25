@@ -230,7 +230,7 @@ if [ 0$FEDORA_VERSION -eq 22 ]; then
   reset_service_priorities
   cleanup_cache
   UPGRADE_FINISHED=1
-if [ 0$FEDORA_VERSION -eq 23 ]; then
+elif [ 0$FEDORA_VERSION -eq 23 ]; then
   welcome_banner 24
 
   dnf_install_deps
