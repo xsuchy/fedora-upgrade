@@ -81,6 +81,23 @@ Example
      The default action is to keep your current version.
     *** aliases (Y/I/N/O/D/M/Z/S) [default=N] ? 
     Your choice: i
+    Choose upgrade method
+      * offline - this use dnf-plugin-system-upgrade plugin and requires two reboots
+                - this is official upgrade method
+      * online  - this use distro-sync and require only one reboot
+                - this is not offically tested by FedoraQA
+    For more information see https://fedoraproject.org/wiki/Upgrading
+    
+    What is your choice? (offline/online) offline
+    
+    ********** End of DNF plugin output **********
+    
+    Download complete! The downloaded packages were saved in cache till the next
+    successful transaction. You can remove cached packages by executing
+    'dnf clean packages'.
+    In next step your computer will be REBOOTED and packages will be upgraded.
+    Hit Enter to continue, Ctrl + C to cancel or S + Enter to skip.
+    
 
 Note
 ====
