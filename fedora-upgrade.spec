@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	23.2
+Version:	24.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -60,6 +60,11 @@ cp -a keys/* %{buildroot}%{_datadir}/%{name}/keys
 %{_datadir}/%{name}
 
 %changelog
+* Mon Apr 25 2016 Miroslav Suchý 24.1-1
+- dnf does not have clean plugins option
+- add example to readme
+- fix syntax error
+
 * Mon Apr 25 2016 Miroslav Suchý 23.2-1
 - add upgrade to F24
 - remove yum and use only DNF
