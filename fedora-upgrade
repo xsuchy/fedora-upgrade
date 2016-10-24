@@ -195,77 +195,7 @@ fi
 # make obvious ending for inexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
-if [ 0$FEDORA_VERSION -eq 22 ]; then
-  welcome_banner 23
-
-  dnf_install_deps
-  dnf_upgrade_before_upgrade
-  rpmconf_before_upgrade
-  import_keys
-
-  install_if_missing dnf-plugins-core
-  dnf clean -q dbcache metadata
-  enable_updates=$(is_prerelease 23)
-
-  choose_upgrade_method
-  echo -e $1
-  ANSWER='XXX'
-  while [ "$ANSWER" != "offline" -a "$ANSWER" != "online" ] ; do
-    read -p "What is your choice? (offline/online)  " ANSWER
-    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
-  done
-  if [ "$ANSWER" == "online" ] ; then
-    dnf --releasever=23 --setopt=deltarpm=false $enable_updates distro-sync
-  elif [ "$ANSWER" == "offline" ] ; then
-    install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --releasever=23 --distro-sync
-    going_to_reboot
-    dnf system-upgrade reboot
-  fi
-  UPGRADE_FINISHED=2
-
-  dnf_install_base
-
-  rpmconf_after_upgrade
-  reset_service_priorities
-  cleanup_cache
-  UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 23 ]; then
-  welcome_banner 24
-
-  dnf_install_deps
-  dnf_upgrade_before_upgrade
-  rpmconf_before_upgrade
-  import_keys
-
-  install_if_missing dnf-plugins-core
-  dnf clean -q dbcache metadata
-  enable_updates=$(is_prerelease 24)
-
-  choose_upgrade_method
-  echo -e $1
-  ANSWER='XXX'
-  while [ "$ANSWER" != "offline" -a "$ANSWER" != "online" ] ; do
-    read -p "What is your choice? (offline/online)  " ANSWER
-    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
-  done
-  if [ "$ANSWER" == "online" ] ; then
-    dnf --releasever=24 --setopt=deltarpm=false $enable_updates distro-sync
-  elif [ "$ANSWER" == "offline" ] ; then
-    install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --releasever=24 --distro-sync
-    going_to_reboot
-    dnf system-upgrade reboot
-  fi
-  UPGRADE_FINISHED=2
-
-  dnf_install_base
-
-  rpmconf_after_upgrade
-  reset_service_priorities
-  cleanup_cache
-  UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 24 ]; then
+if [ 0$FEDORA_VERSION -eq 24 ]; then
   welcome_banner 25
 
   dnf_install_deps
