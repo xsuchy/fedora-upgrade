@@ -60,12 +60,12 @@ function rpmconf_before_upgrade() {
 }
 
 function import_keys() {
-  rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-fedora-$TARGET_VERSION-primary
-  if [ -f /etc/yum.repos.d/rpmfusion-free.repo -a -e /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION ]; then
-    rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION
+  rpm --import /usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-$TARGET_VERSION-primary
+  if [ -f /etc/yum.repos.d/rpmfusion-free.repo -a -e /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION ]; then
+    rpm --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION
   fi
-  if [ -f /etc/yum.repos.d/rpmfusion-nonfree.repo -a -e /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$TARGET_VERSION ]; then
-    rpm --import /usr/share/fedora-upgrade/keys/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$TARGET_VERSION
+  if [ -f /etc/yum.repos.d/rpmfusion-nonfree.repo -a -e /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$TARGET_VERSION ]; then
+    rpm --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$TARGET_VERSION
   fi
 }
 
@@ -266,6 +266,41 @@ elif [ 0$FEDORA_VERSION -eq 23 ]; then
   cleanup_cache
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 24 ]; then
+  welcome_banner 25
+
+  dnf_install_deps
+  dnf_upgrade_before_upgrade
+  rpmconf_before_upgrade
+  import_keys
+
+  install_if_missing dnf-plugins-core
+  dnf clean -q dbcache metadata
+  enable_updates=$(is_prerelease 25)
+
+  choose_upgrade_method
+  echo -e $1
+  ANSWER='XXX'
+  while [ "$ANSWER" != "offline" -a "$ANSWER" != "online" ] ; do
+    read -p "What is your choice? (offline/online)  " ANSWER
+    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
+  done
+  if [ "$ANSWER" == "online" ] ; then
+    dnf --releasever=25 --setopt=deltarpm=false $enable_updates distro-sync
+  elif [ "$ANSWER" == "offline" ] ; then
+    install_if_missing dnf-plugin-system-upgrade
+    dnf system-upgrade download --releasever=25 --distro-sync
+    going_to_reboot
+    dnf system-upgrade reboot
+  fi
+  UPGRADE_FINISHED=2
+
+  dnf_install_base
+
+  rpmconf_after_upgrade
+  reset_service_priorities
+  cleanup_cache
+  UPGRADE_FINISHED=1
+elif [ 0$FEDORA_VERSION -eq 25 ]; then
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"

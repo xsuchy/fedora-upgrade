@@ -20,6 +20,7 @@ Requires:	cpio
 Requires:	rpmconf
 Requires:	libselinux-utils
 Requires:   policycoreutils
+Requires:   distribution-gpg-keys
 Suggests:   vim-enhanced
 Requires:	wget
 BuildRequires: asciidoc
@@ -28,10 +29,11 @@ BuildRequires: libxslt
 %description
 Upgrade Fedora to next version using dnf upgrade.
 This is attempt to automatize steps as listed here:
-https://fedoraproject.org/wiki/Upgrading_Fedora_using_yum
+https://fedoraproject.org/wiki/Upgrading_Fedora_using_package_manager
 
 This is an unofficial tool, for official Fedora-supported
-upgrades please see the 'fedup' tool.
+upgrades please see:
+https://fedoraproject.org/wiki/Upgrading
 
 %prep
 %setup -q
