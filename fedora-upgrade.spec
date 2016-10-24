@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	25.1
+Version:	25.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,9 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Mon Oct 24 2016 Miroslav Suchý <miroslav@suchy.cz> 25.2-1
+- add warning about crashing XWindows
+
 * Mon Oct 24 2016 Miroslav Suchý <miroslav@suchy.cz> 25.1-1
 - remove upgrade from F22 and F23
 - add upgrade to F25 and use distribution-gpg-keys
