@@ -198,6 +198,16 @@ trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 if [ 0$FEDORA_VERSION -eq 24 ]; then
   welcome_banner 25
 
+
+  if [ "$DISPLAY" != "" ]; then
+    cat << WARNING
+It seems you are running upgrade from XWindows. You should switch to VT,
+because of bug in systemd-udev. It may lead to unpredictable things.
+See https://www.happyassassin.net/2016/10/04/x-crash-during-fedora-update-when-system-has-hybrid-graphics-and-systemd-udev-is-in-update/
+WARNING
+    pause
+  fi
+
   dnf_install_deps
   dnf_upgrade_before_upgrade
   rpmconf_before_upgrade
