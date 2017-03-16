@@ -240,7 +240,7 @@ WARNING
   reset_service_priorities
   cleanup_cache
   UPGRADE_FINISHED=1
-if [ 0$FEDORA_VERSION -eq 25 ]; then
+elif [ 0$FEDORA_VERSION -eq 25 ]; then
   UPGRADE_TO=26
   welcome_banner $UPGRADE_TO
 
@@ -251,7 +251,7 @@ if [ 0$FEDORA_VERSION -eq 25 ]; then
 
   install_if_missing dnf-plugins-core
   dnf clean -q dbcache metadata
-  enable_updates=$(is_prerelease $UPGRADE_TO)
+  enable_updates=$(is_prerelease $UPGRADE_TO )
 
   choose_upgrade_method
   echo -e $1
