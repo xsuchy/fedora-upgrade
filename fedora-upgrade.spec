@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	26.0
+Version:	26.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,9 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Thu Mar 16 2017 Miroslav Suchý <msuchy@redhat.com> 26.1-1
+- add upgrade to F26
+
 * Mon Oct 24 2016 Miroslav Suchý <miroslav@suchy.cz> 25.2-1
 - add warning about crashing XWindows
 
