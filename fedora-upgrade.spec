@@ -10,7 +10,7 @@ URL:		https://github.com/xsuchy/fedora-upgrade
 # git clone git://github.com/xsuchy/fedora-upgrade.git
 # cd fedora-upgrade
 # tito build --tgz
-Source0:	%{name}-%{version}.tar.gz
+Source0:    https://github.com/xsuchy/%{name}/archive/%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
 Requires:	dnf
