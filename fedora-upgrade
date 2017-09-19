@@ -241,6 +241,7 @@ WARNING
   cleanup_cache
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 25 ]; then
+# Fedora 25 to 26
   UPGRADE_TO=26
   welcome_banner $UPGRADE_TO
 
@@ -277,6 +278,44 @@ elif [ 0$FEDORA_VERSION -eq 25 ]; then
   cleanup_cache
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 26 ]; then
+# Fedora 26 to 27
+  UPGRADE_TO=27
+  welcome_banner $UPGRADE_TO
+
+  dnf_install_deps
+  dnf_upgrade_before_upgrade
+  rpmconf_before_upgrade
+  import_keys
+
+  install_if_missing dnf-plugins-core
+  dnf clean -q dbcache metadata
+  enable_updates=$(is_prerelease $UPGRADE_TO )
+
+  choose_upgrade_method
+  echo -e $1
+  ANSWER='XXX'
+  while [ "$ANSWER" != "offline" -a "$ANSWER" != "online" ] ; do
+    read -p "What is your choice? (offline/online)  " ANSWER
+    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
+  done
+  if [ "$ANSWER" == "online" ] ; then
+    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false $enable_updates distro-sync
+  elif [ "$ANSWER" == "offline" ] ; then
+    install_if_missing dnf-plugin-system-upgrade
+    dnf system-upgrade download --releasever=$UPGRADE_TO --distro-sync
+    going_to_reboot
+    dnf system-upgrade reboot
+  fi
+  UPGRADE_FINISHED=2
+
+  dnf_install_base
+
+  rpmconf_after_upgrade
+  reset_service_priorities
+  cleanup_cache
+  UPGRADE_FINISHED=1
+elif [ 0$FEDORA_VERSION -eq 27 ]; then
+# Fedora 27 to 28
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"

@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	26.1
+Version:	27.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -10,7 +10,7 @@ URL:		https://github.com/xsuchy/fedora-upgrade
 # git clone git://github.com/xsuchy/fedora-upgrade.git
 # cd fedora-upgrade
 # tito build --tgz
-Source0:	%{name}-%{version}.tar.gz
+Source0:    https://github.com/xsuchy/%{name}/archive/%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
 Requires:	dnf
@@ -56,6 +56,9 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Sep 19 2017 František Zatloukal <fzatlouk@redhat.com> 27.1-1
+- add upgrade to F27
+
 * Thu Mar 16 2017 Miroslav Suchý <msuchy@redhat.com> 26.1-1
 - add upgrade to F26
 
