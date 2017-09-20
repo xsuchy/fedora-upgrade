@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	26.1
+Version:	27.0
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
