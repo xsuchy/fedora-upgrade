@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	27.0
+Version:	27.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,11 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Wed Sep 20 2017 Miroslav Suchý <msuchy@redhat.com> 27.1-1
+- remove old changelogs
+- remove upgrade from f24
+- Add support for Fedora 27
+
 * Thu Mar 16 2017 Miroslav Suchý <msuchy@redhat.com> 26.1-1
 - add upgrade to F26
 
