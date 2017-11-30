@@ -92,7 +92,7 @@ function rpmconf_after_upgrade() {
 }
 
 function reset_service_priorities() {
-  continue_or_skip "\nGoing to reset priorities of services."
+  continue_or_skip "\nGoing to resets all installed unit files to the defaults configured\nin the preset policy file."
   if [ "$ANSWER" != "S" ] ; then
     systemctl preset-all
   fi
