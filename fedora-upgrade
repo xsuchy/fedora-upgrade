@@ -94,11 +94,7 @@ function rpmconf_after_upgrade() {
 function reset_service_priorities() {
   continue_or_skip "\nGoing to reset priorities of services."
   if [ "$ANSWER" != "S" ] ; then
-    ( cd /etc/rc.d/init.d;
-      for f in *; do
-        [ -x $f ] && /sbin/chkconfig $f resetpriorities || :
-      done # TODO - the same for systemd unit files
-    )
+    systemctl preset-all
   fi
 }
 
