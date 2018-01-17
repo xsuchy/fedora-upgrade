@@ -99,7 +99,7 @@ function reset_service_priorities() {
 }
 
 function cleanup_cache() {
-  rm -rf /var/cache/yum/* /var/cache/dnf/*
+  rm -rf /var/cache/yum/* /var/cache/dnf/* /var/cache/PackageKit/*
 }
 
 function unwanted_packages() {
