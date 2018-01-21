@@ -106,9 +106,7 @@ function unwanted_packages() {
   LAST=$1
   continue_or_skip "\nThere may be some packages which are now orphaned, do you want to see them?"
   RESULT=0
-  for i in $(seq 10 $LAST); do
-    rpm -qa | grep fc$i && RESULT=1
-  done
+  package-cleanup --orphans | grep -v kernel && RESULT=1
   if [ 0$RESULT -eq 1 ]; then
     echo "These packages are very probably orphaned. You may want to remove them."
   fi
@@ -233,6 +231,7 @@ if [ 0$FEDORA_VERSION -eq 27 ]; then
   rpmconf_after_upgrade
   reset_service_priorities
   cleanup_cache
+  unwanted_packages
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 26 ]; then
 # Fedora 26 to 27
@@ -270,6 +269,7 @@ elif [ 0$FEDORA_VERSION -eq 26 ]; then
   rpmconf_after_upgrade
   reset_service_priorities
   cleanup_cache
+  unwanted_packages
   UPGRADE_FINISHED=1
 elif [ 0$FEDORA_VERSION -eq 28 ]; then
 # Fedora 28 to rawhide
@@ -309,6 +309,7 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
   rpmconf_after_upgrade
   reset_service_priorities
   cleanup_cache
+  unwanted_packages
   UPGRADE_FINISHED=1
 else
   echo Upgrading from version $FEDORA_VERSION is not supported.

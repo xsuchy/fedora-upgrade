@@ -16,6 +16,7 @@ BuildArch:	noarch
 Requires:	dnf
 Requires:	dnf-plugins-core
 Recommends:	dnf-plugin-system-upgrade
+Requires:   dnf-utils
 Requires:	cpio
 Requires:	rpmconf
 Requires:	libselinux-utils
