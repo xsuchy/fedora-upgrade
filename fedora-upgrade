@@ -19,7 +19,7 @@ function pause() {
 function continue_or_skip() {
    read -t 1 -n 10000 discard || [ $? -gt 128 ]
    echo -e $1
-   echo "This step is highly recommended, but can be safely skipped."
+   echo "This step is highly recommended but can be safely skipped."
    ANSWER='XXX'
    while [ "$ANSWER" != "" -a "$ANSWER" != "S" ] ; do
      read -p "Hit Enter to continue, Ctrl + C to cancel or S + Enter to skip. " ANSWER
@@ -169,7 +169,7 @@ function going_to_reboot() {
   echo "Download complete! The downloaded packages were saved in cache till the next"
   echo "successful transaction. You can remove cached packages by executing"
   echo "'dnf clean packages'."
-  echo "In next step your computer will be REBOOTED and packages will be upgraded."
+  echo "In next step, your computer will be REBOOTED, and packages will be upgraded."
   pause
 }
 
@@ -178,7 +178,7 @@ function choose_upgrade_method() {
   echo "  * offline - this use dnf-plugin-system-upgrade plugin and requires two reboots"
   echo "            - this is official upgrade method"
   echo "  * online  - this use distro-sync and require only one reboot"
-  echo "            - this is not offically tested by FedoraQA"
+  echo "            - this is not officially tested by FedoraQA"
   echo "For more information see https://fedoraproject.org/wiki/Upgrading"
   read -t 1 -n 10000 discard || [ $? -gt 128 ]
 }
