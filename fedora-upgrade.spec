@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	27.1
+Version:	28.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -20,7 +20,7 @@ Requires:	cpio
 Requires:	rpmconf
 Requires:	libselinux-utils
 Requires:   policycoreutils
-Requires:   distribution-gpg-keys
+Requires:   distribution-gpg-keys >= 1.14
 Suggests:   vim-enhanced
 Requires:	wget
 BuildRequires: asciidoc
