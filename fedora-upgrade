@@ -188,6 +188,12 @@ if ! check_installation; then
   exit 2
 fi
 
+if [ 0$UID -ne 0 ]; then
+   echo "Error: You must be a root."
+   echo "Run as: sudo fedora-upgrade"
+   exit 1
+fi
+
 # make obvious ending for inexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
