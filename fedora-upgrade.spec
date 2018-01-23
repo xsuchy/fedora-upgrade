@@ -57,6 +57,15 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 23 2018 Miroslav Suchý <msuchy@redhat.com> 28.1-1
+- clean caches before doing any other task
+- list orphans after upgrade
+- warn if not run as root
+- add upgrade to F28 and remove upgrade to F25
+- Remove PackageKit cache
+- choose better wording for reset priorities
+- reset services priorities the systemd way
+
 * Wed Sep 20 2017 Miroslav Suchý <msuchy@redhat.com> 27.1-1
 - remove old changelogs
 - remove upgrade from f24
