@@ -207,7 +207,6 @@ if [ 0$FEDORA_VERSION -eq 27 ]; then
   rpmconf_before_upgrade
   import_keys
 
-  install_if_missing dnf-plugins-core
   dnf clean -q dbcache metadata
   enable_updates=$(is_prerelease $UPGRADE_TO )
 
@@ -245,7 +244,6 @@ elif [ 0$FEDORA_VERSION -eq 26 ]; then
   rpmconf_before_upgrade
   import_keys
 
-  install_if_missing dnf-plugins-core
   dnf clean -q dbcache metadata
   enable_updates=$(is_prerelease $UPGRADE_TO )
 
@@ -284,7 +282,6 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
   rpmconf_before_upgrade
 
   install_if_missing fedora-repos-rawhide
-  install_if_missing dnf-plugins-core
   dnf config-manager --set-disabled fedora updates updates-testing
   dnf config-manager --set-enabled rawhide
   dnf upgrade -y dnf
