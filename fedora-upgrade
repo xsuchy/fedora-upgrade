@@ -35,6 +35,7 @@ function dnf_install_deps() {
 }
 
 function install_if_missing() {
+  echo "Checking if $1 is installed."
   rpm -q $1 >/dev/null || dnf install -y -q $1
 }
 
@@ -60,6 +61,7 @@ function rpmconf_before_upgrade() {
 }
 
 function import_keys() {
+  echo "Importing new RPM-GPG keys."
   rpm --import /usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-$TARGET_VERSION-primary
   if [ -f /etc/yum.repos.d/rpmfusion-free.repo -a -e /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION ]; then
     rpm --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-$TARGET_VERSION
