@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	28.1
+Version:	28.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -57,6 +57,11 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Wed Apr 18 2018 Miroslav Suchý <msuchy@redhat.com> 28.2-1
+- remove --distro-sync for dnf system-upgrade
+- do not check for dnf-plugins-core, it has been installed by check_dnf_deps()
+- be more verbose so we have some progress
+
 * Tue Jan 23 2018 Miroslav Suchý <msuchy@redhat.com> 28.1-1
 - clean caches before doing any other task
 - list orphans after upgrade
