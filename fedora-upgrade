@@ -208,6 +208,7 @@ if [ 0$FEDORA_VERSION -eq 27 ]; then
   import_keys
 
   dnf clean -q dbcache metadata
+  echo "Checking if this is pre-release"
   enable_updates=$(is_prerelease $UPGRADE_TO )
 
   choose_upgrade_method
@@ -221,7 +222,7 @@ if [ 0$FEDORA_VERSION -eq 27 ]; then
     dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false $enable_updates distro-sync
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --releasever=$UPGRADE_TO --distro-sync
+    dnf system-upgrade download --releasever=$UPGRADE_TO
     going_to_reboot
     dnf system-upgrade reboot
   fi
@@ -245,6 +246,7 @@ elif [ 0$FEDORA_VERSION -eq 26 ]; then
   import_keys
 
   dnf clean -q dbcache metadata
+  echo "Checking if this is pre-release" 
   enable_updates=$(is_prerelease $UPGRADE_TO )
 
   choose_upgrade_method
@@ -258,7 +260,7 @@ elif [ 0$FEDORA_VERSION -eq 26 ]; then
     dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false $enable_updates distro-sync
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --releasever=$UPGRADE_TO --distro-sync
+    dnf system-upgrade download --releasever=$UPGRADE_TO
     going_to_reboot
     dnf system-upgrade reboot
   fi
@@ -297,7 +299,7 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
     dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --releasever=rawhide --distro-sync --nogpgcheck
+    dnf system-upgrade download --releasever=rawhide --nogpgcheck
     going_to_reboot
     dnf system-upgrade reboot
   fi
