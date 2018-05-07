@@ -150,7 +150,7 @@ function print_exit_banner() {
 function welcome_banner() {
   echo "Going to upgrade your Fedora to version $1."
   echo "You may want to read Release Notes:"
-  echo "  http://docs.fedoraproject.org/release-notes/"
+  echo "  http://docs.fedoraproject.org/f${TARGET_VERSION}/release-notes/"
   pause
 }
 
