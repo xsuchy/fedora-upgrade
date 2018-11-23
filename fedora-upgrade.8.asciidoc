@@ -34,7 +34,7 @@ Steps which fedora-upgrade does:
 SEE ALSO
 --------
 dnf(8), rpmconf(8),
-https://fedoraproject.org/wiki/Upgrading_Fedora_using_yum
+https://fedoraproject.org/wiki/Upgrading_Fedora_using_package_manager
 
 
 BUGS
