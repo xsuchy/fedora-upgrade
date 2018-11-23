@@ -201,16 +201,12 @@ fi
 # make obvious ending for inexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
-<<<<<<< HEAD
-if [ 0$FEDORA_VERSION -eq 29 ]; then
-# Fedora 29 to 30
-  UPGRADE_TO=30
-=======
 # parse command line options
 for i in "$@"; do
   case $i in
     -u=*|--upgrade-to=*)
     OPTS_UPGRADE_TO="${i#*=}"
+    TARGET_VERSION="$OPTS_UPGRADE_TO"
     shift # past argument=value
     ;;
     --tmpfs=*)
@@ -232,11 +228,9 @@ if [ -n "$OPTS_HELP" ]; then
   exit 0;
 fi
 
-if [ 0$FEDORA_VERSION -eq 27 ]; then
-# Fedora 27 to 28
-  UPGRADE_TO=28
->>>>>>> allow to mount /var/cache/dnf as tmpfs
-  welcome_banner $UPGRADE_TO
+if [ 0$TARGET_VERSION -eq 30 ]; then
+  # Fedora 29 to 30
+  welcome_banner $TARGET_VERSION
 
   dnf_install_deps
   dnf_upgrade_before_upgrade
@@ -245,7 +239,7 @@ if [ 0$FEDORA_VERSION -eq 27 ]; then
 
   dnf clean -q dbcache metadata
   echo "Checking if this is pre-release"
-  enable_updates=$(is_prerelease $UPGRADE_TO )
+  enable_updates=$(is_prerelease $TARGET_VERSION )
 
   choose_upgrade_method
   echo -e $1
@@ -255,20 +249,16 @@ if [ 0$FEDORA_VERSION -eq 27 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-<<<<<<< HEAD
-    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false --setopt=module_platform_id=platform:f$UPGRADE_TO $enable_updates distro-sync
-=======
     if [ -n "$OPTS_TMPFS" ]; then
       mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
     fi
-    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false $enable_updates distro-sync
+    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates distro-sync
     if [ -n "$OPTS_TMPFS" ]; then
       umount /var/cache/dnf/
     fi
->>>>>>> allow to mount /var/cache/dnf as tmpfs
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download ---setopt=module_platform_id=platform:f$UPGRADE_TO -releasever=$UPGRADE_TO
+    dnf system-upgrade download ---setopt=module_platform_id=platform:f$TARGET_VERSION -releasever=$TARGET_VERSION
     going_to_reboot
     dnf system-upgrade reboot
   fi
@@ -281,10 +271,9 @@ if [ 0$FEDORA_VERSION -eq 27 ]; then
   reset_service_priorities
   unwanted_packages
   UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 28 ]; then
+elif [ 0$TARGET_VERSION -eq 29 ]; then
 # Fedora 28 to 29
-  UPGRADE_TO=29
-  welcome_banner $UPGRADE_TO
+  welcome_banner $TARGET_VERSION
 
   dnf_install_deps
   dnf_upgrade_before_upgrade
@@ -293,7 +282,7 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
 
   dnf clean -q dbcache metadata
   echo "Checking if this is pre-release" 
-  enable_updates=$(is_prerelease $UPGRADE_TO )
+  enable_updates=$(is_prerelease $TARGET_VERSION )
 
   choose_upgrade_method
   echo -e $1
@@ -306,13 +295,13 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
     if [ -n "$OPTS_TMPFS" ]; then
       mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
     fi
-    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false --setopt=module_platform_id=platform:f$UPGRADE_TO $enable_updates distro-sync
+    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates distro-sync
     if [ -n "$OPTS_TMPFS" ]; then
       umount /var/cache/dnf/
     fi
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --setopt=module_platform_id=platform:f$UPGRADE_TO --releasever=$UPGRADE_TO
+    dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=$TARGET_VERSION
     going_to_reboot
     dnf system-upgrade reboot
   fi
@@ -325,8 +314,7 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
   reset_service_priorities
   unwanted_packages
   UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 30 ]; then
-# Fedora 30 to rawhide
+elif [ 0$TARGET_VERSION -eq 31 ]; then
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"
@@ -371,7 +359,7 @@ elif [ 0$FEDORA_VERSION -eq 30 ]; then
   unwanted_packages
   UPGRADE_FINISHED=1
 else
-  echo Upgrading from version $FEDORA_VERSION is not supported.
+  echo Upgrading to version $TARGET_VERSION is not supported.
   exit 1
 fi
 print_exit_banner
