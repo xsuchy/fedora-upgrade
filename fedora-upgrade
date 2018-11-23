@@ -151,6 +151,8 @@ function welcome_banner() {
   echo "Going to upgrade your Fedora to version $1."
   echo "You may want to read Release Notes:"
   echo "  http://docs.fedoraproject.org/f${TARGET_VERSION}/release-notes/"
+  echo "and about commond bugs:"
+  echo "  https://fedoraproject.org/wiki/Common_F${TARGET_VERSION}_bugs"
   pause
 }
 
