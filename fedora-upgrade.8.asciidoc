@@ -10,7 +10,7 @@ fedora-upgrade - tool to guide you with upgrade of Fedora to next major version 
 
 SYNOPSIS
 --------
-*fedora-upgrade*
+*fedora-upgrade* [--help] [--tmpfs=SIZE]
 
 
 DESCRIPTION
@@ -29,6 +29,7 @@ Steps which fedora-upgrade does:
 * Resolve old .rpmsave and .rpmnew files after upgrade.
 * Reset priorities of services.
 
+--tmpfs=SIZE - When performing online upgrade and you have small /var/cache/dnf then this option will mount /var/cache/dnf as tmpfs with specified size. The SIZE can be anything what accepts `mount` command. E.g. "3G". The mount point is unmounted when dnf finishes.
 
 SEE ALSO
 --------

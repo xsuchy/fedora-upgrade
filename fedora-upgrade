@@ -183,6 +183,8 @@ function choose_upgrade_method() {
   read -t 1 -n 10000 discard || [ $? -gt 128 ]
 }
 
+################################ START OF THE CODE ############################
+
 if ! check_installation; then
   echo "Please install fedora-upgrade package using dnf first"
   exit 2
@@ -197,9 +199,41 @@ fi
 # make obvious ending for inexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
+<<<<<<< HEAD
 if [ 0$FEDORA_VERSION -eq 29 ]; then
 # Fedora 29 to 30
   UPGRADE_TO=30
+=======
+# parse command line options
+for i in "$@"; do
+  case $i in
+    -u=*|--upgrade-to=*)
+    OPTS_UPGRADE_TO="${i#*=}"
+    shift # past argument=value
+    ;;
+    --tmpfs=*)
+    OPTS_TMPFS="${i#*=}"
+    shift # past argument=value
+    ;;
+    --help)
+    OPTS_HELP=YES
+    shift # past argument
+    ;;
+    *)
+          # unknown option
+    ;;
+  esac
+done
+
+if [ -n "$OPTS_HELP" ]; then
+  man fedora-upgrade
+  exit 0;
+fi
+
+if [ 0$FEDORA_VERSION -eq 27 ]; then
+# Fedora 27 to 28
+  UPGRADE_TO=28
+>>>>>>> allow to mount /var/cache/dnf as tmpfs
   welcome_banner $UPGRADE_TO
 
   dnf_install_deps
@@ -219,7 +253,17 @@ if [ 0$FEDORA_VERSION -eq 29 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
+<<<<<<< HEAD
     dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false --setopt=module_platform_id=platform:f$UPGRADE_TO $enable_updates distro-sync
+=======
+    if [ -n "$OPTS_TMPFS" ]; then
+      mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
+    fi
+    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false $enable_updates distro-sync
+    if [ -n "$OPTS_TMPFS" ]; then
+      umount /var/cache/dnf/
+    fi
+>>>>>>> allow to mount /var/cache/dnf as tmpfs
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download ---setopt=module_platform_id=platform:f$UPGRADE_TO -releasever=$UPGRADE_TO
@@ -257,7 +301,13 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
+    if [ -n "$OPTS_TMPFS" ]; then
+      mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
+    fi
     dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false --setopt=module_platform_id=platform:f$UPGRADE_TO $enable_updates distro-sync
+    if [ -n "$OPTS_TMPFS" ]; then
+      umount /var/cache/dnf/
+    fi
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download --setopt=module_platform_id=platform:f$UPGRADE_TO --releasever=$UPGRADE_TO
@@ -296,7 +346,13 @@ elif [ 0$FEDORA_VERSION -eq 30 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
+    if [ -n "$OPTS_TMPFS" ]; then
+      mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
+    fi
     dnf --releasever=rawhide --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION distro-sync --nogpgcheck
+    if [ -n "$OPTS_TMPFS" ]; then
+      umount /var/cache/dnf/
+    fi
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=rawhide --nogpgcheck
