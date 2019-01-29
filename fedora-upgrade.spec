@@ -3,7 +3,6 @@ Version:	29.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
-Group:		Applications/System
 License:	GPLv2
 URL:		https://github.com/xsuchy/fedora-upgrade
 # Sources can be obtained by
