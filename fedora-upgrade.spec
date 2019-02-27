@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	29.1
+Version:	30.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
