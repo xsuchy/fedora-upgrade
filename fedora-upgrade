@@ -219,10 +219,10 @@ if [ 0$FEDORA_VERSION -eq 29 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false $enable_updates distro-sync
+    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false --setopt=module_platform_id=platform:f$UPGRADE_TO $enable_updates distro-sync
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --releasever=$UPGRADE_TO
+    dnf system-upgrade download ---setopt=module_platform_id=platform:f$UPGRADE_TO -releasever=$UPGRADE_TO
     going_to_reboot
     dnf system-upgrade reboot
   fi
@@ -257,10 +257,10 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false $enable_updates distro-sync
+    dnf --releasever=$UPGRADE_TO --setopt=deltarpm=false --setopt=module_platform_id=platform:f$UPGRADE_TO $enable_updates distro-sync
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --releasever=$UPGRADE_TO
+    dnf system-upgrade download --setopt=module_platform_id=platform:f$UPGRADE_TO --releasever=$UPGRADE_TO
     going_to_reboot
     dnf system-upgrade reboot
   fi
@@ -296,10 +296,10 @@ elif [ 0$FEDORA_VERSION -eq 30 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-    dnf --releasever=rawhide --setopt=deltarpm=false distro-sync --nogpgcheck
+    dnf --releasever=rawhide --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION distro-sync --nogpgcheck
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --releasever=rawhide --nogpgcheck
+    dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=rawhide --nogpgcheck
     going_to_reboot
     dnf system-upgrade reboot
   fi
