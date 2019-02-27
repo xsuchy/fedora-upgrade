@@ -197,9 +197,9 @@ fi
 # make obvious ending for inexperienced users
 trap "print_exit_banner" SIGHUP SIGINT SIGTERM
 
-if [ 0$FEDORA_VERSION -eq 27 ]; then
-# Fedora 27 to 28
-  UPGRADE_TO=28
+if [ 0$FEDORA_VERSION -eq 29 ]; then
+# Fedora 29 to 30
+  UPGRADE_TO=30
   welcome_banner $UPGRADE_TO
 
   dnf_install_deps
@@ -273,8 +273,8 @@ elif [ 0$FEDORA_VERSION -eq 28 ]; then
   reset_service_priorities
   unwanted_packages
   UPGRADE_FINISHED=1
-elif [ 0$FEDORA_VERSION -eq 29 ]; then
-# Fedora 29 to rawhide
+elif [ 0$FEDORA_VERSION -eq 30 ]; then
+# Fedora 30 to rawhide
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"

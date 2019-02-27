@@ -23,10 +23,11 @@ Currently, you can upgrade only to next version. You can upgrade from
 * Fedora 23 -> Fedora 24 (removed in master)
 * Fedora 24 -> Fedora 25 (removed in master)
 * Fedora 25 -> Fedora 26 (removed in master)
-* Fedora 26 -> Fedora 27
-* Fedora 27 -> Fedora 28
+* Fedora 26 -> Fedora 27 (removed in master)
+* Fedora 27 -> Fedora 28 (removed in master)
 * Fedora 28 -> Fedora 29
-* Fedora 29 -> Fedora rawhide
+* Fedora 29 -> Fedora 30
+* Fedora 30 -> Fedora rawhide
 
 You can *not* upgrade from older releases.
 You can *not* skip release - e.g., upgrade from Fedora 25 to Fedora 27.
