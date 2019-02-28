@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	30.1
+Version:	30.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,12 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Thu Feb 28 2019 Miroslav Suchý <msuchy@redhat.com> 30.2-1
+- set module_id during upgrade
+- add upgrade F29 to F30
+- remove old changelog entries
+- remove Group tag from spec
+
 * Wed Aug 08 2018 Miroslav Suchý <msuchy@redhat.com> 29.1-1
 - add upgrade from F28 to F29
 - Update release notes URL to point towards the correct target version
