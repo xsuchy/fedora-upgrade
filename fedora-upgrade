@@ -2,6 +2,7 @@
 # vim: sw=3:ts=3:et
 set -e
 
+RAWHIDE_VERSION=31
 FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
 TARGET_VERSION=$((FEDORA_VERSION + 1))
 UPGRADE_FINISHED=0
@@ -207,6 +208,10 @@ for i in "$@"; do
     -u=*|--upgrade-to=*)
     OPTS_UPGRADE_TO="${i#*=}"
     TARGET_VERSION="$OPTS_UPGRADE_TO"
+    if [ "$TARGET_VERSION" = "rawhide" ]; then
+      TARGET_VERSION="$RAWHIDE_VERSION"
+    fi
+
     shift # past argument=value
     ;;
     --tmpfs=*)
@@ -314,7 +319,7 @@ elif [ 0$TARGET_VERSION -eq 29 ]; then
   reset_service_priorities
   unwanted_packages
   UPGRADE_FINISHED=1
-elif [ 0$TARGET_VERSION -eq 31 ]; then
+elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"
