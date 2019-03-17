@@ -15,22 +15,11 @@ Please note that fedora-upgrade is NOT officially supported upgrade path.
 That means it is not tested by Fedora QA before release and bugs in fedora-upgrade
 are not a blocker for release.
 
-Currently, you can upgrade only to next version. You can upgrade from
-* Fedora 19 -> Fedora 20 (removed in master)
-* Fedora 20 -> Fedora 21 (removed in master)
-* Fedora 21 -> Fedora 22 (removed in master)
-* Fedora 22 -> Fedora 23 (removed in master)
-* Fedora 23 -> Fedora 24 (removed in master)
-* Fedora 24 -> Fedora 25 (removed in master)
-* Fedora 25 -> Fedora 26 (removed in master)
-* Fedora 26 -> Fedora 27 (removed in master)
-* Fedora 27 -> Fedora 28 (removed in master)
-* Fedora 28 -> Fedora 29
-* Fedora 29 -> Fedora 30
-* Fedora 30 -> Fedora rawhide
+You can upgrade only to any version. However, Fedora QA tests, and most users upgrade to next version.next version. You can upgrade to
 
-You can *not* upgrade from older releases.
-You can *not* skip release - e.g., upgrade from Fedora 25 to Fedora 27.
+* Fedora 29
+* Fedora 30
+* Fedora rawhide
 
 
 How it works
@@ -41,7 +30,9 @@ How it works
 3. Resolve old .rpmsave and .rpmnew files using [rpmconf](https://github.com/xsuchy/rpmconf/). This step is optional and can be skipped. But it is better to start to upgrade with a clean state.
 4. Download and install new GPG keys - including rpmfusion if you are using it.
 5. Update dnf and clean all dnf metadata.
-6. Upgrade system using dnf. In this or any previous step, you can hit Ctrl + C and interrupt upgrade and repeat it as many times you wish. After this step, you could not return (you can use back up, you created a backup before upgrade, did you?). You can choose between offline upgrade (officially supported) or online upgrade (unofficial method).
+6. Upgrade system using dnf. In this or any previous step, you can hit Ctrl + C and interrupt upgrade and repeat it as many times you wish. After this step, you could not return (you can use back up, you created a backup before upgrade, did you?). You can choose between offline upgrade:
+   * offline - this use dnf-plugin-system-upgrade plugin and requires two reboots - this is official upgrade method
+   * online  - this use distro-sync and require only one reboot - this is not officially tested by FedoraQA
 7. Install packages from group 'Minimal Install'. It may happen that some new essential packages have been introduced to Fedora. This step will install them. You may, however, skip this step if you want to.
 8. Clean old caches (YUM, DNF, PackageKit).
 9. Resolve old .rpmsave and .rpmnew files using [rpmconf](https://github.com/xsuchy/rpmconf/). This step is optional and can be skipped. But it is better to finish the upgrade with a clean state.
