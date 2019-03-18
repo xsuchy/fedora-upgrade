@@ -186,6 +186,18 @@ function choose_upgrade_method() {
   read -t 1 -n 10000 discard || [ $? -gt 128 ]
 }
 
+function mount_cache_dnf() {
+  if [ -n "$OPTS_TMPFS" ]; then
+    mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
+  fi
+}
+
+function umount_cache_dnf() {
+  if [ -n "$OPTS_TMPFS" ]; then
+    umount /var/cache/dnf/
+  fi
+}
+
 ################################ START OF THE CODE ############################
 
 if ! check_installation; then
@@ -254,13 +266,9 @@ if [ 0$TARGET_VERSION -eq 30 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-    if [ -n "$OPTS_TMPFS" ]; then
-      mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
-    fi
+    mount_cache_dnf
     dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates distro-sync
-    if [ -n "$OPTS_TMPFS" ]; then
-      umount /var/cache/dnf/
-    fi
+    umount_cache_dnf
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download ---setopt=module_platform_id=platform:f$TARGET_VERSION -releasever=$TARGET_VERSION
@@ -297,13 +305,9 @@ elif [ 0$TARGET_VERSION -eq 29 ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-    if [ -n "$OPTS_TMPFS" ]; then
-      mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
-    fi
+    mount_cache_dnf
     dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates distro-sync
-    if [ -n "$OPTS_TMPFS" ]; then
-      umount /var/cache/dnf/
-    fi
+    umount_cache_dnf
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=$TARGET_VERSION
@@ -341,13 +345,9 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
     ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
   done
   if [ "$ANSWER" == "online" ] ; then
-    if [ -n "$OPTS_TMPFS" ]; then
-      mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
-    fi
+    mount_cache_dnf
     dnf --releasever=rawhide --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION distro-sync --nogpgcheck
-    if [ -n "$OPTS_TMPFS" ]; then
-      umount /var/cache/dnf/
-    fi
+    umount_cache_dnf
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
     dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=rawhide --nogpgcheck
