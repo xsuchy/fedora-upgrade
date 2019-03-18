@@ -6,6 +6,7 @@ RAWHIDE_VERSION=31
 FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
 TARGET_VERSION=$((FEDORA_VERSION + 1))
 UPGRADE_FINISHED=0
+TMPFS_MOUNTED=0
 
 function check_installation() {
   [[ -e /usr/sbin/fedora-upgrade ]]
@@ -129,6 +130,7 @@ function is_prerelease() {
 }
 
 function print_exit_banner() {
+  umount_cache_dnf
   if [ $UPGRADE_FINISHED -eq 1 ]; then
     echo
     echo You successfully upgraded to Fedora $TARGET_VERSION
@@ -189,12 +191,14 @@ function choose_upgrade_method() {
 function mount_cache_dnf() {
   if [ -n "$OPTS_TMPFS" ]; then
     mount -t tmpfs none -o "size=$OPTS_TMPFS" /var/cache/dnf/
+    TMPFS_MOUNTED=1
   fi
 }
 
 function umount_cache_dnf() {
-  if [ -n "$OPTS_TMPFS" ]; then
+  if [ -n "$OPTS_TMPFS" -a 0$TMPFS_MOUNTED -eq 1 ]; then
     umount /var/cache/dnf/
+    TMPFS_MOUNTED=0
   fi
 }
 
@@ -212,7 +216,7 @@ if [ 0$UID -ne 0 ]; then
 fi
 
 # make obvious ending for inexperienced users
-trap "print_exit_banner" SIGHUP SIGINT SIGTERM INT
+trap "print_exit_banner" SIGHUP SIGINT SIGTERM INT ERR
 
 # parse command line options
 for i in "$@"; do
