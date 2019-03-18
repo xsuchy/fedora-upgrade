@@ -31,7 +31,7 @@ Steps which fedora-upgrade does:
 
 --tmpfs=SIZE - When performing online upgrade and you have small /var/cache/dnf then this option will mount /var/cache/dnf as tmpfs with specified size. The SIZE can be anything what accepts `mount` command. E.g. "3G". The mount point is unmounted when dnf finishes.
 
--u=VERSION, --upgrade-to=VERSION - By default `fedora-upgrade` upgrade to next version. I.e. from 29 to 30. You can specify to which version you are going to upgrade and upgrade from 28 to 30. Be warned that this is hardly tested and there can be some issues. The VERSION is a number.
+-u=VERSION, --upgrade-to=VERSION - By default `fedora-upgrade` upgrade to next version. I.e. from 29 to 30. You can specify to which version you are going to upgrade and upgrade from 28 to 30. Be warned that this is hardly tested and there can be some issues. The VERSION is a number or string "rawhide".
 
 SEE ALSO
 --------
