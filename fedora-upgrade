@@ -245,7 +245,7 @@ for i in "$@"; do
 done
 
 if [ -n "$OPTS_HELP" ]; then
-  man fedora-upgrade
+  man fedora-upgrade | cat
   exit 0;
 fi
 
