@@ -275,7 +275,7 @@ if [ 0$TARGET_VERSION -eq 30 ]; then
     umount_cache_dnf
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download ---setopt=module_platform_id=platform:f$TARGET_VERSION -releasever=$TARGET_VERSION
+    dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=$TARGET_VERSION
     going_to_reboot
     dnf system-upgrade reboot
   fi
