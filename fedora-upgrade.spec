@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	30.2
+Version:	30.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,14 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Mon Mar 18 2019 Miroslav Suchý <msuchy@redhat.com> 30.3-1
+- unmount tmpfs when error occurs
+- trap Ctrl+C
+- accept "rawhide" as upgrade-to version
+- allow to upgrade to specific version
+- add link to common bugs
+- allow to mount /var/cache/dnf as tmpfs
+
 * Thu Feb 28 2019 Miroslav Suchý <msuchy@redhat.com> 30.2-1
 - set module_id during upgrade
 - add upgrade F29 to F30
