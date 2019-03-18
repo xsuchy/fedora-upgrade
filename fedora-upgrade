@@ -200,7 +200,7 @@ if [ 0$UID -ne 0 ]; then
 fi
 
 # make obvious ending for inexperienced users
-trap "print_exit_banner" SIGHUP SIGINT SIGTERM
+trap "print_exit_banner" SIGHUP SIGINT SIGTERM INT
 
 # parse command line options
 for i in "$@"; do
