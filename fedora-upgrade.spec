@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	30.3
+Version:	30.4
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,9 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Mar 19 2019 Miroslav Suchý <msuchy@redhat.com> 30.4-1
+- Fix the offline update path for fedora 30
+
 * Mon Mar 18 2019 Miroslav Suchý <msuchy@redhat.com> 30.3-1
 - unmount tmpfs when error occurs
 - trap Ctrl+C
