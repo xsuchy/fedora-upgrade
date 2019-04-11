@@ -136,17 +136,12 @@ function print_exit_banner() {
     echo You successfully upgraded to Fedora $TARGET_VERSION
     echo Reboot is strongly suggested.
     exit 0
-  elif [ $UPGRADE_FINISHED -eq 0 ]; then
-    echo
-    echo Upgrade to Fedora $TARGET_VERSION was not finished!
-    echo You can safely re-run fedora-upgrade again to start over.
-    exit 1
   else
     echo
     echo Upgrade to Fedora $TARGET_VERSION was not finished!
-    echo Finish steps manually according to documentation on the wiki:
-    echo 'https://fedoraproject.org/wiki/Upgrading_Fedora_using_package_manager?rd=Upgrading_Fedora_using_yum#5._Make_sure_Fedora_is_upgraded'
-    exit 2
+    echo You can safely re-run fedora-upgrade again to start over with:
+    echo "    fedora-upgrade --upgrade-to=${TARGET_VERSION}"
+    exit 1
   fi
 }
 
@@ -279,7 +274,6 @@ if [ 0$TARGET_VERSION -eq 30 ]; then
     going_to_reboot
     dnf system-upgrade reboot
   fi
-  UPGRADE_FINISHED=2
 
   dnf_install_base
 
@@ -318,7 +312,6 @@ elif [ 0$TARGET_VERSION -eq 29 ]; then
     going_to_reboot
     dnf system-upgrade reboot
   fi
-  UPGRADE_FINISHED=2
 
   dnf_install_base
 
@@ -358,7 +351,6 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
     going_to_reboot
     dnf system-upgrade reboot
   fi
-  UPGRADE_FINISHED=2
 
   dnf_install_base
 
