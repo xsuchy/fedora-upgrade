@@ -129,6 +129,16 @@ function is_prerelease() {
   rm -rf "$TEMP"
 }
 
+function warn_if_graphics_mode() {
+   if [[ ! "$TERM" =~ "screen".* ]]; then
+      cat << WARNING
+It seems you are running upgrade from graphics mode. You should use "screen" or "tmux".
+Are you sure you want to continue?
+WARNING
+      pause
+   fi
+}
+
 function print_exit_banner() {
   umount_cache_dnf
   if [ $UPGRADE_FINISHED -eq 1 ]; then
@@ -246,6 +256,7 @@ fi
 
 if [ 0$TARGET_VERSION -eq 30 ]; then
   # Fedora 29 to 30
+  warn_if_graphics_mode
   welcome_banner $TARGET_VERSION
 
   dnf_install_deps
@@ -283,7 +294,8 @@ if [ 0$TARGET_VERSION -eq 30 ]; then
   unwanted_packages
   UPGRADE_FINISHED=1
 elif [ 0$TARGET_VERSION -eq 29 ]; then
-# Fedora 28 to 29
+  # Fedora 28 to 29
+  warn_if_graphics_mode
   welcome_banner $TARGET_VERSION
 
   dnf_install_deps
@@ -321,6 +333,7 @@ elif [ 0$TARGET_VERSION -eq 29 ]; then
   unwanted_packages
   UPGRADE_FINISHED=1
 elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
+  warn_if_graphics_mode
   echo "Going to upgrade your Fedora to rawhide."
   echo "Fedora $TARGET_VERSION is currently under development."
   echo "Are you sure?"
