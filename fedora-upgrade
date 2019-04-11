@@ -3,7 +3,7 @@
 set -e
 
 RAWHIDE_VERSION=31
-FEDORA_VERSION=$(rpm -q --qf '%{version}' fedora-release)
+FEDORA_VERSION=$(rpm -qf --qf '%{version}' /etc/os-release)
 TARGET_VERSION=$((FEDORA_VERSION + 1))
 UPGRADE_FINISHED=0
 TMPFS_MOUNTED=0
