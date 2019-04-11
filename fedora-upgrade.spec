@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	30.4
+Version:	30.5
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,12 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Thu Apr 11 2019 Miroslav Suchý <msuchy@redhat.com> 30.5-1
+- warn when user is not running screen or tmux
+- improve exit banner when failure happens
+- package fedora-release does not need to be installed, it can be fedora-
+  release-common
+
 * Tue Mar 19 2019 Miroslav Suchý <msuchy@redhat.com> 30.4-1
 - Fix the offline update path for fedora 30
 
