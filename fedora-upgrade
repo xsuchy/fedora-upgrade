@@ -7,6 +7,7 @@ FEDORA_VERSION=$(rpm -qf --qf '%{version}' /etc/os-release)
 TARGET_VERSION=$((FEDORA_VERSION + 1))
 UPGRADE_FINISHED=0
 TMPFS_MOUNTED=0
+DISABLED_PLUGINS="--disableplugin=needs-restarting --disableplugin=tracer"
 
 function check_installation() {
   [[ -e /usr/sbin/fedora-upgrade ]]
@@ -277,7 +278,7 @@ if [ 0$TARGET_VERSION -eq 30 ]; then
   done
   if [ "$ANSWER" == "online" ] ; then
     mount_cache_dnf
-    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates distro-sync
+    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates $DISABLED_PLUGINS distro-sync
     umount_cache_dnf
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
@@ -316,7 +317,7 @@ elif [ 0$TARGET_VERSION -eq 29 ]; then
   done
   if [ "$ANSWER" == "online" ] ; then
     mount_cache_dnf
-    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates distro-sync
+    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates $DISABLED_PLUGINS distro-sync
     umount_cache_dnf
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
@@ -356,7 +357,7 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
   done
   if [ "$ANSWER" == "online" ] ; then
     mount_cache_dnf
-    dnf --releasever=rawhide --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION distro-sync --nogpgcheck
+    dnf --releasever=rawhide --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $DISABLED_PLUGINS distro-sync --nogpgcheck
     umount_cache_dnf
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
