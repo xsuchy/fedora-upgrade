@@ -2,7 +2,7 @@
 # vim: sw=3:ts=3:et
 set -e
 
-RAWHIDE_VERSION=31
+RAWHIDE_VERSION=32
 FEDORA_VERSION=$(rpm -qf --qf '%{version}' /etc/os-release)
 TARGET_VERSION=$((FEDORA_VERSION + 1))
 UPGRADE_FINISHED=0
@@ -267,7 +267,7 @@ if [ 0$TARGET_VERSION -eq 30 ]; then
 
   dnf clean -q dbcache metadata
   echo "Checking if this is pre-release"
-  enable_updates=$(is_prerelease $TARGET_VERSION )
+  enable_updates="" #$(is_prerelease $TARGET_VERSION )
 
   choose_upgrade_method
   echo -e $1
@@ -294,8 +294,8 @@ if [ 0$TARGET_VERSION -eq 30 ]; then
   reset_service_priorities
   unwanted_packages
   UPGRADE_FINISHED=1
-elif [ 0$TARGET_VERSION -eq 29 ]; then
-  # Fedora 28 to 29
+elif [ 0$TARGET_VERSION -eq 31 ]; then
+  # Fedora 30 to 31
   warn_if_graphics_mode
   welcome_banner $TARGET_VERSION
 
