@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	31.0
+Version:	31.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,10 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 28 2019 Miroslav Suchý <msuchy@redhat.com> 31.1-1
+- add migration to Fedora 31
+- do not run tracer and needs-restarting plugins
+
 * Thu Apr 11 2019 Miroslav Suchý <msuchy@redhat.com> 30.5-1
 - warn when user is not running screen or tmux
 - improve exit banner when failure happens
