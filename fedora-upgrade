@@ -123,7 +123,7 @@ function is_prerelease() {
   TEMP=$(mktemp -d)
   dnf download -q --destdir "$TEMP" --disablerepo=* --enablerepo=fedora --releasever=$RELEASE fedora-repos
   if rpm2cpio "$TEMP"/fedora-repos*.rpm | cpio -i --quiet --to-stdout - ./etc/yum.repos.d/fedora-updates-testing.repo | grep 'enabled=1' >/dev/null ; then
-    echo "--enablerepo=updates-testing"
+    echo "--enablerepo=updates-testing --enablerepo=updates-testing-modular"
   else
     echo ""
   fi
