@@ -103,6 +103,13 @@ function reset_service_priorities() {
   fi
 }
 
+function EXCEPTION_reset_libgit2_module() {
+  continue_or_skip "\nGoing to reset libgit2, exa, bat Fedora Modules. (dnf module reset libgit2 exa bat)"
+  if [ "$ANSWER" != "S" ] ; then
+    dnf module reset libgit2 exa bat
+  fi
+}
+
 function cleanup_cache() {
   rm -rf /var/cache/yum/* /var/cache/dnf/* /var/cache/PackageKit/*
 }
@@ -308,6 +315,8 @@ elif [ 0$TARGET_VERSION -eq 31 ]; then
   echo "Checking if this is pre-release" 
   enable_updates=$(is_prerelease $TARGET_VERSION )
 
+  EXCEPTION_reset_libgit2_module
+
   choose_upgrade_method
   echo -e $1
   ANSWER='XXX'
@@ -348,6 +357,9 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
   dnf config-manager --set-enabled rawhide
   dnf upgrade -y dnf
   dnf clean -q dbcache metadata
+
+  EXCEPTION_reset_libgit2_module
+
   choose_upgrade_method
   echo -e $1
   ANSWER='XXX'
