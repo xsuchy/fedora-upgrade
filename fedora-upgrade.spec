@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	31.2
+Version:	31.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,9 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Sun Oct 27 2019 Miroslav Suchý <msuchy@redhat.com> 31.3-1
+- do not check if F31 is pre-release
+
 * Mon Sep 23 2019 Miroslav Suchý <msuchy@redhat.com> 31.2-1
 - 1747408 - reset modules before upgrading
 - enable modulare-testing if needed
