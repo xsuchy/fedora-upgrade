@@ -150,6 +150,17 @@ WARNING
 function print_exit_banner() {
   umount_cache_dnf
   if [ $UPGRADE_FINISHED -eq 1 ]; then
+    echo "Enabling updates repos back"
+    # upgrade to rawhide failed, restore repos
+    dnf config-manager --set-enabled fedora updates updates-testing updates-modular
+    # FIXME we should enable
+    #    rpmfusion-free-updates rpmfusion-nonfree-updates
+    # but only if we previously disabled it
+    echo "Disabling rawhide repo."
+    dnf config-manager --set-disabled rawhide
+    UPGRADE_FINISHED=0
+  fi
+  if [ $UPGRADE_FINISHED -eq 1 ]; then
     echo
     echo You successfully upgraded to Fedora $TARGET_VERSION
     echo Reboot is strongly suggested.
@@ -355,6 +366,7 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
   install_if_missing fedora-repos-rawhide
   dnf config-manager --set-disabled fedora updates updates-testing updates-modular rpmfusion-free-updates rpmfusion-nonfree-updates
   dnf config-manager --set-enabled rawhide
+  UPGRADE_FINISHED=2
   dnf clean -q dbcache metadata
 
   EXCEPTION_reset_libgit2_module
