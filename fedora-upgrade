@@ -355,7 +355,6 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
   install_if_missing fedora-repos-rawhide
   dnf config-manager --set-disabled fedora updates updates-testing updates-modular
   dnf config-manager --set-enabled rawhide
-  dnf upgrade -y dnf
   dnf clean -q dbcache metadata
 
   EXCEPTION_reset_libgit2_module
