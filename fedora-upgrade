@@ -353,7 +353,7 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
   rpmconf_before_upgrade
 
   install_if_missing fedora-repos-rawhide
-  dnf config-manager --set-disabled fedora updates updates-testing updates-modular
+  dnf config-manager --set-disabled fedora updates updates-testing updates-modular rpmfusion-free-updates rpmfusion-nonfree-updates
   dnf config-manager --set-enabled rawhide
   dnf clean -q dbcache metadata
 
