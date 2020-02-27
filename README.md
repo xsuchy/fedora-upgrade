@@ -19,6 +19,7 @@ You can upgrade to any version. However, Fedora QA tests, and most users upgrade
 
 * Fedora 30
 * Fedora 31
+* Fedora 32
 * Fedora rawhide
 
 
