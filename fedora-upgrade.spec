@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	31.3
+Version:	32.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,13 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Mar 03 2020 Miroslav Suchý <msuchy@redhat.com> 32.1-1
+- add upgrade to f32
+- try to restore repos in case of failed upgrade to rawhide
+- disable rpmfusion-*-updates when updating to rawhide
+- do not upgrade dnf before upgrading to rawhide
+- disable updates-modular when updating to rawhide
+
 * Sun Oct 27 2019 Miroslav Suchý <msuchy@redhat.com> 31.3-1
 - do not check if F31 is pre-release
 
