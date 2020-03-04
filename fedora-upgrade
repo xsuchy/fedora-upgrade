@@ -110,6 +110,13 @@ function EXCEPTION_reset_libgit2_module() {
   fi
 }
 
+function EXCEPTION_reset_modules() {
+  continue_or_skip "\nGoing to reset Fedora Modules. (dnf module reset '*')"
+  if [ "$ANSWER" != "S" ] ; then
+    dnf module reset '*'
+  fi
+}
+
 function cleanup_cache() {
   rm -rf /var/cache/yum/* /var/cache/dnf/* /var/cache/PackageKit/*
 }
@@ -366,6 +373,9 @@ elif [ 0$TARGET_VERSION -eq 32 ]; then
   dnf clean -q dbcache metadata
   echo "Checking if this is pre-release"
   enable_updates=$(is_prerelease $TARGET_VERSION )
+
+  # https://bugzilla.redhat.com/show_bug.cgi?id=1767351
+  EXCEPTION_reset_modules
 
   choose_upgrade_method
   echo -e $1
