@@ -333,7 +333,7 @@ elif [ 0$TARGET_VERSION -eq 32 ]; then
 
   dnf clean -q dbcache metadata
   echo "Checking if this is pre-release"
-  enable_updates=$(is_prerelease $TARGET_VERSION )
+  enable_updates="" #$(is_prerelease $TARGET_VERSION )
 
   # https://bugzilla.redhat.com/show_bug.cgi?id=1767351
   EXCEPTION_reset_modules
