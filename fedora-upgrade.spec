@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	32.2
+Version:	32.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,10 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Aug 25 2020 Miroslav Suchý <msuchy@redhat.com> 32.3-1
+- do not check prerelease when upgrading to F32
+- add Fedora 33
+
 * Wed Mar 04 2020 Miroslav Suchý <msuchy@redhat.com> 32.2-1
 - 1767351 - reset modules before the upgrade
 
