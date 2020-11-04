@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	33.1
+Version:	33.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,9 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Wed Nov 04 2020 Miroslav Suchý <msuchy@redhat.com> 33.2-1
+- do not test if F33 is prerelease
+
 * Tue Aug 25 2020 Miroslav Suchý <msuchy@redhat.com> 33.1-1
 - bump up version
 
