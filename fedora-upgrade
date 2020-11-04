@@ -374,8 +374,9 @@ elif [ 0$TARGET_VERSION -eq 33 ]; then
   import_keys
 
   dnf clean -q dbcache metadata
-  echo "Checking if this is pre-release"
-  enable_updates=$(is_prerelease $TARGET_VERSION )
+  # echo "Checking if this is pre-release"
+  enable_updates=""
+  #enable_updates=$(is_prerelease $TARGET_VERSION )
 
   choose_upgrade_method
   echo -e $1
