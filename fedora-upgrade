@@ -377,6 +377,10 @@ elif [ 0$TARGET_VERSION -eq 34 ]; then
   echo "Checking if this is pre-release"
   enable_updates=$(is_prerelease $TARGET_VERSION )
 
+  # EXCEPTION https://bugzilla.redhat.com/show_bug.cgi?id=1919864
+  allowerasing=""
+  rpm -q rdma-core.i686 >/dev/null 2>&1 && allowerasing="--allowerasing"
+
   choose_upgrade_method
   echo -e $1
   ANSWER='XXX'
@@ -386,11 +390,11 @@ elif [ 0$TARGET_VERSION -eq 34 ]; then
   done
   if [ "$ANSWER" == "online" ] ; then
     mount_cache_dnf
-    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates $DISABLED_PLUGINS distro-sync
+    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates $DISABLED_PLUGINS distro-sync $allowerasing
     umount_cache_dnf
   elif [ "$ANSWER" == "offline" ] ; then
     install_if_missing dnf-plugin-system-upgrade
-    dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=$TARGET_VERSION
+    dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=$TARGET_VERSION $allowerasing
     going_to_reboot
     dnf system-upgrade reboot
   fi
