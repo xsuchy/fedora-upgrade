@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	34.1
+Version:	34.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -56,6 +56,11 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Feb 23 2021 Miroslav Suchý <msuchy@redhat.com> 34.2-1
+- fedora-repos-modular does not need to be installed
+- handle special case of rdma-core.i686
+- print info when checking updates
+
 * Thu Feb 11 2021 Miroslav Suchý <msuchy@redhat.com> 34.1-1
 - remove f31
 - add f34
