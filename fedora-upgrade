@@ -96,6 +96,20 @@ function rpmconf_after_upgrade() {
   fi
 }
 
+function remove_old_gpg_keys() {
+  continue_or_skip "\nGoing to remove old GPG keys."
+
+  # Fedora 30
+  rpm -e gpg-pubkey-c0aeda6e-5ad45327 2>/dev/null
+  rpm -e gpg-pubkey-1d14a795-5ad4532e 2>/dev/null
+  rpm -e gpg-pubkey-cfc659b9-5b6eac67 2>/dev/null
+
+  # Fedora 31
+  rpm -e gpg-pubkey-c481937a-5bc4662d 2>/dev/null
+  rpm -e gpg-pubkey-3c3359c4-5c6ae44d 2>/dev/null
+  rpm -e gpg-pubkey-54a86092-5bc4663b 2>/dev/null
+}
+
 function reset_service_priorities() {
   continue_or_skip "\nGoing to resets all installed unit files to the defaults configured\nin the preset policy file."
   if [ "$ANSWER" != "S" ] ; then
@@ -324,6 +338,7 @@ if [ 0$TARGET_VERSION -eq 32 ]; then
   cleanup_cache
   rpmconf_after_upgrade
   reset_service_priorities
+  remove_old_gpg_keys
   unwanted_packages
   UPGRADE_FINISHED=1
 elif [ 0$TARGET_VERSION -eq 33 ]; then
@@ -364,6 +379,7 @@ elif [ 0$TARGET_VERSION -eq 33 ]; then
   cleanup_cache
   rpmconf_after_upgrade
   reset_service_priorities
+  remove_old_gpg_keys
   unwanted_packages
   UPGRADE_FINISHED=1
 elif [ 0$TARGET_VERSION -eq 34 ]; then
@@ -408,6 +424,7 @@ elif [ 0$TARGET_VERSION -eq 34 ]; then
   cleanup_cache
   rpmconf_after_upgrade
   reset_service_priorities
+  remove_old_gpg_keys
   unwanted_packages
   UPGRADE_FINISHED=1
 elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
@@ -451,6 +468,7 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
   cleanup_cache
   rpmconf_after_upgrade
   reset_service_priorities
+  remove_old_gpg_keys
   unwanted_packages
   UPGRADE_FINISHED=1
 else
