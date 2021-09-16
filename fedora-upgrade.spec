@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	34.3
+Version:	35.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -20,7 +20,7 @@ Requires:	cpio
 Requires:	rpmconf
 Requires:	libselinux-utils
 Requires:   policycoreutils
-Requires:   distribution-gpg-keys >= 1.33
+Requires:   distribution-gpg-keys >= 1.51
 Suggests:   vim-enhanced
 Requires:	wget
 BuildRequires: asciidoc
@@ -56,6 +56,10 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_datadir}/%{name}
 
 %changelog
+* Thu Sep 16 2021 Miroslav Suchý <msuchy@redhat.com> 35.1-1
+- remove upgrade to f32
+- add upgrade to f35
+
 * Thu Apr 29 2021 Miroslav Suchý <msuchy@redhat.com> 34.3-1
 - remove prerelease test for F34
 
