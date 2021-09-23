@@ -1,0 +1,43 @@
+#!/usr/bin/bash
+
+source /etc/os-release
+UPGRADE_FROM="$1"
+if [ -z "$UPGRADE_FROM" ]; then
+        UPGRADE_FROM=$(("$VERSION_ID"-1))
+fi
+UPGRADE_TO="$VERSION_ID"
+echo Looking for retired packages betweeen Fedora $UPGRADE_FROM and Fedora $UPGRADE_TO
+echo These packages are no longer maintained.
+echo "You can keep them (answer N to following questions),"
+echo but this packages will not get any updates. Not even security updates.
+
+TO_REMOVE=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
+OLD_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
+NEW_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
+
+
+
+
+#--repo={fedora,fedora-modular,updates,updates-modular}-source
+
+echo Gather package list for Fedora $UPGRADE_FROM
+repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local --arch src --enablerepo=*-source -a | pkgname | sort | uniq > "$OLD_LIST"
+#repoquery --releasever "$UPGRADE_FROM" --arch src -a | pkgname | sort | uniq > "$OLD_LIST"
+echo Gather package list for Fedora $UPGRADE_TO
+repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local --arch src --enablerepo=*-source -a | pkgname | sort | uniq > "$NEW_LIST"
+comm -23 "$OLD_LIST" "$NEW_LIST" > "$TO_REMOVE"
+
+echo Asking for super user access:
+sudo true
+
+for PACKAGE in $( cat "$TO_REMOVE"); do
+        #skip if this package is not installed
+        rpm -q "$PACKAGE" 2>/dev/null >&2 || continue
+
+        SUMMARY=$(rpm -q --qf "%{summary}" "$PACKAGE" | head -n1 )
+        echo "Removing $PACKAGE: $SUMMARY"
+        sudo dnf remove "$PACKAGE"
+done
+
+# cleanup
+rm -f "$TO_REMOVE" "$OLD_LIST" "$NEW_LIST"

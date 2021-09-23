@@ -35,11 +35,19 @@ This is an unofficial tool, for official Fedora-supported
 upgrades please see:
 https://fedoraproject.org/wiki/Upgrading
 
+%package -n remove-retired-packages
+Summary: Remove retired distribution's packages
+
+%description -n remove-retired-packages
+Script that removes packages removed from
+Fedora distribution.
+
 %prep
 %setup -q
 
 %build
 a2x -d manpage -f manpage fedora-upgrade.8.asciidoc
+a2x -d manpage -f manpage remove-retired-packages.8.asciidoc
 
 %install
 mkdir -p %{buildroot}%{_sbindir}
@@ -47,6 +55,8 @@ mkdir -p %{buildroot}%{_mandir}/man8
 mkdir -p %{buildroot}%{_datadir}/%{name}
 install -m755 fedora-upgrade %{buildroot}%{_sbindir}
 install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
+install -m755 remove-retired-packages %{buildroot}%{_sbindir}
+install -m644 remove-retired-packages.8 %{buildroot}/%{_mandir}/man8/
 
 %files
 %license LICENSE
@@ -54,6 +64,11 @@ install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 %{_sbindir}/fedora-upgrade
 %doc %{_mandir}/man8/fedora-upgrade.8*
 %{_datadir}/%{name}
+
+%files -n remove-retired-packages
+%{_sbindir}/remove-retired-packages
+%doc %{_mandir}/man8/remove-retired-packages.8*
+%license LICENSE
 
 %changelog
 * Thu Sep 16 2021 Miroslav Suchý <msuchy@redhat.com> 35.1-1

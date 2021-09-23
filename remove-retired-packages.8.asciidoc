@@ -1,0 +1,34 @@
+remove-retired-packages(8)
+==========================
+:man source:  remove-retired-packages
+:man manual:  Remove Retired Packages
+
+NAME
+----
+remove-retired-packages - tool to remove packages no longer shipped by Fedora's distribution.
+
+
+SYNOPSIS
+--------
+*remove-retired-packages* [VERSION]
+
+
+DESCRIPTION
+-----------
+
+Script *remove-retired-packages* checks which packages has been retired (removed) between current version of Fedora and VERSION's version. When no paramters is passed then VERSION is set to current version minus one.
+
+SEE ALSO
+--------
+dnf(8), fedora-upgrade(8),
+https://docs.fedoraproject.org/en-US/package-maintainers/Package_Retirement_Process/
+
+
+BUGS
+----
+If you experience some problem, please report it at: https://github.com/xsuchy/fedora-upgrade/issues
+
+
+AUTHOR
+------
+Miroslav Suchý <msuchy@redhat.com>
