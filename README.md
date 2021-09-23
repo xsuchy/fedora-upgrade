@@ -17,9 +17,10 @@ are not a blocker for release.
 
 You can upgrade to any version. However, Fedora QA tests, and most users upgrade to next version.next version. You can upgrade to
 
-* Fedora 30
-* Fedora 31
-* Fedora 32
+* Fedora 33
+* Fedora 34
+* Fedora 35
+* Fedora 36
 * Fedora rawhide
 
 
