@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	35.1
+Version:	35.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -71,6 +71,9 @@ install -m644 remove-retired-packages.8 %{buildroot}/%{_mandir}/man8/
 %license LICENSE
 
 %changelog
+* Thu Sep 23 2021 Miroslav Suchý <msuchy@redhat.com> 35.2-1
+- add remove-retired-packages
+
 * Thu Sep 16 2021 Miroslav Suchý <msuchy@redhat.com> 35.1-1
 - remove upgrade to f32
 - add upgrade to f35
