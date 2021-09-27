@@ -21,10 +21,10 @@ NEW_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
 #--repo={fedora,fedora-modular,updates,updates-modular}-source
 
 echo Gather package list for Fedora $UPGRADE_FROM
-dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local --arch src --enablerepo=*-source --qf="%{name}" | sort > "$OLD_LIST"
+dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local --qf="%{name}" | sort > "$OLD_LIST"
 #repoquery --releasever "$UPGRADE_FROM" --arch src -a | pkgname | sort | uniq > "$OLD_LIST"
 echo Gather package list for Fedora $UPGRADE_TO
-dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local --arch src --enablerepo=*-source --qf="%{name}" | sort > "$NEW_LIST"
+dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local --qf="%{name}" | sort > "$NEW_LIST"
 comm -23 "$OLD_LIST" "$NEW_LIST" > "$TO_REMOVE"
 
 echo Asking for super user access:
