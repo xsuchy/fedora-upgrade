@@ -1,0 +1,34 @@
+fedora-remove-old-gpg-keys(8)
+=============================
+:man source:  fedora-remove-old-gpg-keys
+:man manual:  Fedora Upgrade
+
+NAME
+----
+fedora-remove-old-gpg-keys - tool to remove old RPM GPG keys
+
+
+SYNOPSIS
+--------
+*fedora-remove-old-gpg-keys*
+
+
+DESCRIPTION
+-----------
+
+Script *fedora-remove-old-gpg-keys* removes from rpmdb the GPG keys of EOLed Fedora Linuxes.
+
+
+SEE ALSO
+--------
+rpm(8), fedora-upgrade(8)
+
+
+BUGS
+----
+If you experience some problem, please report it at: https://github.com/xsuchy/fedora-upgrade/issues
+
+
+AUTHOR
+------
+Miroslav Suchý <msuchy@redhat.com>

@@ -23,6 +23,7 @@ Requires:   policycoreutils
 Requires:   distribution-gpg-keys >= 1.51
 Suggests:   vim-enhanced
 Requires:	wget
+Requires: remove-retired-packages
 BuildRequires: asciidoc
 BuildRequires: libxslt
 
@@ -46,8 +47,9 @@ Fedora distribution.
 %setup -q
 
 %build
-a2x -d manpage -f manpage fedora-upgrade.8.asciidoc
-a2x -d manpage -f manpage remove-retired-packages.8.asciidoc
+for i in fedora-remove-old-gpg-keys.8.asciidoc fedora-upgrade.8.asciidoc remove-retired-packages.8.asciidoc; do
+  a2x -d manpage -f manpage "$i"
+done
 
 %install
 mkdir -p %{buildroot}%{_sbindir}
@@ -57,6 +59,8 @@ install -m755 fedora-upgrade %{buildroot}%{_sbindir}
 install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 install -m755 remove-retired-packages %{buildroot}%{_sbindir}
 install -m644 remove-retired-packages.8 %{buildroot}/%{_mandir}/man8/
+install -m755 fedora-remove-old-gpg-keys %{buildroot}%{_sbindir}/
+install -m644 fedora-remove-old-gpg-keys.8 %{buildroot}/%{_mandir}/man8/
 
 %files
 %license LICENSE
@@ -67,7 +71,9 @@ install -m644 remove-retired-packages.8 %{buildroot}/%{_mandir}/man8/
 
 %files -n remove-retired-packages
 %{_sbindir}/remove-retired-packages
+%{_sbindir}/fedora-remove-old-gpg-keys
 %doc %{_mandir}/man8/remove-retired-packages.8*
+%doc %{_mandir}/man8/fedora-remove-old-gpg-keys.8*
 %license LICENSE
 
 %changelog
