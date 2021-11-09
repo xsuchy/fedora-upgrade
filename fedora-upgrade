@@ -388,8 +388,8 @@ elif [ 0$TARGET_VERSION -eq 35 ]; then
 
   dnf clean -q dbcache metadata
   enable_updates=""
-  echo "Checking if this is pre-release"
-  enable_updates=$(is_prerelease $TARGET_VERSION )
+  #echo "Checking if this is pre-release"
+  #enable_updates=$(is_prerelease $TARGET_VERSION )
 
   # EXCEPTION https://bugzilla.redhat.com/show_bug.cgi?id=1919864
   # remove this exception on upgrade to F36
