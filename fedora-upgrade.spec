@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	35.2
+Version:	35.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -77,6 +77,18 @@ install -m644 fedora-remove-old-gpg-keys.8 %{buildroot}/%{_mandir}/man8/
 %license LICENSE
 
 %changelog
+* Tue Nov 09 2021 Miroslav Suchý <msuchy@redhat.com> 35.3-1
+- do not test prerelease during upgrade to F35
+- note fedora-remove-old-gpg-keys in fedora-upgrade man page
+- print whole list before asking on individual packages
+- add fedora 33 gpg keys to remove
+- add fedora 32 gpg keys to remove
+- add fedora-remove-old-gpg-key
+- fail if something fail, or when user interrupt
+- grammar edits
+- work on list of removed packages rather than components
+- Small changes to reduce dependencies
+
 * Thu Sep 23 2021 Miroslav Suchý <msuchy@redhat.com> 35.2-1
 - add remove-retired-packages
 
