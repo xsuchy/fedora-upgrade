@@ -2,6 +2,7 @@
 
 # get full list of all GPG keys:
 # rpm -qa --qf '%{name}-%{version}-%{release} %{summary}\n' gpg-pubkey
+# rpm -qa --qf '%{name}-%{version}-%{release} %{summary}\n' gpg-pubkey |grep '(32)' |awk '{ print $1 }' |sort |uniq
 
 # Fedora 30
 rpm -e gpg-pubkey-c0aeda6e-5ad45327 2>/dev/null
@@ -14,8 +15,10 @@ rpm -e gpg-pubkey-3c3359c4-5c6ae44d 2>/dev/null
 rpm -e gpg-pubkey-54a86092-5bc4663b 2>/dev/null
 
 # Fedora 32
-for i in gpg-pubkey-b9c13282-582f265a gpg-pubkey-cd30c86b-503293b9 gpg-pubkey-e051b67e-54863278 gpg-pubkey-100bcd92-5ca9b382 gpg-pubkey-12c944d0-5d5156ab gpg-pubkey-172ff33d-503292b0 gpg-pubkey-3276f4b3-582f2526 gpg-pubkey-5ca6c469-548632d2 gpg-pubkey-6dc1be18-5ca9b41f; do
+for i in gpg-pubkey-100bcd92-5ca9b382 gpg-pubkey-12c944d0-5d5156ab gpg-pubkey-6dc1be18-5ca9b41f; do
         rpm -e "$i" 2>/dev/null
 done
 
+# Fedora 33
+rpm -e gpg-pubkey-9570ff31-5e3006fb 2>/dev/null
 true
