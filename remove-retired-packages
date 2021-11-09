@@ -9,7 +9,7 @@ UPGRADE_TO="$VERSION_ID"
 echo Looking for retired packages betweeen Fedora $UPGRADE_FROM and Fedora $UPGRADE_TO
 echo These packages are no longer maintained.
 echo "You can keep them (answer N to following questions),"
-echo but this packages will not get any updates. Not even security updates.
+echo but these packages will not get any updates. Not even security updates.
 
 TO_REMOVE=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
 OLD_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
@@ -20,7 +20,7 @@ NEW_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
 
 #--repo={fedora,fedora-modular,updates,updates-modular}-source
 
-echo Gather package list for Fedora $UPGRADE_FROM
+echo Gathering package list for Fedora $UPGRADE_FROM
 dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local --qf="%{name}" | sort > "$OLD_LIST"
 #repoquery --releasever "$UPGRADE_FROM" --arch src -a | pkgname | sort | uniq > "$OLD_LIST"
 echo Gather package list for Fedora $UPGRADE_TO
