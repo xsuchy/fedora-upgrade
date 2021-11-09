@@ -35,7 +35,7 @@ Steps which fedora-upgrade does:
 
 SEE ALSO
 --------
-dnf(8), rpmconf(8),
+dnf(8), rpmconf(8), fedora-remove-old-gpg-keys(8)
 https://fedoraproject.org/wiki/Upgrading_Fedora_using_package_manager
 
 
