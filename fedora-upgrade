@@ -137,6 +137,13 @@ function unwanted_packages() {
   fi
 }
 
+function unwanted_packages2() {
+  LAST=$1
+  continue_or_skip "\nThere may be some packages which are now retired, do you want to remove them?\nYou will confirm each removal separately."
+  RESULT=0
+  remove-retired-packages $LAST
+}
+
 function is_prerelease() {
   # will print string "--enablerepo=updates-testing" if this is prerelease, "" otherwise
   local RELEASE=$1
@@ -290,8 +297,8 @@ if [ -n "$OPTS_HELP" ]; then
   exit 0;
 fi
 
-if [ 0$TARGET_VERSION -eq 33 ]; then
-  # Fedora 32 to 33
+if [ 0$TARGET_VERSION -eq 36 ]; then
+  # Fedora 35 to 36
   warn_if_graphics_mode
   welcome_banner $TARGET_VERSION
 
@@ -301,9 +308,8 @@ if [ 0$TARGET_VERSION -eq 33 ]; then
   import_keys
 
   dnf clean -q dbcache metadata
-  # echo "Checking if this is pre-release"
-  enable_updates=""
-  #enable_updates=$(is_prerelease $TARGET_VERSION )
+  echo "Checking if this is pre-release"
+  enable_updates=$(is_prerelease $TARGET_VERSION )
 
   choose_upgrade_method
   echo -e $1
@@ -328,8 +334,8 @@ if [ 0$TARGET_VERSION -eq 33 ]; then
   cleanup_cache
   rpmconf_after_upgrade
   reset_service_priorities
+  unwanted_packages2 $FEDORA_VERSION
   remove_old_gpg_keys
-  unwanted_packages
   UPGRADE_FINISHED=1
 elif [ 0$TARGET_VERSION -eq 34 ]; then
   # Fedora 33 to 34
