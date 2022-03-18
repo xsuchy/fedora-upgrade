@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	36.1
+Version:	36.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -77,6 +77,9 @@ install -m644 fedora-remove-old-gpg-keys.8 %{buildroot}/%{_mandir}/man8/
 %license LICENSE
 
 %changelog
+* Fri Mar 18 2022 Miroslav Suchý <msuchy@redhat.com> 36.2-1
+- 2065720 - fix path to fedora-remove-old-gpg-keys
+
 * Wed Feb 09 2022 Miroslav Suchý <msuchy@redhat.com> 36.1-1
 - add upgrade to Feodora 36
 - failure during reset of services preset should not be fatal
