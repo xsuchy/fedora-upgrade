@@ -99,7 +99,7 @@ function rpmconf_after_upgrade() {
 function remove_old_gpg_keys() {
   continue_or_skip "\nGoing to remove old GPG keys."
 
-  /usr/bin/fedora-remove-old-gpg-keys
+  /usr/sbin/fedora-remove-old-gpg-keys
 }
 
 function reset_service_priorities() {
