@@ -31,7 +31,7 @@ comm -23 "$OLD_LIST" "$NEW_LIST" > "$TO_REMOVE"
 echo Asking for super user access:
 sudo true
 
-echo "These packages has been retired:"
+echo "These packages have been retired:"
 for PACKAGE in $( cat "$TO_REMOVE"); do
         #skip if this package is not installed
         rpm -q "$PACKAGE" 2>/dev/null >&2 || continue
