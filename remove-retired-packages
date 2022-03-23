@@ -8,8 +8,7 @@ if [ -z "$UPGRADE_FROM" ]; then
 fi
 UPGRADE_TO="$VERSION_ID"
 echo "Looking for retired packages betweeen Fedora $UPGRADE_FROM and Fedora $UPGRADE_TO"
-echo "These packages are no longer maintained."
-echo "You can keep them (answer N to following questions),"
+echo "Retired packages are no longer maintained. Answer N to the following questions to keep them,"
 echo "but these packages will not get any updates. Not even security updates."
 
 TO_REMOVE=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
