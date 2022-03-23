@@ -7,10 +7,10 @@ if [ -z "$UPGRADE_FROM" ]; then
         UPGRADE_FROM=$(("$VERSION_ID"-1))
 fi
 UPGRADE_TO="$VERSION_ID"
-echo Looking for retired packages betweeen Fedora $UPGRADE_FROM and Fedora $UPGRADE_TO
-echo These packages are no longer maintained.
+echo "Looking for retired packages betweeen Fedora $UPGRADE_FROM and Fedora $UPGRADE_TO"
+echo "These packages are no longer maintained."
 echo "You can keep them (answer N to following questions),"
-echo but these packages will not get any updates. Not even security updates.
+echo "but these packages will not get any updates. Not even security updates."
 
 TO_REMOVE=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
 OLD_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
@@ -22,18 +22,18 @@ NEW_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
 #--repo={fedora,fedora-modular,updates,updates-modular}-source
 
 
-echo Gathering package list for Fedora $UPGRADE_FROM
+echo "Gathering package list for Fedora $UPGRADE_FROM"
 # in case the metadata are signed and GPG key is not yet imported
 dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local XXXXXXXXXXXX
 dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local --qf="%{name}" | sort > "$OLD_LIST"
 #repoquery --releasever "$UPGRADE_FROM" --arch src -a | pkgname | sort | uniq > "$OLD_LIST"
-echo Gather package list for Fedora $UPGRADE_TO
+echo "Gather package list for Fedora $UPGRADE_TO"
 # in case the metadata are signed and GPG key is not yet imported
 dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local XXXXXXXXXXXX
 dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local --qf="%{name}" | sort > "$NEW_LIST"
 comm -23 "$OLD_LIST" "$NEW_LIST" > "$TO_REMOVE"
 
-echo Asking for super user access:
+echo "Asking for super user access:"
 sudo true
 
 echo "These packages have been retired:"
