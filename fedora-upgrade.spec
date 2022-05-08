@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	36.2
+Version:	36.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -77,6 +77,16 @@ install -m644 fedora-remove-old-gpg-keys.8 %{buildroot}/%{_mandir}/man8/
 %license LICENSE
 
 %changelog
+* Sun May 08 2022 Miroslav Suchý <msuchy@redhat.com> 36.3-1
+- do not test prerelease for F36
+- remove-retired-packages: Normalize grammatical tense in messages
+- remove-retired-packages: Rewrite introductory text for better clarity
+- remove-retired-packages: Normalize quotation marks in echo commands
+- ignore if rpmfusion repos are not present during upgrade to rawhide
+- ignore if some gpg keys to be remove are missing
+- 2066053 - ask for the GPG key if needed
+- remove-retired-packages: Typo
+
 * Fri Mar 18 2022 Miroslav Suchý <msuchy@redhat.com> 36.2-1
 - 2065720 - fix path to fedora-remove-old-gpg-keys
 
