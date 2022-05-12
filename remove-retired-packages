@@ -2,6 +2,11 @@
 set -e
 
 source /etc/os-release
+if [[ ! "$1" =~ ^[0-9]*$ ]]
+then
+    echo "usage: $(basename "$0") [fedora version number as digits]."
+    exit 1
+fi
 UPGRADE_FROM="$1"
 if [ -z "$UPGRADE_FROM" ]; then
         UPGRADE_FROM=$(("$VERSION_ID"-1))
