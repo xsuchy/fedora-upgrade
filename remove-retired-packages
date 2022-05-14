@@ -7,7 +7,7 @@ if [ -z "$UPGRADE_FROM" ]; then
         UPGRADE_FROM=$(("$VERSION_ID"-1))
 fi
 UPGRADE_TO="$VERSION_ID"
-echo "Looking for retired packages betweeen Fedora $UPGRADE_FROM and Fedora $UPGRADE_TO"
+echo "Looking for retired packages between Fedora $UPGRADE_FROM and Fedora $UPGRADE_TO"
 echo "Retired packages are no longer maintained. Answer N to the following questions to keep them,"
 echo "but these packages will not get any updates. Not even security updates."
 
