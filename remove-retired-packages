@@ -15,7 +15,11 @@ TO_REMOVE=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
 OLD_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
 NEW_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
 
-
+function pause() {
+   # clear the stdin buffer and pause with question
+   read -t 1 -n 10000 discard || [ $? -gt 128 ]
+   read -p "Hit Enter to continue with other package or Ctrl + C to interrupt."
+}
 
 
 #--repo={fedora,fedora-modular,updates,updates-modular}-source
@@ -50,7 +54,7 @@ for PACKAGE in $( cat "$TO_REMOVE"); do
 
         SUMMARY=$(rpm -q --qf "%{summary}" "$PACKAGE" | head -n1 )
         echo "Removing $PACKAGE: $SUMMARY"
-        sudo dnf remove "$PACKAGE"
+        sudo dnf remove "$PACKAGE" || pause
 done
 
 # cleanup
