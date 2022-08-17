@@ -144,7 +144,6 @@ function unwanted_packages2() {
   LAST=$1
   continue_or_skip "\nThere may be some packages which are now retired, do you want to remove them?\nYou will confirm each removal separately."
   if [ "$ANSWER" != "S" ] ; then
-      RESULT=0
       remove-retired-packages $LAST
   fi
 }
