@@ -98,8 +98,9 @@ function rpmconf_after_upgrade() {
 
 function remove_old_gpg_keys() {
   continue_or_skip "\nGoing to remove old GPG keys."
-
-  /usr/sbin/fedora-remove-old-gpg-keys || true
+  if [ "$ANSWER" != "S" ] ; then
+      /usr/sbin/fedora-remove-old-gpg-keys || true
+  fi
 }
 
 function reset_service_priorities() {
@@ -130,18 +131,22 @@ function cleanup_cache() {
 function unwanted_packages() {
   LAST=$1
   continue_or_skip "\nThere may be some packages which are now orphaned, do you want to see them?"
-  RESULT=0
-  package-cleanup --orphans | grep -v kernel && RESULT=1
-  if [ 0$RESULT -eq 1 ]; then
-    echo "These packages are very probably orphaned. You may want to remove them."
+  if [ "$ANSWER" != "S" ] ; then
+      RESULT=0
+      package-cleanup --orphans | grep -v kernel && RESULT=1
+      if [ 0$RESULT -eq 1 ]; then
+	  echo "These packages are very probably orphaned. You may want to remove them."
+      fi
   fi
 }
 
 function unwanted_packages2() {
   LAST=$1
   continue_or_skip "\nThere may be some packages which are now retired, do you want to remove them?\nYou will confirm each removal separately."
-  RESULT=0
-  remove-retired-packages $LAST
+  if [ "$ANSWER" != "S" ] ; then
+      RESULT=0
+      remove-retired-packages $LAST
+  fi
 }
 
 function is_prerelease() {
