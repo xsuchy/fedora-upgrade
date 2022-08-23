@@ -301,7 +301,48 @@ if [ -n "$OPTS_HELP" ]; then
   exit 0;
 fi
 
-if [ 0$TARGET_VERSION -eq 36 ]; then
+if [ 0$TARGET_VERSION -eq 37 ]; then
+  # Fedora 36 to 37
+  warn_if_graphics_mode
+  welcome_banner $TARGET_VERSION
+
+  dnf_install_deps
+  dnf_upgrade_before_upgrade
+  rpmconf_before_upgrade
+  import_keys
+
+  dnf clean -q dbcache metadata
+  enable_updates=""
+  #echo "Checking if this is pre-release"
+  #enable_updates=$(is_prerelease $TARGET_VERSION )
+
+  choose_upgrade_method
+  echo -e $1
+  ANSWER='XXX'
+  while [ "$ANSWER" != "offline" -a "$ANSWER" != "online" ] ; do
+    read -p "What is your choice? (offline/online)  " ANSWER
+    ANSWER=$(echo $ANSWER | tr "[:upper:]" "[:lower:]")
+  done
+  if [ "$ANSWER" == "online" ] ; then
+    mount_cache_dnf
+    dnf --releasever=$TARGET_VERSION --setopt=deltarpm=false --setopt=module_platform_id=platform:f$TARGET_VERSION $enable_updates $DISABLED_PLUGINS distro-sync
+    umount_cache_dnf
+  elif [ "$ANSWER" == "offline" ] ; then
+    install_if_missing dnf-plugin-system-upgrade
+    dnf system-upgrade download --setopt=module_platform_id=platform:f$TARGET_VERSION --releasever=$TARGET_VERSION
+    going_to_reboot
+    dnf system-upgrade reboot
+  fi
+
+  dnf_install_base
+
+  cleanup_cache
+  rpmconf_after_upgrade
+  reset_service_priorities
+  unwanted_packages2 $FEDORA_VERSION
+  remove_old_gpg_keys
+  UPGRADE_FINISHED=1
+elif [ 0$TARGET_VERSION -eq 36 ]; then
   # Fedora 35 to 36
   warn_if_graphics_mode
   welcome_banner $TARGET_VERSION
