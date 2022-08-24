@@ -177,7 +177,7 @@ WARNING
 
 function print_exit_banner() {
   umount_cache_dnf
-  if [ $UPGRADE_FINISHED -eq 1 ]; then
+  if [ $UPGRADE_FINISHED -eq 2 ]; then
     echo "Enabling updates repos back"
     # upgrade to rawhide failed, restore repos
     dnf config-manager --set-enabled fedora updates updates-testing updates-modular
