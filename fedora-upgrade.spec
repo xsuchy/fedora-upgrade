@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	36.3
+Version:	36.4
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -77,6 +77,19 @@ install -m644 fedora-remove-old-gpg-keys.8 %{buildroot}/%{_mandir}/man8/
 %license LICENSE
 
 %changelog
+* Thu Aug 25 2022 Miroslav Suchý <msuchy@redhat.com> 36.4-1
+- add f37 to releasers
+- remove upgrade to f35
+- remove upgrade to f34
+- check if f37 is prerelease
+- UPGRADE_FINISHED=2 is for in-progress-to-rawhide
+- Add update to F37
+- Set current rawhide version
+- Do not ignore user request to skip
+- Update remove-retired-packages
+- do not stop when you want to skip one package
+- fixed one typo
+
 * Sun May 08 2022 Miroslav Suchý <msuchy@redhat.com> 36.3-1
 - do not test prerelease for F36
 - remove-retired-packages: Normalize grammatical tense in messages
