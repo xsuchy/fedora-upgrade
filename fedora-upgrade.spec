@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	37.0
+Version:	37.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -77,6 +77,9 @@ install -m644 fedora-remove-old-gpg-keys.8 %{buildroot}/%{_mandir}/man8/
 %license LICENSE
 
 %changelog
+* Thu Aug 25 2022 Miroslav Suchý <msuchy@redhat.com> 37.1-1
+- bump up version
+
 * Thu Aug 25 2022 Miroslav Suchý <msuchy@redhat.com> 36.4-1
 - add f37 to releasers
 - remove upgrade to f35
