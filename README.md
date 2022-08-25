@@ -15,14 +15,7 @@ Please note that fedora-upgrade is NOT officially supported upgrade path.
 That means it is not tested by Fedora QA before release and bugs in fedora-upgrade
 are not a blocker for release.
 
-You can upgrade to any version. However, Fedora QA tests, and most users upgrade to next version.next version. You can upgrade to
-
-* Fedora 33
-* Fedora 34
-* Fedora 35
-* Fedora 36
-* Fedora rawhide
-
+You can upgrade to any version. However, Fedora QA tests, and most users upgrade to next version.next version.
 
 How it works
 ============
