@@ -59,6 +59,10 @@ for PACKAGE in $( cat "$TO_REMOVE"); do
 
         SUMMARY=$(rpm -q --qf "%{summary}" "$PACKAGE" | head -n1 )
         echo "Removing $PACKAGE: $SUMMARY"
+        SRPMFILENAME=$(rpm -q --qf "%{sourcerpm}" "$PACKAGE")
+        SRPM=$(rpm-print-name-from-filename "$SRPMFILENAME")
+        REASON=$(curl --fail https://src.fedoraproject.org/rpms/$SRPM/raw/rawhide/f/dead.package 2>/dev/null || echo "unknow reason")
+        echo "Reason of retirement: $REASON"
         sudo dnf remove "$PACKAGE" || pause
 done
 
