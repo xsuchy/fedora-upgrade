@@ -42,7 +42,7 @@ dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local --qf="%{name}"
 comm -23 "$OLD_LIST" "$NEW_LIST" > "$TO_REMOVE"
 
 echo "Asking for super user access:"
-sudo true
+sudo true Executed from remove-retired-packages
 
 echo "These packages have been retired:"
 for PACKAGE in $( cat "$TO_REMOVE"); do
