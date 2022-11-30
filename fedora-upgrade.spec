@@ -3,7 +3,7 @@ Version:	37.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
-License:	GPLv2
+License:	GPL-2.0-only
 URL:		https://github.com/xsuchy/fedora-upgrade
 # Sources can be obtained by
 # git clone git://github.com/xsuchy/fedora-upgrade.git
