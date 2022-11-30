@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	37.1
+Version:	37.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -82,6 +82,12 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 %license LICENSE
 
 %changelog
+* Wed Nov 30 2022 Miroslav Suchý <msuchy@redhat.com> 37.2-1
+- do not check if f37 is prerelease
+- use spdx license
+- 2142229 - reference for log what executed /usr/bin/true
+- report reason of the retirement
+
 * Thu Aug 25 2022 Miroslav Suchý <msuchy@redhat.com> 37.1-1
 - bump up version
 
