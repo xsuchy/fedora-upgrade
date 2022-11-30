@@ -313,8 +313,8 @@ if [ 0$TARGET_VERSION -eq 37 ]; then
 
   dnf clean -q dbcache metadata
   enable_updates=""
-  echo "Checking if this is pre-release"
-  enable_updates=$(is_prerelease $TARGET_VERSION )
+  #echo "Checking if this is pre-release"
+  #enable_updates=$(is_prerelease $TARGET_VERSION )
 
   choose_upgrade_method
   echo -e $1
