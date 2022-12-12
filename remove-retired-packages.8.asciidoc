@@ -16,7 +16,7 @@ SYNOPSIS
 DESCRIPTION
 -----------
 
-Script *remove-retired-packages* checks which packages has been retired (removed) between current version of Fedora and VERSION's version. When no paramters is passed then VERSION is set to current version minus one.
+Script *remove-retired-packages* checks which packages has been retired (removed) between current version of Fedora Linux and VERSION's version. When no paramters is passed then VERSION is set to current version minus one.
 
 SEE ALSO
 --------
