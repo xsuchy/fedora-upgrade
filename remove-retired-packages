@@ -4,7 +4,7 @@ set -e
 source /etc/os-release
 if [[ ! "$1" =~ ^[0-9]*$ ]]
 then
-    echo "usage: $(basename "$0") [fedora version number as digits]."
+    echo "usage: $(basename "$0") [fedora linux version number as digits]."
     exit 1
 fi
 UPGRADE_FROM="$1"
@@ -12,7 +12,7 @@ if [ -z "$UPGRADE_FROM" ]; then
         UPGRADE_FROM=$(("$VERSION_ID"-1))
 fi
 UPGRADE_TO="$VERSION_ID"
-echo "Looking for retired packages between Fedora $UPGRADE_FROM and Fedora $UPGRADE_TO"
+echo "Looking for retired packages between Fedora Linux $UPGRADE_FROM and Fedora Linux $UPGRADE_TO"
 echo "Retired packages are no longer maintained. Answer N to the following questions to keep them,"
 echo "but these packages will not get any updates. Not even security updates."
 
@@ -30,12 +30,12 @@ function pause() {
 #--repo={fedora,fedora-modular,updates,updates-modular}-source
 
 
-echo "Gathering package list for Fedora $UPGRADE_FROM"
+echo "Gathering package list for Fedora Linux $UPGRADE_FROM"
 # in case the metadata are signed and GPG key is not yet imported
 dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local XXXXXXXXXXXX
 dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local --qf="%{name}" | sort > "$OLD_LIST"
 #repoquery --releasever "$UPGRADE_FROM" --arch src -a | pkgname | sort | uniq > "$OLD_LIST"
-echo "Gathering package list for Fedora $UPGRADE_TO"
+echo "Gathering package list for Fedora Linux $UPGRADE_TO"
 # in case the metadata are signed and GPG key is not yet imported
 dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local XXXXXXXXXXXX
 dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local --qf="%{name}" | sort > "$NEW_LIST"
