@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	37.2
+Version:	38.0
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
