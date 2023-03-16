@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	38.0
+Version:	38.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -82,6 +82,10 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 %license LICENSE
 
 %changelog
+* Thu Mar 16 2023 Miroslav Suchý <msuchy@redhat.com> 38.1-1
+- add upgrades to F38
+- Use "Fedora Linux" to refer to the distro
+
 * Wed Nov 30 2022 Miroslav Suchý <msuchy@redhat.com> 37.2-1
 - do not check if f37 is prerelease
 - use spdx license
