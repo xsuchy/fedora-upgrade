@@ -12,10 +12,14 @@ URL:		https://github.com/xsuchy/fedora-upgrade
 Source0:	%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
+%if 0%{?fedora} > 38
+Requires:       dnf5
+%else
 Requires:	dnf
 Requires:	dnf-plugins-core
 Recommends:	dnf-plugin-system-upgrade
 Requires:   dnf-utils
+%endif
 Requires:	cpio
 Requires:	rpmconf
 Requires:	libselinux-utils
