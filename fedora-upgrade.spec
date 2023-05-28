@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	38.1
+Version:	38.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -86,6 +86,10 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 %license LICENSE
 
 %changelog
+* Sun May 28 2023 Miroslav Suchý <msuchy@redhat.com> 38.2-1
+- use dnf5 on F39+
+- Fix typo in main script
+
 * Thu Mar 16 2023 Miroslav Suchý <msuchy@redhat.com> 38.1-1
 - add upgrades to F38
 - Use "Fedora Linux" to refer to the distro
