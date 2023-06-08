@@ -1,6 +1,9 @@
 #!/usr/bin/bash
 set -e
 
+# speed up sort and comm
+export LC_ALL=C
+
 source /etc/os-release
 if [[ ! "$1" =~ ^[0-9]*$ ]]
 then
@@ -16,9 +19,12 @@ echo "Looking for retired packages between Fedora Linux $UPGRADE_FROM and Fedora
 echo "Retired packages are no longer maintained. Answer N to the following questions to keep them,"
 echo "but these packages will not get any updates. Not even security updates."
 
-TO_REMOVE=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
-OLD_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
-NEW_LIST=$(mktemp --tmpdir retired-packages.XXXXXXXXX)
+TDIR=$(mktemp --directory --tmpdir remove-retired.XXXXXXXXX)
+TO_REMOVE="$TDIR/retired"
+OLD_LIST="$TDIR/old"
+NEW_LIST="$TDIR/new"
+INST_LIST="$TDIR/installed"
+RM_LIST="$TDIR/toberemoved"
 
 function pause() {
    # clear the stdin buffer and pause with question
@@ -45,18 +51,14 @@ echo "Asking for super user access:"
 sudo true Executed from remove-retired-packages
 
 echo "These packages have been retired:"
-for PACKAGE in $( cat "$TO_REMOVE"); do
-        #skip if this package is not installed
-        rpm -q "$PACKAGE" 2>/dev/null >&2 || continue
-
+rpm -qa --qf '%{name}\n' | sort > "$INST_LIST"
+comm -12  "$TO_REMOVE" "$INST_LIST" > "$RM_LIST"
+while read PACKAGE; do
         SUMMARY=$(rpm -q --qf "%{summary}" "$PACKAGE" | head -n1 )
         echo "$PACKAGE: $SUMMARY"
-done
+done < "$RM_LIST"
 
-for PACKAGE in $( cat "$TO_REMOVE"); do
-        #skip if this package is not installed
-        rpm -q "$PACKAGE" 2>/dev/null >&2 || continue
-
+while read -u 7 PACKAGE; do
         SUMMARY=$(rpm -q --qf "%{summary}" "$PACKAGE" | head -n1 )
         echo "Removing $PACKAGE: $SUMMARY"
         SRPMFILENAME=$(rpm -q --qf "%{sourcerpm}" "$PACKAGE")
@@ -64,7 +66,7 @@ for PACKAGE in $( cat "$TO_REMOVE"); do
         REASON=$(curl --fail https://src.fedoraproject.org/rpms/$SRPM/raw/rawhide/f/dead.package 2>/dev/null || echo "unknown reason")
         echo "Reason of retirement: $REASON"
         sudo dnf remove "$PACKAGE" || pause
-done
+done 7< "$RM_LIST"
 
 # cleanup
-rm -f "$TO_REMOVE" "$OLD_LIST" "$NEW_LIST"
+rm -rf "$TDIR"
