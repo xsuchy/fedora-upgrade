@@ -12,7 +12,7 @@ URL:		https://github.com/xsuchy/fedora-upgrade
 Source0:	%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
-%if 0%{?fedora} > 38
+%if 0%{?fedora} >= 41
 Requires:       dnf5
 %else
 Requires:	dnf
