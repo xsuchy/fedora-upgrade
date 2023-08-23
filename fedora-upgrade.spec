@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	39.0
+Version:	39.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -86,6 +86,13 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 %license LICENSE
 
 %changelog
+* Wed Aug 23 2023 Miroslav Suchý <msuchy@redhat.com> 39.1-1
+- remove upgrade to F37
+- add upgrade to f39 and remove upgrade to f36
+- add f39 to releasers
+- Speed up selecting retired installed packages
+- Require DNF 5 in Fedora >= 41, not Fedora > 38
+
 * Sun May 28 2023 Miroslav Suchý <msuchy@redhat.com> 38.2-1
 - use dnf5 on F39+
 - Fix typo in main script
