@@ -59,6 +59,9 @@ while read PACKAGE; do
 done < "$RM_LIST"
 
 while read -u 7 PACKAGE; do
+        #skip if this package is not installed
+        rpm -q "$PACKAGE" 2>/dev/null >&2 || continue
+
         SUMMARY=$(rpm -q --qf "%{summary}" "$PACKAGE" | head -n1 )
         echo "Removing $PACKAGE: $SUMMARY"
         SRPMFILENAME=$(rpm -q --qf "%{sourcerpm}" "$PACKAGE")
