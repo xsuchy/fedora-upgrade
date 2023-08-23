@@ -313,8 +313,8 @@ if [ 0$TARGET_VERSION -eq 38 ]; then
 
   dnf clean -q dbcache metadata
   enable_updates=""
-  echo "Checking if this is pre-release"
-  enable_updates=$(is_prerelease $TARGET_VERSION )
+  #echo "Checking if this is pre-release"
+  #enable_updates=$(is_prerelease $TARGET_VERSION )
 
   choose_upgrade_method
   echo -e $1
@@ -383,8 +383,8 @@ elif [ 0$TARGET_VERSION -eq 37 ]; then
   unwanted_packages2 $FEDORA_VERSION
   remove_old_gpg_keys
   UPGRADE_FINISHED=1
-elif [ 0$TARGET_VERSION -eq 36 ]; then
-  # Fedora 35 to 36
+elif [ 0$TARGET_VERSION -eq 39 ]; then
+  # Fedora 38 to 39
   warn_if_graphics_mode
   welcome_banner $TARGET_VERSION
 
@@ -395,8 +395,8 @@ elif [ 0$TARGET_VERSION -eq 36 ]; then
 
   dnf clean -q dbcache metadata
   enable_updates=""
-  #echo "Checking if this is pre-release"
-  #enable_updates=$(is_prerelease $TARGET_VERSION )
+  echo "Checking if this is pre-release"
+  enable_updates=$(is_prerelease $TARGET_VERSION )
 
   choose_upgrade_method
   echo -e $1
