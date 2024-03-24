@@ -342,7 +342,7 @@ if [ 0$TARGET_VERSION -eq 39 ]; then
   unwanted_packages2 $FEDORA_VERSION
   remove_old_gpg_keys
   UPGRADE_FINISHED=1
-if [ 0$TARGET_VERSION -eq 40 ]; then
+elif [ 0$TARGET_VERSION -eq 40 ]; then
   # Fedora 39 to 40
   warn_if_graphics_mode
   welcome_banner $TARGET_VERSION
