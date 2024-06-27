@@ -28,6 +28,7 @@ Requires:   distribution-gpg-keys >= 1.51
 Suggests:   vim-enhanced
 Requires:	wget
 Requires: remove-retired-packages
+Requires: clean-rpm-gpg-pubkey
 BuildRequires: asciidoc
 BuildRequires: libxslt
 
@@ -53,7 +54,7 @@ Fedora distribution.
 %setup -q
 
 %build
-for i in fedora-remove-old-gpg-keys.8.asciidoc fedora-upgrade.8.asciidoc remove-retired-packages.8.asciidoc; do
+for i in fedora-upgrade.8.asciidoc remove-retired-packages.8.asciidoc; do
   a2x -d manpage -f manpage "$i"
 done
 
@@ -66,8 +67,6 @@ install -m755 fedora-upgrade %{buildroot}%{_sbindir}
 install -m644 fedora-upgrade.8 %{buildroot}/%{_mandir}/man8/
 install -m755 remove-retired-packages %{buildroot}%{_sbindir}
 install -m644 remove-retired-packages.8 %{buildroot}/%{_mandir}/man8/
-install -m755 fedora-remove-old-gpg-keys %{buildroot}%{_sbindir}/
-install -m644 fedora-remove-old-gpg-keys.8 %{buildroot}/%{_mandir}/man8/
 install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-name-from-filename
 
 %files
@@ -79,13 +78,15 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 
 %files -n remove-retired-packages
 %{_sbindir}/remove-retired-packages
-%{_sbindir}/fedora-remove-old-gpg-keys
 %{_bindir}/rpm-print-name-from-filename
 %doc %{_mandir}/man8/remove-retired-packages.8*
-%doc %{_mandir}/man8/fedora-remove-old-gpg-keys.8*
 %license LICENSE
 
 %changelog
+* Thu Jun 27 2024 Peter Oliver <rpm@mavit.org.uk> - 40.2-1
+- Replace unmaintained fedora-remove-old-gpg-keys with a call to
+  clean-rpm-gpg-pubkey.
+
 * Sun Mar 24 2024 Miroslav Suchý <msuchy@redhat.com> 40.1-1
 - upgrade to F40
 
