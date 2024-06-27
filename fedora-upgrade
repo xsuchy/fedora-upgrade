@@ -99,7 +99,7 @@ function rpmconf_after_upgrade() {
 function remove_old_gpg_keys() {
   continue_or_skip "\nGoing to remove old GPG keys."
   if [ "$ANSWER" != "S" ] ; then
-      /usr/sbin/fedora-remove-old-gpg-keys || true
+      /usr/bin/clean-rpm-gpg-pubkey || true
   fi
 }
 
