@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	40.1
+Version:	41.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -86,6 +86,9 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 %license LICENSE
 
 %changelog
+* Sat Aug 17 2024 Miroslav Suchý <msuchy@redhat.com> 41.1-1
+- add upgrade to f41
+
 * Sun Mar 24 2024 Miroslav Suchý <msuchy@redhat.com> 40.1-1
 - upgrade to F40
 
