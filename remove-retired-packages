@@ -68,6 +68,11 @@ while read -u 7 PACKAGE; do
         SRPMFILENAME=$(rpm -q --qf "%{sourcerpm}" "$PACKAGE")
         SRPM=$(rpm-print-name-from-filename "$SRPMFILENAME")
         REASON=$(curl --fail https://src.fedoraproject.org/rpms/$SRPM/raw/rawhide/f/dead.package 2>/dev/null || echo "unknown reason")
+        if [ "$REASON" = "unknown reason" ]; then
+                if curl --fail https://src.fedoraproject.org/rpms/$SRPM/raw/rawhide/f/${SRPM}.spec 2>/dev/null >/dev/null; then
+                        REASON="$PACKAGE was subpackage of $SRPM, but this subpackages was removed"
+                fi
+        fi
         echo "Reason of retirement: $REASON"
         sudo dnf remove "$PACKAGE" || pause
 done 7< "$RM_LIST"
