@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	41.1
+Version:	41.2
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -86,6 +86,11 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 %license LICENSE
 
 %changelog
+* Tue Nov 05 2024 Miroslav Suchý <msuchy@redhat.com> 41.2-1
+- remove-retired-packages: detect removed subpackages
+- no need to check if F41 is prerelease
+- add new line to repoquery to make remove-retired-packages work with dnf5
+
 * Sat Aug 17 2024 Miroslav Suchý <msuchy@redhat.com> 41.1-1
 - add upgrade to f41
 
