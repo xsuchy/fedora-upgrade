@@ -39,12 +39,13 @@ function pause() {
 echo "Gathering package list for Fedora Linux $UPGRADE_FROM"
 # in case the metadata are signed and GPG key is not yet imported
 dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local XXXXXXXXXXXX
-dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local --qf="%{name}" | sort > "$OLD_LIST"
+# sed from the repoquery can be remove when dnf4 will be a history
+dnf repoquery -q --releasever "$UPGRADE_FROM" --disableplugin=local --qf="%{name}\n" | sort | sed -r '/^\s*$/d' > "$OLD_LIST"
 #repoquery --releasever "$UPGRADE_FROM" --arch src -a | pkgname | sort | uniq > "$OLD_LIST"
 echo "Gathering package list for Fedora Linux $UPGRADE_TO"
 # in case the metadata are signed and GPG key is not yet imported
 dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local XXXXXXXXXXXX
-dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local --qf="%{name}" | sort > "$NEW_LIST"
+dnf repoquery -q --releasever "$UPGRADE_TO" --disableplugin=local --qf="%{name}\n" | sort | sed -r '/^\s*$/d' > "$NEW_LIST"
 comm -23 "$OLD_LIST" "$NEW_LIST" > "$TO_REMOVE"
 
 echo "Asking for super user access:"
