@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	41.2
+Version:	41.3
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -87,6 +87,14 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 %license LICENSE
 
 %changelog
+* Thu Dec 26 2024 Miroslav Suchý <msuchy@redhat.com> 41.3-1
+- correctly detect tmux
+- requires sudo
+- add reverence to `dnf history` in man page
+- add old gpg keys
+- group minimal install does not exist anymore
+- move rawhide version
+
 * Tue Nov 05 2024 Miroslav Suchý <msuchy@redhat.com> 41.2-1
 - remove-retired-packages: detect removed subpackages
 - no need to check if F41 is prerelease
