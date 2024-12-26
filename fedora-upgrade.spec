@@ -20,6 +20,7 @@ Requires:	dnf-plugins-core
 Recommends:	dnf-plugin-system-upgrade
 Requires:   dnf-utils
 %endif
+Requires:       sudo
 Requires:	cpio
 Requires:	rpmconf
 Requires:	libselinux-utils
