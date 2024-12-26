@@ -28,6 +28,7 @@ BUGS
 ----
 If you experience some problem, please report it at: https://github.com/xsuchy/fedora-upgrade/issues
 
+`remove-retired-packages` is built on top of DNF. If you want to later investigate what you actually done, you can check `dnf history`.
 
 AUTHOR
 ------
