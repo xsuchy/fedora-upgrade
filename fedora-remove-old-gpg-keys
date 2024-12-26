@@ -21,4 +21,14 @@ done
 
 # Fedora 33
 rpm -e gpg-pubkey-9570ff31-5e3006fb 2>/dev/null
+
+# Fedora 37
+rpm -e gpg-pubkey-5323552a-6112bcdc 2>/dev/null
+
+# Fedora 38
+rpm -e gpg-pubkey-eb10b464-6202d9c6 2>/dev/null
+
+# Fedora 39
+rpm -e gpg-pubkey-18b8e74c-62f2920f 2>/dev/null
+
 true
