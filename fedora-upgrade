@@ -74,13 +74,6 @@ function import_keys() {
   fi
 }
 
-function install_base() {
-  continue_or_skip "\nGoing to install missing packages from group 'Minimal Install'"
-  if [ "$ANSWER" != "S" ] ; then
-    dnf group install 'Minimal Install'
-  fi
-}
-
 function dnf_install_base() {
   continue_or_skip "\nGoing to install missing packages from group 'Minimal Install'"
   if [ "$ANSWER" != "S" ] ; then
@@ -375,8 +368,6 @@ elif [ 0$TARGET_VERSION -eq 41 ]; then
     dnf system-upgrade reboot
   fi
 
-  dnf_install_base
-
   cleanup_cache
   rpmconf_after_upgrade
   reset_service_priorities
@@ -417,8 +408,6 @@ elif [ 0$TARGET_VERSION -eq 0$RAWHIDE_VERSION ]; then
     going_to_reboot
     dnf system-upgrade reboot
   fi
-
-  dnf_install_base
 
   cleanup_cache
   rpmconf_after_upgrade
