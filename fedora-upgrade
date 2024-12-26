@@ -159,7 +159,9 @@ function is_prerelease() {
 }
 
 function warn_if_graphics_mode() {
-   if [[ ! "$TERM" =~ "screen".* ]]; then
+   if [[ "$TERM" =~ "screen".* || "$TERM" =~ "tmux".* ]]; then
+      true
+   else
       cat << WARNING
 It seems you are running upgrade from graphics mode. You should use "screen" or "tmux".
 Are you sure you want to continue?
