@@ -1,5 +1,5 @@
 Name:		fedora-upgrade
-Version:	44.1
+Version:	45.1
 Release:	1%{?dist}
 Summary:	Upgrade Fedora to next version using dnf upgrade (unofficial tool)
 
@@ -80,6 +80,11 @@ install -m755 rpm-print-name-from-filename.py %{buildroot}%{_bindir}/rpm-print-n
 %license LICENSE
 
 %changelog
+* Wed Aug 19 2026 Miroslav Suchý <msuchy@redhat.com> 45.1-1
+- remove upgrade to 42 and add upgrade to 45
+- fix typo paramters->parameters
+- fix typo commond->common
+
 * Mon Apr 13 2026 Miroslav Suchý <msuchy@redhat.com> 44.1-1
 - do not check if F44 is prerelease
 
